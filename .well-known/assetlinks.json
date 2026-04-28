@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.fulcrumpf.app",
+      "sha256_cert_fingerprints": [
+        "BF:15:08:AA:0A:09:76:58:12:75:30:37:0D:A7:F4:36:51:01:E0:A1:3F:01:E2:3F:0B:2B:A6:B9:B5:18:4D:F7"
+      ]
+    }
+  }
+]
