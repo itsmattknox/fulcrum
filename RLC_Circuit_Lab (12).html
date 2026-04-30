@@ -1,0 +1,2966 @@
+<!--
+================================================================================
+  RLC CIRCUIT LAB
+  Copyright © 2026 Matt Knox and Electrical Training Institute of Indianapolis
+  All rights reserved.
+
+  LICENCE TERMS
+  This software is provided for personal and educational use only.
+
+  You MAY:
+    · View, run, and use this application for personal or educational purposes.
+    · Share unmodified copies with students or colleagues for educational use,
+      provided this copyright notice remains intact.
+
+  You MAY NOT:
+    · Redistribute this file in modified form.
+    · Use this file or any portion of it for commercial purposes.
+    · Remove, obscure, or alter this copyright notice or licence text.
+    · Claim authorship or ownership of this work or any derivative of it.
+
+  No warranty is provided. Use at your own risk.
+
+  Contact: Electrical Training Institute of Indianapolis
+================================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>RLC Circuit Lab</title>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="RLC Circuit Lab">
+<meta name="theme-color" content="#1a6dbf">
+<link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIlJMQyBDaXJjdWl0IExhYiIsCiAgInNob3J0X25hbWUiOiAiUkxDIENpcmN1aXQgTGFiIiwKICAiZGVzY3JpcHRpb24iOiAiUkxDIFBoYXNlIFNpbXVsYXRvciBhbmQgUHJhY3RpY2UgUHJvYmxlbSBTb2x2ZXIiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2YwZjRmOCIsCiAgInRoZW1lX2NvbG9yIjogIiMxYTZkYmYiLAogICJvcmllbnRhdGlvbiI6ICJhbnkiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsPHN2ZyB4bWxucz1cJ2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnXCcgdmlld0JveD1cJzAgMCAxOTIgMTkyXCc+PHJlY3Qgd2lkdGg9XCcxOTJcJyBoZWlnaHQ9XCcxOTJcJyByeD1cJzMyXCcgZmlsbD1cJyUyMzFhNmRiZlwnLz48dGV4dCB4PVwnOTZcJyB5PVwnMTMwXCcgdGV4dC1hbmNob3I9XCdtaWRkbGVcJyBmb250LWZhbWlseT1cJ21vbm9zcGFjZVwnIGZvbnQtd2VpZ2h0PVwnOTAwXCcgZm9udC1zaXplPVwnODBcJyBmaWxsPVwnd2hpdGVcJz7imqE8L3RleHQ+PC9zdmc+IiwKICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIiwKICAgICAgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIgogICAgfQogIF0KfQ==">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%231a6dbf'/><text x='96' y='130' text-anchor='middle' font-family='monospace' font-weight='900' font-size='80' fill='white'>⚡</text></svg>">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Mono:wght@300;400;500;600&family=Barlow:wght@300;400;600&display=swap');
+
+/* ══════════════════════════════════════════
+   SHARED DESIGN TOKENS
+══════════════════════════════════════════ */
+:root {
+  --bg:      #f0f4f8;
+  --surface: #ffffff;
+  --border:  #d0dce8;
+  --border2: #c2d0e0;
+  --v-color: #c47a00;
+  --i-color: #0a8f5c;
+  --r-color: #c0392b;
+  --l-color: #1a6dbf;
+  --c-color: #d4580a;
+  --z-color: #7b3fc4;
+  --p-color: #0a7a8f;
+  --text:    #2c3e50;
+  --muted:   #7a92a8;
+  --strong:  #1a2535;
+  --gap:     14px;
+  --pad:     24px;
+  --nav-h: 47px;  /* app-shell-nav height */
+  --fs:      12px;
+  --thumb:   16px;
+  --track:   4px;
+  --num-w:   62px;
+  --ctrl-w:  280px;
+}
+
+
+/* ══════════════════════════════════════════
+   DARK MODE — token overrides
+   Applied when <html data-theme="dark">
+══════════════════════════════════════════ */
+[data-theme="dark"] {
+  --bg:      #1a1f2a;
+  --surface: #242b38;
+  --border:  #343d52;
+  --border2: #3f4d66;
+  --text:    #dce6f0;
+  --muted:   #6a82a0;
+  --strong:  #eef3fa;
+
+  /* Accent hues — slightly lightened for dark bg legibility */
+  --v-color: #e09a20;
+  --i-color: #18c47a;
+  --r-color: #e05048;
+  --l-color: #4a9de0;
+  --c-color: #f07030;
+  --z-color: #a060e0;
+  --p-color: #20a8c0;
+}
+
+/* Surface adjustments that can't be handled by tokens alone */
+[data-theme="dark"] body {
+  color-scheme: dark;
+}
+[data-theme="dark"] .app-shell-nav {
+  background:var(--surface);
+  border-bottom-color:var(--border);
+}
+[data-theme="dark"] .prac-cat-panel,
+[data-theme="dark"] .ctrl-group,
+[data-theme="dark"] .result-section,
+[data-theme="dark"] .rcard,
+[data-theme="dark"] .steps-box,
+[data-theme="dark"] .step,
+[data-theme="dark"] .empty-state,
+[data-theme="dark"] .export-section,
+[data-theme="dark"] .prac-import-box,
+[data-theme="dark"] .gen-confirm-box {
+  background:var(--surface);
+  border-color:var(--border);
+}
+[data-theme="dark"] .given-row {
+  background:var(--bg);
+  border-color:var(--border);
+}
+[data-theme="dark"] .given-row.has-value {
+  border-color:var(--border2);
+}
+[data-theme="dark"] .given-input,
+[data-theme="dark"] .io-textarea,
+[data-theme="dark"] .export-code,
+[data-theme="dark"] .prac-import-input {
+  background:var(--bg);
+  border-color:var(--border2);
+  color:var(--strong);
+}
+[data-theme="dark"] .status-pill.need-more { background:#2a1f00; border-color:#7a6000; color:#e0c060; }
+[data-theme="dark"] .status-pill.conflict  { background:#2a0a0a; border-color:#7a2020; color:#e08080; }
+[data-theme="dark"] .status-pill.ready     { background:#0a2a1a; border-color:#207a50; color:#60d0a0; }
+[data-theme="dark"] .tb-btn-solve,
+[data-theme="dark"] .cs-btn-solve {
+  background:linear-gradient(135deg,#0f1e38,#142d56); color:#7ab8f0;
+  border-color:var(--l-color);
+}
+[data-theme="dark"] .tb-btn-generate,
+[data-theme="dark"] .cs-btn-generate {
+  background:linear-gradient(135deg,#150e24,#1f1238); color:#b080f0;
+  border-color:var(--z-color);
+}
+[data-theme="dark"] .cs-toggle {
+  background:var(--bg);
+}
+[data-theme="dark"] .cs-btn {
+  background:var(--bg);
+  color:var(--muted);
+}
+[data-theme="dark"] .cs-btn:hover:not(:disabled) {
+  background:var(--surface);
+  color:var(--text);
+}
+[data-theme="dark"] #prac-opt-series.active,
+[data-theme="dark"] #prac-opt-parallel.active { background:var(--l-color); color:#fff; }
+[data-theme="dark"] .step-num { background:#1a2a4a; border-color:#2a4a8a; }
+[data-theme="dark"] .badge-solved { background:#0a2a1a; color:#60d0a0; border-color:#207a50; }
+[data-theme="dark"] .badge-given  { background:var(--bg); color:var(--muted); border-color:var(--border); }
+[data-theme="dark"] .gen-confirm-modal { background:rgba(0,0,0,0.65); }
+[data-theme="dark"] .gen-confirm-header { background:var(--l-color); }
+[data-theme="dark"] .prac-results-grid .prac-res-col { background:var(--surface); border-color:var(--border); }
+
+/* Dark mode toggle button */
+.dark-toggle {
+  margin-left:auto; flex-shrink:0;
+  display:flex; align-items:center; gap:6px;
+  font-family:'Orbitron',monospace; font-size:9px; font-weight:700;
+  letter-spacing:1px; color:var(--muted); cursor:pointer;
+  padding:6px 10px; border-radius:20px;
+  border:1.5px solid var(--border2);
+  background:var(--bg);
+  transition:all 0.2s;
+  white-space:nowrap;
+}
+.dark-toggle:hover { color:var(--text); border-color:var(--border2); }
+.dark-toggle-track {
+  width:32px; height:18px; border-radius:9px;
+  background:var(--border2); position:relative;
+  transition:background 0.2s; flex-shrink:0;
+}
+.dark-toggle-thumb {
+  position:absolute; top:3px; left:3px;
+  width:12px; height:12px; border-radius:50%;
+  background:#fff; transition:transform 0.2s;
+  box-shadow:0 1px 3px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .dark-toggle-track { background:var(--l-color); }
+[data-theme="dark"] .dark-toggle-thumb { transform:translateX(14px); }
+[data-theme="dark"] .dark-toggle { color:var(--muted); background:var(--surface); border-color:var(--border2); }
+
+/* ══════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════ */
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scrollbar-gutter:stable; } /* reserve scrollbar space always — prevents centering shift on tab switch */
+body { background:var(--bg); color:var(--text); font-family:'Barlow',sans-serif; overflow-x:hidden; min-height:100vh; }
+
+
+/* ══════════════════════════════════════════
+   APP SHELL — top nav switching tools
+══════════════════════════════════════════ */
+.app-shell-nav {
+  position:sticky; top:0; z-index:200;
+  background:var(--surface); border-bottom:2px solid var(--border);
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  display:block;
+  padding:0;
+}
+.app-shell-nav-inner {
+  display:flex; align-items:center; gap:0;
+  max-width:1300px; margin:0 auto; padding:0 var(--pad);
+}
+.app-logo {
+  font-family:'Orbitron',monospace; font-size:clamp(8px,2vw,16px);
+  font-weight:900; letter-spacing:1px; white-space:nowrap;
+  background:linear-gradient(90deg,var(--l-color),#c47a00,var(--c-color));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  padding:12px 0; margin-right:12px; flex-shrink:1; min-width:0;
+}
+.tool-tab {
+  font-family:'Orbitron',monospace; font-size:8.5px; letter-spacing:1.5px; font-weight:700;
+  padding:14px 18px; border:none; background:transparent; color:var(--muted);
+  cursor:pointer; border-bottom:3px solid transparent; transition:all 0.2s;
+  white-space:nowrap; margin-bottom:-2px;
+}
+.tool-tab:hover { color:var(--text); }
+.tool-tab.active { color:var(--l-color); border-bottom-color:var(--l-color); }
+.tool-tab.active.prac-tab { color:var(--i-color); border-bottom-color:var(--i-color); }
+
+/* ══════════════════════════════════════════
+   TOOL WRAPPERS — shown/hidden by JS
+══════════════════════════════════════════ */
+.tool-view { display:none; }
+.tool-view.active { display:block; }
+/* ══════════════════════════════════════════
+   ── SIMULATOR CSS ──
+══════════════════════════════════════════ */
+.sim-wrap .logo {
+  font-family:'Orbitron',monospace; font-size:clamp(13px,2.5vw,20px);
+  font-weight:900; letter-spacing:2px; white-space:nowrap;
+  background:linear-gradient(90deg,var(--l-color),#c47a00,var(--c-color));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.sim-wrap .app-header {
+  padding:16px var(--pad) 0;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:10px;
+}
+.sim-wrap .header-stats { display:flex; gap:8px; flex-wrap:wrap; margin-left:auto; justify-content:flex-end; }
+.sim-wrap .hstat {
+  font-family:'DM Mono',monospace; font-size:11px; padding:5px 10px;
+  background:var(--surface); border:1px solid var(--border); border-radius:6px;
+  color:var(--muted); box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+.sim-wrap .hstat span { font-weight:600; font-size:13px; color:var(--strong); }
+.header-stats.desktop-only { display:flex; }
+.sim-wrap .layout {
+  display:grid;
+  grid-template-columns:var(--ctrl-w) 1fr;
+  grid-template-rows:auto auto 1fr 1fr;
+  gap:var(--gap);
+  padding:var(--gap) var(--pad) var(--pad);
+  max-width:1300px; margin:0 auto;
+}
+.sim-wrap .controls-panel { grid-column:1; grid-row:2/5; }
+.sim-wrap .title-bar      { grid-column:1/3; grid-row:1; display:flex; align-items:center; justify-content:flex-start; flex-wrap:wrap; gap:8px; padding:0; min-height:36px; }
+.sim-wrap .waveform-panel { grid-column:2; grid-row:2; }
+.sim-wrap .bottom-row     { grid-column:2; grid-row:3/5; }
+/* app-header: only visible on phone (<600px) via the phone media query below */
+.sim-wrap .app-header { display:none; }
+/* title-bar: visible on desktop AND tablet (>=600px); hidden on phone */
+.sim-wrap .title-bar { display:flex; }
+@media (max-width:599px) {
+  .tool-tab { padding:14px 10px; font-size:7.5px; letter-spacing:1px; } .sim-wrap .title-bar { display:none; } }
+.sim-wrap .stat-grid-row { display:none; }
+.sim-wrap .tab-nav       { display:none; }
+
+@media (max-width:1024px) and (min-width:600px) {
+  :root { --ctrl-w:200px; --gap:9px; --pad:14px; --fs:11px; --thumb:18px; --num-w:56px; }
+  .sim-wrap .layout {
+    max-width:none;
+    padding:var(--pad);
+    grid-template-columns:var(--ctrl-w) 1fr;
+    grid-template-rows:auto 1fr 1fr;
+  }
+  .sim-wrap .controls-panel { grid-column:1; grid-row:2/4; overflow-y:auto; overflow-x:hidden; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+  .sim-wrap .waveform-panel { grid-column:2; grid-row:2; }
+  .sim-wrap .bottom-row     { grid-column:2; grid-row:3; min-height:0; }
+  .sim-wrap .waveform-panel,
+  .sim-wrap .phasor-panel,
+  .sim-wrap .info-panel { display:flex; flex-direction:column; min-height:0; }
+}
+
+@media (max-width:599px) {
+  :root { --pad:14px; --fs:13px; --thumb:22px; --track:6px; --num-w:72px; }
+  .sim-wrap { max-width:none; margin:0; }
+  /* Phone: show app-header with logo + stat pills below the app-shell-nav */
+  .sim-wrap .app-header {
+    display:flex !important;
+    position:sticky; top:47px; z-index:100;
+    background:var(--surface); border-bottom:1px solid var(--border);
+    padding:9px var(--pad) 7px; box-shadow:0 2px 6px rgba(0,0,0,0.06);
+    flex-direction:column; align-items:flex-start; gap:6px;
+  }
+  .sim-wrap .app-header .logo { font-size:14px; }
+  .header-stats.desktop-only { display:none; }
+  .sim-wrap .phone-stat-row {
+    width:100%; display:grid; grid-template-columns:repeat(4,1fr); gap:5px;
+  }
+  .sim-wrap .phone-stat-row .hstat { text-align:center; padding:4px 2px; }
+  .sim-wrap .phone-stat-row .hstat span { font-size:11px; }
+  /* tab-nav: app-shell-nav(47px) + logo+pills header(~82px) = 129px */
+  .sim-wrap .tab-nav {
+    display:flex; background:var(--surface); border-bottom:1px solid var(--border);
+    position:sticky; top:129px; z-index:99;
+  }
+  .sim-wrap .tab-btn { flex:1; padding:10px 3px; font-family:'Orbitron',monospace; font-size:8px; letter-spacing:1px; border:none; background:transparent; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; transition:all 0.2s; }
+  .sim-wrap .tab-btn.active { color:var(--l-color); border-bottom-color:var(--l-color); }
+
+  .sim-wrap .layout { display:block; padding:0; max-width:none; }
+  .sim-wrap .controls-panel,
+  .sim-wrap .waveform-panel,
+  .sim-wrap .bottom-row { display:none !important; }
+  .sim-wrap .controls-panel { background:transparent; border:none; box-shadow:none; border-radius:0; padding:var(--pad); padding-bottom:80px; }
+  .sim-wrap .waveform-panel { background:transparent; border:none; box-shadow:none; border-radius:0; padding:var(--pad); padding-bottom:80px; }
+  .sim-wrap .bottom-row     { padding:var(--pad); padding-bottom:80px; flex-direction:column; gap:14px; }
+  .sim-wrap #panel-phasor,
+  .sim-wrap #panel-analysis { display:none !important; }
+  .sim-wrap .controls-panel.tab-active  { display:flex !important; flex-direction:column; }
+  .sim-wrap .waveform-panel.tab-active  { display:flex !important; flex-direction:column; }
+  .sim-wrap .bottom-row.tab-active      { display:flex !important; }
+  .sim-wrap #panel-phasor.tab-active    { display:flex !important; flex-direction:column; }
+  .sim-wrap #panel-analysis.tab-active  { display:flex !important; flex-direction:column; }
+  .sim-wrap .waveform-panel .canvas-wrap { min-height:220px; }
+  .sim-wrap .phasor-wrap { min-height:300px; }
+}
+
+.sim-wrap .controls-panel {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:18px 16px;
+  display:flex; flex-direction:column; gap:5px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);
+}
+.sim-wrap .section-label {
+  font-family:'Orbitron',monospace; font-size:8px; letter-spacing:3px;
+  color:var(--muted); text-transform:uppercase;
+  margin:9px 0 5px; padding-bottom:5px; border-bottom:1px solid var(--border);
+}
+.sim-wrap .ctrl { display:flex; flex-direction:column; gap:4px; margin-bottom:5px; }
+.sim-wrap .ctrl-header-row { display:flex; align-items:center; gap:6px; }
+.sim-wrap .ctrl-name { font-family:'DM Mono',monospace; font-size:var(--fs); font-weight:500; flex:1; }
+.sim-wrap .ctrl-num-row { display:flex; align-items:center; gap:4px; flex-shrink:0; }
+.sim-wrap .ctrl-num-row .num-input { width:calc(var(--ctrl-w) * 0.28); min-width:48px; text-align:right; }
+.sim-wrap .ctrl-num-row .unit-label { flex-shrink:0; width:28px; text-align:left; }
+.sim-wrap .ctrl-input-row { display:flex; flex-direction:column; gap:4px; }
+.sim-wrap .ctrl-input-row input[type=range] { width:100%; }
+input[type=range] { -webkit-appearance:none; width:100%; height:var(--track); border-radius:3px; outline:none; cursor:pointer; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:var(--thumb); height:var(--thumb); border-radius:50%; border:2px solid white; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+@media (min-width:600px) { input[type=range]::-webkit-slider-thumb:hover { transform:scale(1.25); transition:transform 0.1s; } }
+.r-slider { background:linear-gradient(to right,var(--r-color) var(--pct,50%),var(--border) var(--pct,50%)); }
+.r-slider::-webkit-slider-thumb { background:var(--r-color); }
+.l-slider { background:linear-gradient(to right,var(--l-color) var(--pct,50%),var(--border) var(--pct,50%)); }
+.l-slider::-webkit-slider-thumb { background:var(--l-color); }
+.c-slider { background:linear-gradient(to right,var(--c-color) var(--pct,50%),var(--border) var(--pct,50%)); }
+.c-slider::-webkit-slider-thumb { background:var(--c-color); }
+.f-slider { background:linear-gradient(to right,var(--v-color) var(--pct,50%),var(--border) var(--pct,50%)); }
+.f-slider::-webkit-slider-thumb { background:var(--v-color); }
+.num-input { font-family:'DM Mono',monospace; font-size:var(--fs); font-weight:600; width:var(--num-w); padding:4px 5px; border-radius:6px; border:1px solid var(--border2); background:var(--bg); color:var(--strong); text-align:right; outline:none; -moz-appearance:textfield; }
+.num-input::-webkit-inner-spin-button, .num-input::-webkit-outer-spin-button { -webkit-appearance:none; }
+.num-input:focus         { border-color:#5a9ae0; box-shadow:0 0 0 2px rgba(90,154,224,0.2); }
+.num-input.r-inp:focus   { border-color:var(--r-color); box-shadow:0 0 0 2px rgba(192,57,43,0.15); }
+.num-input.l-inp:focus   { border-color:var(--l-color); box-shadow:0 0 0 2px rgba(26,109,191,0.15); }
+.num-input.c-inp:focus   { border-color:var(--c-color); box-shadow:0 0 0 2px rgba(212,88,10,0.15); }
+.num-input.f-inp:focus, .num-input.v-inp:focus { border-color:var(--v-color); box-shadow:0 0 0 2px rgba(196,122,0,0.15); }
+.unit-label { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); white-space:nowrap; }
+.sim-wrap .mode-toggle { display:flex; gap:4px; margin-bottom:5px; background:var(--bg); border-radius:8px; padding:3px; border:1px solid var(--border); }
+.sim-wrap .mode-btn { flex:1; padding:7px; font-family:'Orbitron',monospace; font-size:8px; letter-spacing:1px; border:none; background:transparent; color:var(--muted); border-radius:5px; cursor:pointer; transition:all 0.2s; }
+.sim-wrap .mode-btn.active { background:var(--surface); color:var(--strong); border:1px solid var(--border2); box-shadow:0 1px 4px rgba(0,0,0,0.1); }
+.circuit-badge { font-family:'Orbitron',monospace; font-size:10px; letter-spacing:1px; padding:5px 10px; border-radius:6px; text-align:center; margin:3px 0; font-weight:700; }
+.resonate-btn { width:100%; margin-top:5px; padding:10px; font-family:'Orbitron',monospace; font-size:9px; letter-spacing:1.5px; font-weight:700; border:2px solid #0a8f5c; border-radius:10px; background:linear-gradient(135deg,#e8faf3,#cef5e2); color:#0a7a50; cursor:pointer; transition:all 0.2s ease; display:flex; align-items:center; justify-content:center; gap:7px; box-shadow:0 2px 8px rgba(10,143,92,0.18); }
+.resonate-btn:hover { background:linear-gradient(135deg,#0a8f5c,#08c77e); color:white; }
+.resonate-btn .btn-icon { font-size:14px; }
+@keyframes resonatePulse { 0%{box-shadow:0 0 0 0 rgba(10,143,92,0.5)} 40%{background:linear-gradient(135deg,#0a8f5c,#08c77e);color:white;box-shadow:0 0 0 10px rgba(10,143,92,0)} 100%{box-shadow:0 2px 8px rgba(10,143,92,0.18)} }
+.resonate-btn.firing { animation:resonatePulse 0.7s ease forwards; }
+.resonance-alert { background:var(--bg); border:1px solid var(--border); color:var(--muted); font-family:Orbitron,monospace; font-size:9px; letter-spacing:2px; padding:7px; border-radius:6px; text-align:center; margin-top:5px; }
+[data-theme="dark"] .resonate-btn { background:linear-gradient(135deg,#0a2a1a,#0f3d28); color:#18c47a; border-color:#18c47a; }
+[data-theme="dark"] .resonate-btn:hover { background:linear-gradient(135deg,#18c47a,#0fa060); color:#fff; }
+.imp-box { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px; margin-top:4px; }
+.imp-row { display:flex; justify-content:space-between; font-family:'DM Mono',monospace; font-size:var(--fs); padding:4px 0; border-bottom:1px solid var(--border); }
+.imp-row:last-child { border-bottom:none; }
+.imp-label { color:var(--muted); }
+.resonance-alert { font-family:'Orbitron',monospace; font-size:9px; letter-spacing:2px; padding:7px; border-radius:6px; text-align:center; margin-top:5px; border:1px solid var(--border); background:var(--bg); color:var(--muted); }
+.sim-wrap .waveform-panel, .sim-wrap .phasor-panel, .sim-wrap .info-panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:16px 18px; box-shadow:0 2px 12px rgba(0,0,0,0.06); display:flex; flex-direction:column; }
+.sim-wrap .bottom-row { display:grid; grid-template-columns:1fr 1fr; gap:var(--gap); }
+.panel-title { font-family:'Orbitron',monospace; font-size:11px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; }
+.legend { display:flex; gap:12px; flex-wrap:wrap; }
+.pause-btn { font-family:'Orbitron',monospace; font-size:8px; letter-spacing:1.5px; font-weight:700; padding:4px 10px; border-radius:6px; cursor:pointer; border:1px solid var(--border2); background:var(--bg); color:var(--muted); transition:all 0.2s; display:flex; align-items:center; gap:5px; flex-shrink:0; }
+.pause-btn:hover { border-color:var(--l-color); color:var(--l-color); background:#eef4ff; }
+.pause-btn.paused { background:#fff8ee; border-color:var(--v-color); color:var(--v-color); }
+.scrub-row { display:flex; flex-direction:column; gap:4px; margin-top:8px; flex-shrink:0; visibility:hidden; }
+.scrub-row.visible { visibility:visible; }
+.scrub-slider { -webkit-appearance:none; width:100%; height:4px; border-radius:2px; outline:none; cursor:pointer; background:linear-gradient(to right, var(--v-color) var(--pct,0%), var(--border) var(--pct,0%)); }
+.scrub-slider::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--v-color); border:2px solid white; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+.scrub-ticks { display:flex; justify-content:space-between; padding:0 2px; }
+.scrub-tick { display:flex; flex-direction:column; align-items:center; gap:2px; font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); }
+.scrub-tick::before { content:''; display:block; width:1px; height:5px; background:var(--border2); }
+.legend-item { display:flex; align-items:center; gap:5px; font-size:11px; font-family:'DM Mono',monospace; color:var(--text); }
+.legend-line { width:20px; height:3px; border-radius:2px; }
+canvas { display:block; border-radius:8px; }
+.canvas-wrap { position:relative; flex:1; min-height:0; width:100%; overflow:hidden; }
+.canvas-wrap canvas { position:absolute; inset:0; width:100%; height:100%; }
+.phasor-wrap { flex:1; min-height:0; width:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.phasor-wrap canvas { display:block; }
+@media (min-width:1025px) { .sim-wrap .waveform-panel .canvas-wrap { min-height:200px; } .sim-wrap .phasor-panel .phasor-wrap { min-height:220px; } }
+.phase-readout { background:var(--bg); border-radius:10px; padding:10px; text-align:center; border:1px solid var(--border); }
+.phase-readout .big { font-family:'Orbitron',monospace; font-size:clamp(20px,3vw,28px); font-weight:900; display:block; margin:3px 0; }
+.phase-label { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); }
+.info-cards { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:8px; }
+.icard { background:var(--bg); border-radius:8px; padding:9px 10px; border:1px solid var(--border); border-left-width:3px; }
+.icard.r { border-left-color:var(--r-color); }
+.icard.l { border-left-color:var(--l-color); }
+.icard.c { border-left-color:var(--c-color); }
+.icard.z { border-left-color:var(--v-color); }
+.icard-label { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); margin-bottom:3px; }
+.icard-val   { font-family:'Orbitron',monospace; font-size:clamp(11px,1.4vw,14px); font-weight:700; }
+.circuit-badge-series   { background:#eef4ff; color:#1a6dbf; border:1px solid #b8d0f0; font-family:Orbitron,monospace; font-size:10px; letter-spacing:1px; padding:5px 10px; border-radius:6px; text-align:center; margin:3px 0; font-weight:700; }
+.circuit-badge-parallel { background:#fff4ee; color:#d4580a; border:1px solid #f0c8a0; font-family:Orbitron,monospace; font-size:10px; letter-spacing:1px; padding:5px 10px; border-radius:6px; text-align:center; margin:3px 0; font-weight:700; }
+[data-theme="dark"] .circuit-badge-series   { background:#0f1e38; color:var(--l-color); border-color:var(--border2); }
+[data-theme="dark"] .circuit-badge-parallel { background:#2a1200; color:var(--c-color); border-color:var(--border2); }
+.explain-box { margin-top:8px; background:var(--bg); border-radius:8px; padding:9px 12px; font-size:11px; line-height:1.7; border:1px solid var(--border); color:var(--text); }
+@media (max-width:599px) { .icard-val { font-size:15px; } .phase-readout .big { font-size:30px; } .explain-box { font-size:13px; } }
+
+/* Import box (simulator) */
+.import-box { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px; margin-top:4px; }
+.import-row { display:flex; gap:6px; align-items:stretch; margin-top:6px; }
+.import-input { font-family:'DM Mono',monospace; font-size:10px; font-weight:500; flex:1; padding:6px 8px; border-radius:6px; border:1px solid var(--border2); background:var(--surface); color:var(--strong); outline:none; resize:none; min-height:34px; line-height:1.4; }
+.import-input:focus { border-color:#5a9ae0; box-shadow:0 0 0 2px rgba(90,154,224,0.2); }
+.import-btn { font-family:'Orbitron',monospace; font-size:8px; letter-spacing:1px; font-weight:700; padding:0 10px; border-radius:6px; flex-shrink:0; border:none; background:transparent; color:var(--l-color); cursor:pointer; transition:all 0.2s; display:flex; align-items:center; }
+.import-btn:hover { background:var(--l-color); color:#fff; }
+[data-theme="dark"] .import-btn { color:var(--l-color); background:var(--bg); }
+[data-theme="dark"] .import-btn:hover { background:var(--l-color); color:#fff; }
+.import-status { font-family:'DM Mono',monospace; font-size:10px; margin-top:5px; min-height:16px; color:var(--muted); }
+.import-status.ok  { color:var(--i-color); }
+.import-status.err { color:var(--r-color); }
+
+/* Send-to-Simulator button (practice tool) */
+.send-sim-btn { width:100%; padding:10px; font-family:'Orbitron',monospace; font-size:9px; letter-spacing:1.5px; font-weight:700; border:2px solid var(--c-color); border-radius:10px; background:linear-gradient(135deg,#fdf0e8,#fad5b8); color:#a8420a; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:7px; box-shadow:0 2px 8px rgba(212,88,10,0.15); }
+.send-sim-btn:hover { background:linear-gradient(135deg,var(--c-color),#f07030); color:white; box-shadow:0 4px 14px rgba(212,88,10,0.28); }
+.send-sim-btn:disabled { opacity:0.35; cursor:not-allowed; border-color:var(--border); background:var(--bg); color:var(--muted); box-shadow:none; }
+
+/* ══════════════════════════════════════════
+   ── PRACTICE TOOL CSS ──
+══════════════════════════════════════════ */
+/* ── Practice title bar (matches sim title-bar) ── */
+/* ══════════════════════════════════════════
+   PRACTICE CONTROL STRIP
+   A horizontal row of labelled vertical groups.
+   Each group has a category label + large touch-friendly buttons.
+   Groups never reflow into each other — each is an independent unit.
+   Touch target minimum: 44px height (Apple HIG / Material Design).
+══════════════════════════════════════════ */
+
+.prac-title-bar {
+  padding:10px var(--pad) 0;
+  max-width:1300px; margin:0 auto;
+  background:var(--bg);
+}
+
+/* Logo row — sits above the control strip */
+.prac-logo-row {
+  display:flex; align-items:baseline; gap:10px;
+  margin-bottom:8px;
+}
+.prac-logo {
+  font-family:'Orbitron',monospace; font-size:clamp(13px,2vw,18px);
+  font-weight:900; letter-spacing:2px; white-space:nowrap;
+  background:linear-gradient(90deg,var(--i-color),var(--l-color),var(--p-color));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+
+/* Control strip — horizontal row of groups */
+.prac-control-strip {
+  display:flex; align-items:flex-start; gap:8px;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+}
+
+/* Each group is a labelled vertical card */
+.ctrl-group {
+  display:flex; flex-direction:column; gap:4px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; padding:6px 8px 8px;
+  flex:1; min-width:0;
+  justify-content:flex-start;
+}
+.ctrl-group-label {
+  font-family:'Orbitron',monospace; font-size:8px; font-weight:700;
+  letter-spacing:2px; color:var(--muted); text-transform:uppercase;
+  text-align:center; white-space:nowrap;
+}
+.ctrl-group-btns {
+  display:flex; gap:4px; align-items:center; width:100%;
+}
+.ctrl-group-btns.vertical {
+  flex-direction:column;
+}
+/* All toggles inside ctrl-group-btns span full group width */
+.ctrl-group-btns .cs-toggle,
+.ctrl-group-btns.vertical .cs-toggle {
+  width:100%;
+}
+/* Generate button inside its cs-toggle wrapper */
+.ctrl-group-btns.vertical .cs-toggle .cs-btn-generate {
+  border:none;
+  background:linear-gradient(135deg,#f0ebfa,#ddd0f5);
+  color:#5a2fa0;
+  width:100%;
+}
+.ctrl-group-btns.vertical .cs-toggle .cs-btn-generate:hover {
+  background:linear-gradient(135deg,var(--z-color),#9b5ee0); color:#fff;
+}
+[data-theme="dark"] .ctrl-group-btns.vertical .cs-toggle .cs-btn-generate {
+  background:linear-gradient(135deg,#150e24,#1f1238); color:#b080f0; border-color:var(--z-color);
+}
+[data-theme="dark"] .ctrl-group-btns.vertical .cs-toggle .cs-btn-generate:hover {
+  background:linear-gradient(135deg,var(--z-color),#9b5ee0); color:#fff;
+}
+/* Simulator button — wide top row */
+.ctrl-group-btns.vertical .cs-toggle .cs-btn-sim {
+  border:none; width:100%; color:var(--p-color);
+}
+.ctrl-group-btns.vertical .cs-toggle .cs-btn-sim:hover:not(:disabled) {
+  background:var(--p-color); color:#fff;
+}
+.ctrl-group-btns.vertical .cs-toggle .cs-btn-sim:disabled { opacity:0.38; cursor:not-allowed; }
+/* Solve button inside bottom split */
+.ctrl-group-btns.vertical .cs-toggle .cs-btn-solve {
+  border:none; border-right:1px solid var(--border);
+  background:linear-gradient(135deg,#eef4ff,#d8e8ff); color:#1a4a9f;
+}
+.ctrl-group-btns.vertical .cs-toggle .cs-btn-solve:hover:not(:disabled) {
+  background:linear-gradient(135deg,var(--l-color),#2a8de0); color:#fff;
+}
+[data-theme="dark"] .ctrl-group-btns.vertical .cs-toggle .cs-btn-solve {
+  background:linear-gradient(135deg,#0f1e38,#142d56); color:#7ab8f0; border-color:var(--l-color);
+}
+[data-theme="dark"] .ctrl-group-btns.vertical .cs-toggle .cs-btn-solve:hover:not(:disabled) {
+  background:linear-gradient(135deg,var(--l-color),#2a8de0); color:#fff;
+}
+[data-theme="dark"] .ctrl-group-btns.vertical .cs-toggle .cs-btn-solve:disabled {
+  background:var(--bg); color:var(--muted);
+}
+.ctrl-group-btns.vertical .cs-toggle .cs-btn-solve:disabled { opacity:0.38; cursor:not-allowed; background:var(--bg); color:var(--muted); }
+/* Clear button inside bottom split */
+.ctrl-group-btns.vertical .cs-toggle .cs-btn-clear {
+  border:none;
+}
+.ctrl-group-btns.vertical .cs-toggle .cs-btn-clear:hover {
+  background:#fff0f0; color:var(--r-color);
+}
+
+/* Base control strip button — 44px minimum touch target */
+.cs-btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:5px;
+  font-family:'Orbitron',monospace; font-size:11px; font-weight:700;
+  letter-spacing:0.5px; white-space:nowrap;
+  min-height:44px; padding:0 8px; border-radius:8px; cursor:pointer;
+  transition:background 0.15s, color 0.15s, border-color 0.15s;
+  border:1.5px solid var(--border2);
+  background:var(--bg); color:var(--muted);
+  flex:1;
+}
+.cs-btn:hover:not(:disabled) { background:var(--surface); color:var(--text); border-color:var(--border2); }
+.cs-btn:disabled { opacity:0.38; cursor:not-allowed; }
+
+/* Toggle button — selected state */
+.cs-btn.cs-active {
+  background:var(--surface); color:var(--text);
+  border-color:var(--border2);
+  box-shadow:inset 0 0 0 2px var(--border2);
+}
+
+/* Themed variants */
+.cs-btn-generate {
+  border-color:var(--z-color); background:linear-gradient(135deg,#f0ebfa,#ddd0f5);
+  color:#5a2fa0; font-size:12px; min-width:120px;
+}
+.cs-btn-generate:hover { background:linear-gradient(135deg,var(--z-color),#9b5ee0); color:#fff; }
+
+.cs-btn-solve {
+  border-color:var(--l-color); background:linear-gradient(135deg,#eef4ff,#d8e8ff);
+  color:#1a4a9f;
+}
+.cs-btn-solve:hover:not(:disabled) { background:linear-gradient(135deg,var(--l-color),#2a8de0); color:#fff; }
+.cs-btn-solve:disabled { background:var(--bg); border-color:var(--border); color:var(--muted); opacity:0.38; }
+
+.cs-btn-sim { border-color:var(--p-color); color:var(--p-color); }
+.cs-btn-sim:hover:not(:disabled) { background:var(--p-color); color:#fff; }
+.cs-btn-sim:disabled { opacity:0.38; cursor:not-allowed; }
+
+.cs-btn-clear { border-color:var(--border2); color:var(--muted); }
+.cs-btn-clear:hover { border-color:var(--r-color); color:var(--r-color); background:#fff5f5; }
+
+/* Circuit/mode toggle — inline paired style */
+.cs-toggle {
+  display:flex; border-radius:8px; overflow:hidden;
+  border:1.5px solid var(--border2); gap:0;
+}
+.cs-toggle .cs-btn {
+  border-radius:0; border:none; box-shadow:none;
+  border-right:1px solid var(--border);
+  min-height:40px; padding:0 6px; font-size:10.5px;
+}
+.cs-toggle .cs-btn:last-child { border-right:none; }
+.cs-toggle .cs-btn.cs-active {
+  background:var(--surface); color:var(--text);
+  box-shadow:none; border-color:transparent;
+}
+
+/* Active highlights for circuit type and mode */
+#prac-opt-series.active,  #prac-opt-parallel.active  { background:var(--l-color);  color:#fff; }
+#ctRLC.ct-active { background:var(--p-color); color:#fff; }
+#ctRL.ct-active  { background:var(--p-color); color:#fff; }
+#ctRC.ct-active  { background:var(--p-color); color:#fff; }
+#selAny.sel-active { background:var(--z-color); color:#fff; }
+#sel1.sel-active   { background:var(--z-color); color:#fff; }
+#sel2.sel-active   { background:var(--z-color); color:#fff; }
+#sel3.sel-active   { background:var(--z-color); color:#fff; }
+
+/* Status strip — below the control strip */
+.prac-status-strip {
+  padding:6px 0 0; max-width:1300px; margin:0 auto;
+}
+.status-pill {
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:'DM Mono',monospace; font-size:11px; line-height:1.4;
+  padding:5px 10px; border-radius:8px; border:1px solid var(--border);
+  background:var(--bg); max-width:100%;
+}
+.status-pill.need-more { background:#fff8ee; border-color:#f0c870; color:#7a5000; }
+.status-pill.conflict  { background:#fff0f0; border-color:#f0b0b0; color:#8a1a1a; }
+.status-pill.ready     { background:#e8faf3; border-color:#0a8f5c; color:#0a5c3a; }
+
+/* Narrow screens: allow groups to wrap but each group stays intact */
+@media (max-width:700px) {
+  .prac-title-bar { padding:8px 12px 0; }
+  .ctrl-group { padding:5px 6px; }
+  .cs-btn { min-height:42px; padding:0 12px; font-size:10.5px; }
+  .cs-toggle .cs-btn { min-height:38px; padding:0 10px; }
+}
+@media (max-width:480px) {
+  .prac-control-strip { gap:6px; }
+  .cs-btn { font-size:10px; padding:0 10px; }
+  .cs-btn-generate { min-width:90px; font-size:10px; }
+}
+
+/* Legacy references (kept for JS compatibility) */
+.prac-toolbar-left, .prac-toolbar-right { display:contents; }
+.tb-btn { display:none; } /* superseded by cs-btn */
+.complexity-badge { display:none !important; } /* removed per design decision */
+
+/* ── Practice input grid — 4 panels horizontal ── */
+.prac-input-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap:var(--gap);
+  padding:var(--gap) var(--pad) 0;
+  max-width:1300px; margin:0 auto;
+  scroll-margin-top:calc(var(--nav-h) + 52px + 40px);
+}
+@media (max-width:900px)  { .prac-input-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:500px)  { .prac-input-grid { grid-template-columns:1fr; } }
+
+.prac-cat-panel {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:14px 12px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);
+  display:flex; flex-direction:column; gap:5px;
+}
+.prac-cat-panel.r-cat { border-top:3px solid var(--r-color); }
+.prac-cat-panel.l-cat { border-top:3px solid var(--l-color); }
+.prac-cat-panel.c-cat { border-top:3px solid var(--c-color); }
+
+.prac-cat-title {
+  font-family:'Orbitron',monospace; font-size:10px; letter-spacing:2px;
+  text-transform:uppercase; padding-bottom:6px;
+  border-bottom:1px solid var(--border); margin-bottom:2px;
+}
+
+/* ── Compact given-row for horizontal layout ── */
+.prac-cat-panel .given-row {
+  padding:5px 7px; gap:5px;
+}
+.prac-cat-panel .given-label { font-size:13px; }
+.prac-cat-panel .given-icon  { width:30px; font-size:12px; }
+.prac-cat-panel .given-input { width:72px; font-size:15px; }
+.prac-cat-panel .given-unit  { width:28px; font-size:12px; }
+
+/* ── Results below the input grid ── */
+.prac-results-wrap { display:contents; }
+.prac-wrap .panel-title { font-family:'Orbitron',monospace; font-size:11px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; padding-bottom:8px; border-bottom:1px solid var(--border); margin-bottom:2px; }
+.prac-wrap .section-label { font-family:'Orbitron',monospace; font-size:9px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin:7px 0 3px; padding-bottom:4px; border-bottom:1px solid var(--border); }
+.prac-wrap .section-label.r-sect { color:var(--r-color); border-color:rgba(192,57,43,0.3); }
+.prac-wrap .section-label.l-sect { color:var(--l-color); border-color:rgba(26,109,191,0.3); }
+.prac-wrap .section-label.c-sect { color:var(--c-color); border-color:rgba(212,88,10,0.3); }
+.prac-wrap .mode-toggle { display:flex; gap:4px; background:var(--bg); border-radius:8px; padding:3px; border:1px solid var(--border); }
+.prac-wrap .mode-btn { flex:1; padding:7px; font-family:'Orbitron',monospace; font-size:8px; letter-spacing:1px; border:none; background:transparent; color:var(--muted); border-radius:5px; cursor:pointer; transition:all 0.2s; }
+.prac-wrap .mode-btn.active { background:var(--surface); color:var(--strong); border:1px solid var(--border2); box-shadow:0 1px 4px rgba(0,0,0,0.1); }
+.given-row { display:flex; align-items:center; gap:6px; padding:5px 7px; border-radius:8px; border:1px solid var(--border); background:var(--bg); transition:border-color 0.2s,background 0.2s; }
+.given-row.active    { border-color:var(--border2); background:var(--surface); }
+.given-row.has-value { border-color:var(--border2); }
+.given-icon  { font-family:'Orbitron',monospace; font-size:10px; font-weight:700; width:30px; text-align:center; flex-shrink:0; line-height:1.3; }
+.given-label { font-family:'DM Mono',monospace; font-size:10.5px; color:var(--muted); flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.given-input { font-family:'DM Mono',monospace; font-size:15px; font-weight:600; width:80px; padding:6px 7px; min-height:40px; border-radius:6px; border:1px solid var(--border2); background:var(--bg); color:var(--strong); text-align:right; outline:none; -moz-appearance:textfield; transition:border-color 0.15s,box-shadow 0.15s; }
+.given-input::-webkit-inner-spin-button, .given-input::-webkit-outer-spin-button { -webkit-appearance:none; }
+.given-input:focus { border-color:#5a9ae0; box-shadow:0 0 0 2px rgba(90,154,224,0.2); }
+.given-unit  { font-family:'DM Mono',monospace; font-size:9.5px; color:var(--muted); width:28px; text-align:left; flex-shrink:0; }
+.clear-btn   { width:16px; height:16px; border-radius:50%; border:1px solid var(--border2); background:transparent; cursor:pointer; color:var(--muted); font-size:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; opacity:0; transition:opacity 0.15s,background 0.15s; }
+.given-row.has-value .clear-btn { opacity:1; }
+.clear-btn:hover { background:var(--r-color); color:white; border-color:var(--r-color); }
+.status-box { border-radius:10px; padding:10px 12px; font-family:'DM Mono',monospace; font-size:12px; line-height:1.6; border:1px solid var(--border); background:var(--bg); margin-top:4px; word-break:break-word; }
+.status-box.need-more { background:#fff8ee; border-color:#f0c870; color:#7a5000; }
+.status-box.conflict  { background:#fff0f0; border-color:#f0b0b0; color:#8a1a1a; }
+.status-box.ready     { background:#e8faf3; border-color:#0a8f5c; color:#0a5c3a; }
+.status-icon { font-size:13px; margin-right:4px; }
+.solve-btn { width:100%; padding:11px; font-family:'Orbitron',monospace; font-size:9px; letter-spacing:1.5px; font-weight:700; border:2px solid var(--l-color); border-radius:10px; background:linear-gradient(135deg,#eef4ff,#d8e8ff); color:#1a4a9f; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:7px; box-shadow:0 2px 8px rgba(26,109,191,0.15); }
+.solve-btn:hover:not(:disabled) { background:linear-gradient(135deg,var(--l-color),#2a8de0); color:white; box-shadow:0 4px 14px rgba(26,109,191,0.3); }
+.solve-btn:disabled { opacity:0.45; cursor:not-allowed; border-color:var(--border); background:var(--bg); color:var(--muted); box-shadow:none; }
+.clear-all-btn { width:100%; padding:7px; font-family:'Orbitron',monospace; font-size:8px; letter-spacing:1.5px; font-weight:700; border:1px solid var(--border2); border-radius:8px; background:transparent; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+.clear-all-btn:hover { border-color:var(--r-color); color:var(--r-color); background:#fff5f5; }
+.results-panel { display:block; width:100%; }
+.result-section { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+.result-section.r-section { border-top:3px solid var(--r-color); }
+.result-section.l-section { border-top:3px solid var(--l-color); }
+.result-section.c-section { border-top:3px solid var(--c-color); }
+.rcard { background:var(--bg); border-radius:10px; padding:10px 11px; border:1px solid var(--border); border-left-width:3px; display:flex; flex-direction:column; gap:3px; transition:transform 0.15s,box-shadow 0.15s; }
+.rcard.highlight  { box-shadow:0 2px 10px rgba(0,0,0,0.1); transform:translateY(-1px); }
+.rcard.given-card { opacity:0.55; }
+.rcard-label { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:0.5px; text-transform:uppercase; }
+.rcard-val   { font-family:'Orbitron',monospace; font-size:clamp(12px,1.5vw,15px); font-weight:700; }
+.rcard-badge { font-family:'Orbitron',monospace; font-size:9px; letter-spacing:1px; padding:2px 5px; border-radius:3px; align-self:flex-start; margin-top:2px; }
+.badge-given  { background:#f0f4f8; color:var(--muted); border:1px solid var(--border); }
+.badge-solved { background:#e8faf3; color:#0a7a50; border:1px solid #b0e8d0; }
+.steps-box { background:var(--bg); border-radius:10px; padding:11px 13px; border:1px solid var(--border); margin-top:6px; display:flex; flex-direction:column; gap:5px; }
+.step { display:flex; gap:10px; align-items:flex-start; font-family:'DM Mono',monospace; font-size:12px; line-height:1.6; padding:4px 0; border-bottom:1px solid var(--border); }
+.step:last-child { border-bottom:none; }
+.step-num  { font-family:'Orbitron',monospace; font-size:10px; font-weight:700; color:var(--l-color); background:#eef4ff; border:1px solid #c0d8f8; border-radius:4px; padding:2px 0; width:28px; text-align:center; flex-shrink:0; margin-top:1px; display:inline-block; }
+.step-text { color:var(--text); flex:1; }
+.step-text em { font-style:normal; color:var(--l-color); font-weight:600; }
+.phase-big  { font-family:'Orbitron',monospace; font-size:clamp(20px,3vw,26px); font-weight:900; }
+.phase-desc { font-family:'DM Mono',monospace; font-size:12px; color:var(--muted); line-height:1.5; }
+.empty-state { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:24px 16px; box-shadow:0 2px 12px rgba(0,0,0,0.07); text-align:center; color:var(--muted); display:flex; flex-direction:column; align-items:center; gap:8px; }
+.empty-icon  { font-size:28px; opacity:0.4; }
+.empty-title { font-family:'Orbitron',monospace; font-size:11px; letter-spacing:2px; color:var(--muted); }
+.empty-desc  { font-family:'DM Mono',monospace; font-size:11px; line-height:1.6; max-width:220px; }
+
+@media (max-width:480px) {
+  .given-row { gap:4px; padding:5px 6px; }
+  .given-icon { width:24px; font-size:9.5px; }
+  .given-label { font-size:9.5px; min-width:0; }
+  .given-input { width:68px; font-size:14px; padding:5px 5px; }
+  .given-unit { width:22px; font-size:9px; }
+  .clear-btn { width:14px; height:14px; font-size:8px; }
+  .rcard { padding:8px 9px; }
+  .rcard-val { font-size:13px; }
+  .solve-btn { font-size:8px; padding:10px; }
+}
+
+/* ══ EXPORT ══ */
+.export-section { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+.export-code-wrap { display:flex; gap:6px; margin-top:8px; align-items:stretch; }
+.export-code { font-family:'DM Mono',monospace; font-size:12px; font-weight:600; flex:1; padding:8px 10px; border-radius:8px; border:1px solid var(--border2); background:var(--bg); color:var(--strong); word-break:break-all; line-height:1.5; cursor:text; resize:none; outline:none; min-height:38px; }
+.export-copy-btn { font-family:'Orbitron',monospace; font-size:8px; letter-spacing:1px; font-weight:700; padding:0 12px; border-radius:8px; flex-shrink:0; border:2px solid var(--l-color); background:linear-gradient(135deg,#eef4ff,#d8e8ff); color:#1a4a9f; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:5px; }
+.export-copy-btn:hover { background:linear-gradient(135deg,var(--l-color),#2a8de0); color:white; }
+.export-copy-btn.copied { background:linear-gradient(135deg,var(--i-color),#0abf7a); color:white; border-color:var(--i-color); }
+.export-note { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); margin-top:6px; line-height:1.5; }
+
+/* ── Practice mode sliding toggle ── */
+/* Practice mode toggle — identical style to simulator */
+
+/* Toggle embedded in Total Circuit panel title */
+.prac-cat-title--with-toggle {
+  display:flex; align-items:center; justify-content:space-between; gap:6px;
+}
+.prac-mode-toggle--compact {
+  padding:2px;
+  gap:2px;
+}
+.prac-mode-toggle--compact .prac-mode-opt {
+  padding:0 10px;
+  font-size:11px;
+  letter-spacing:0.5px;
+  height:28px; display:flex; align-items:center;
+}
+.prac-mode-toggle {
+  display:flex; gap:2px;
+  background:var(--bg); border-radius:8px; padding:3px;
+  border:1.5px solid var(--border); height:36px; align-items:center;
+}
+.prac-mode-opt {
+  flex:1; padding:7px;
+  font-family:'Orbitron',monospace; font-size:10px; letter-spacing:1px;
+  border:none; background:transparent; color:var(--muted);
+  border-radius:5px; cursor:pointer; transition:all 0.2s;
+  text-align:center; white-space:nowrap;
+}
+.prac-mode-opt.active {
+  background:white; color:var(--strong);
+  border:1px solid var(--border2); box-shadow:0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* ── Results: 4-column grid matching input panels ── */
+.empty-state-wrap {
+  display:flex; justify-content:center;
+  padding:var(--gap) var(--pad) 0;
+  max-width:1300px; margin:0 auto;
+}
+.prac-results-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:var(--gap);
+  padding:var(--gap) var(--pad) 0;
+  max-width:1300px; margin:0 auto;
+}
+@media (max-width:900px) {
+
+.prac-results-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:500px) {
+
+.prac-results-grid { grid-template-columns:1fr; } }
+
+.prac-res-col {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:14px 12px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);
+  display:flex; flex-direction:column; gap:5px;
+}
+.prac-res-col.r-cat { border-top:3px solid var(--r-color); }
+.prac-res-col.l-cat { border-top:3px solid var(--l-color); }
+.prac-res-col.c-cat { border-top:3px solid var(--c-color); }
+
+/* Result card: full-width row within its column */
+.rcard {
+  display:flex; align-items:center; gap:6px;
+  padding:5px 7px; border-radius:8px;
+  border:1px solid var(--border); background:var(--bg);
+  border-left-width:3px;
+}
+.rcard.highlight  { background:var(--surface); border-color:var(--border2); }
+.rcard.given-card { opacity:0.55; }
+.rcard-label { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); flex:1; }
+.rcard-val   { font-family:'Orbitron',monospace; font-size:13px; font-weight:700; white-space:nowrap; }
+.rcard-badge { font-family:'Orbitron',monospace; font-size:9px; letter-spacing:1px;
+               padding:2px 5px; border-radius:3px; flex-shrink:0; }
+.badge-given  { background:#f0f4f8; color:var(--muted); border:1px solid var(--border); }
+.badge-solved { background:#e8faf3; color:#0a7a50; border:1px solid #b0e8d0; }
+
+/* Phase badge + steps/export span full width below the columns */
+
+@media (max-width:700px) {
+
+}
+.prac-results-footer {
+  margin-top:0;
+  padding:var(--gap) var(--pad) var(--pad);
+  max-width:1300px; margin:0 auto;
+  display:grid;
+  grid-template-columns: 1fr 340px;
+  grid-template-rows: auto;
+  gap:var(--gap);
+  align-items:start;
+}
+/* Steps spans full height of the grid row */
+.prac-footer-steps { grid-column:1; grid-row:1; }
+/* Export and import stack in the right column */
+/* Pre-solve row: awaiting input left, import box right */
+.prac-presolve-row {
+  padding:var(--gap) var(--pad) var(--pad);
+  max-width:1300px; margin:0 auto;
+  display:flex;
+  justify-content:center;
+}
+/* Mobile/narrow: stack vertically */
+@media (max-width:700px) {
+  .prac-presolve-row { grid-template-columns:1fr; }
+  .prac-results-footer { grid-template-columns:1fr; }
+  .prac-footer-steps { grid-column:1; grid-row:1; }
+}
+
+/* ── Practice import box ── */
+.prac-import-box {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:16px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.prac-import-row { display:flex; gap:6px; align-items:stretch; margin-top:6px; }
+.prac-import-input {
+  font-family:'DM Mono',monospace; font-size:12px; font-weight:500;
+  flex:1; padding:6px 8px; border-radius:6px;
+  border:1px solid var(--border2); background:var(--bg);
+  color:var(--strong); outline:none; resize:none; min-height:34px; line-height:1.4;
+}
+.prac-import-input:focus { border-color:#5a9ae0; box-shadow:0 0 0 2px rgba(90,154,224,0.2); }
+.prac-import-btn {
+  font-family:'Orbitron',monospace; font-size:8px; letter-spacing:1px; font-weight:700;
+  padding:0 12px; border-radius:6px; flex-shrink:0;
+  border:2px solid var(--i-color);
+  background:linear-gradient(135deg,#e8faf3,#cef5e2); color:#0a7a50;
+  cursor:pointer; transition:all 0.2s; display:flex; align-items:center;
+}
+.prac-import-btn:hover { background:linear-gradient(135deg,var(--i-color),#08c77e); color:white; }
+.prac-import-status { font-family:'DM Mono',monospace; font-size:11px; margin-top:5px; min-height:16px; color:var(--muted); }
+.prac-import-status.ok  { color:var(--i-color); }
+.prac-import-status.err { color:var(--r-color); }
+
+/* ── Problem generator buttons ── */
+.gen-btn {
+  width:auto; padding:5px 10px; white-space:nowrap; font-size:11px; flex-shrink:0;
+  font-family:'Orbitron',monospace; font-weight:700; letter-spacing:1px;
+  border-radius:10px; cursor:pointer; transition:all 0.2s;
+  border:2px solid var(--z-color);
+  background:linear-gradient(135deg,#f0ebfa,#ddd0f5); color:#5a2fa0;
+  box-shadow:0 2px 8px rgba(123,63,196,0.15);
+  display:flex; align-items:center; gap:5px;
+}
+.gen-btn:hover { background:linear-gradient(135deg,var(--z-color),#9b5ee0); color:white; }
+/* Complexity badge shown in pre-solve row after generation */
+/* Complexity selector — segmented control */
+/* Circuit type selector (RL/RC vs RLC) */
+.circuit-type-selector {
+  display:inline-flex; align-items:center; gap:0;
+  background:var(--bg); border:1.5px solid var(--border);
+  border-radius:8px; overflow:hidden; flex-shrink:0; height:36px;
+}
+.circuit-type-selector button {
+  font-family:'Orbitron',monospace; font-size:11px; font-weight:700;
+  letter-spacing:0.5px; padding:0 11px; height:36px; border:none; background:transparent;
+  color:var(--muted); cursor:pointer; transition:all 0.15s;
+  border-right:1px solid var(--border); white-space:nowrap;
+}
+.circuit-type-selector button:last-child { border-right:none; }
+.circuit-type-selector button:hover { background:var(--surface); color:var(--text); }
+.circuit-type-selector button.ct-active { background:var(--p-color); color:#fff; }
+/* Hide inductor or capacitor panels in RL/RC mode */
+.prac-input-grid.hide-C .c-cat,
+.prac-results-wrap .l-res-col.hidden,
+.prac-results-wrap .c-res-col.hidden { display:none !important; }
+.prac-input-grid.hide-L .l-cat { display:none !important; }
+/* Logo updates for circuit type */
+.complexity-selector {
+  display:inline-flex; align-items:center; gap:0;
+  background:var(--bg); border:1.5px solid var(--border);
+  border-radius:8px; overflow:hidden; flex-shrink:0; height:36px;
+}
+.complexity-selector button {
+  font-family:'Orbitron',monospace; font-size:11px; font-weight:700;
+  letter-spacing:0.5px; padding:0 11px; height:36px; border:none; background:transparent;
+  color:var(--muted); cursor:pointer; transition:all 0.15s;
+  border-right:1px solid var(--border); white-space:nowrap;
+}
+.complexity-selector button:last-child { border-right:none; }
+.complexity-selector button:hover { background:var(--surface); color:var(--text); }
+.complexity-selector button.sel-active {
+  background:var(--z-color); color:#fff;
+}
+
+.complexity-badge {
+  display:inline-flex; align-items:center; gap:4px;
+  font-family:'Orbitron',monospace; font-size:9px; font-weight:700;
+  letter-spacing:1px; color:var(--muted); padding:3px 8px;
+  background:var(--bg); border:1px solid var(--border); border-radius:6px;
+}
+.complexity-badge .stars { color:var(--z-color); letter-spacing:2px; }
+
+
+
+/* Import/Export ctrl-group */
+/* IO group — vertical stack, textarea fixed to same height as button */
+.ctrl-group-io { flex:1; min-width:160px; max-width:320px; }
+.io-textarea {
+  font-family:'DM Mono',monospace; font-size:11px; font-weight:600;
+  width:100%; box-sizing:border-box; padding:0 8px;
+  height:44px; /* matches cs-btn min-height */
+  border-radius:8px; border:1.5px solid var(--border2);
+  background:var(--bg); color:var(--strong);
+  resize:none; outline:none; overflow:hidden;
+  white-space:nowrap; word-break:break-all;
+  line-height:44px; /* vertically centres single-line text */
+  transition:border-color 0.15s, box-shadow 0.15s;
+}
+.io-textarea:focus { border-color:#5a9ae0; box-shadow:0 0 0 2px rgba(90,154,224,0.18); }
+.io-load-btn, .io-copy-btn { border:none; width:100%; }
+.io-load-btn { color:var(--l-color); }
+.io-load-btn:hover { background:var(--l-color); color:#fff; }
+.io-copy-btn { color:var(--l-color); }
+.io-copy-btn:hover { background:var(--l-color); color:#fff; }
+.io-copy-btn.copied { background:var(--i-color); color:#fff; }
+[data-theme="dark"] .io-load-btn,
+[data-theme="dark"] .io-copy-btn { color:var(--l-color); background:var(--bg); }
+[data-theme="dark"] .io-load-btn:hover,
+[data-theme="dark"] .io-copy-btn:hover { background:var(--l-color); color:#fff; }
+/* ── Toolbar responsive behaviour ──────────────────────────────── */
+
+/* 900–1300px: hide logo text, keep all controls */
+@media (max-width:1000px) {
+  .prac-logo { display:none; }
+  .prac-title-bar { padding:0 14px; gap:5px; }
+  .tb-btn { padding:0 10px; font-size:10px; }
+}
+
+/* 600–899px: compress further — hide circuit type labels, shrink gaps */
+@media (max-width:760px) {
+  .prac-toolbar-left { gap:5px; }
+  .prac-toolbar-right { gap:4px; }
+  .tb-btn { padding:0 9px; font-size:10px; }
+  .complexity-selector button,
+  .circuit-type-selector button { padding:0 8px; font-size:10px; }
+  /* Hide ↗ SIM label, keep icon only */
+  .tb-btn-sim .sim-label { display:none; }
+}
+
+/* <600px: two-row layout — state row + action row */
+@media (max-width:599px) {
+  .prac-title-bar {
+    height:auto;
+    flex-direction:column;
+    align-items:stretch;
+    padding:8px 12px;
+    gap:8px;
+  }
+  .prac-toolbar-left {
+    flex:none; width:100%;
+    justify-content:flex-start;
+  }
+  .prac-toolbar-right {
+    width:100%;
+    justify-content:flex-end;
+    flex-wrap:nowrap;
+  }
+  .prac-logo { display:block; }
+  .tb-btn { height:34px; font-size:10px; padding:0 10px; }
+  .complexity-selector,
+  .circuit-type-selector,
+  .prac-mode-toggle { height:34px; }
+  .complexity-selector button,
+  .circuit-type-selector button { height:34px; font-size:10px; padding:0 9px; }
+  .prac-mode-toggle--compact .prac-mode-opt { height:26px; font-size:10px; }
+}
+
+/* ── Confirmation modal ── */
+.gen-confirm-modal {
+  display:none; position:fixed; inset:0; z-index:9998;
+  background:rgba(0,0,0,0.45); align-items:center; justify-content:center; padding:24px;
+}
+.gen-confirm-modal.open { display:flex; }
+.gen-confirm-box {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; max-width:360px; width:100%;
+  box-shadow:0 8px 40px rgba(0,0,0,0.2); overflow:hidden;
+}
+.gen-confirm-header {
+  background:var(--l-color); padding:12px 16px;
+  font-family:'Orbitron',monospace; font-size:10px; font-weight:700;
+  letter-spacing:2px; color:white;
+}
+.gen-confirm-body {
+  padding:16px 20px; font-family:'DM Mono',monospace;
+  font-size:11px; line-height:1.7; color:var(--text);
+}
+.gen-confirm-btns {
+  padding:0 20px 16px; display:flex; gap:8px; justify-content:flex-end;
+}
+.gen-confirm-ok {
+  font-family:'Orbitron',monospace; font-size:9px; font-weight:700;
+  letter-spacing:1px; padding:7px 14px; border-radius:8px;
+  border:2px solid var(--l-color);
+  background:linear-gradient(135deg,var(--l-color),#2980d9); color:white;
+  cursor:pointer; transition:all 0.2s;
+}
+.gen-confirm-ok:hover { opacity:0.88; }
+.gen-confirm-cancel {
+  font-family:'Orbitron',monospace; font-size:9px; font-weight:700;
+  letter-spacing:1px; padding:7px 14px; border-radius:8px;
+  border:2px solid var(--border); background:var(--bg);
+  color:var(--muted); cursor:pointer; transition:all 0.2s;
+}
+.gen-confirm-cancel:hover { border-color:var(--border2); color:var(--text); }
+.sim-copyright {
+  margin-top:auto; padding-top:10px;
+  font-family:'DM Mono',monospace; font-size:9px;
+  color:var(--muted); text-align:center; line-height:1.6;
+  border-top:1px solid var(--border);
+}
+.prac-copyright {
+  padding:8px var(--pad) 0;
+  max-width:1300px; margin:0 auto;
+  font-family:'DM Mono',monospace; font-size:9px;
+  color:var(--muted); text-align:center; line-height:1.6;
+  border-top:1px solid var(--border);
+}
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+.animate-in { animation:fadeIn 0.25s ease forwards; }
+@keyframes solvePulse { 0%{box-shadow:0 2px 8px rgba(26,109,191,0.15)} 40%{box-shadow:0 0 0 10px rgba(26,109,191,0)} 100%{box-shadow:0 2px 8px rgba(26,109,191,0.15)} }
+.solve-btn.firing { animation:solvePulse 0.5s ease forwards; }
+@keyframes sendPulse { 0%{box-shadow:0 2px 8px rgba(212,88,10,0.15)} 40%{box-shadow:0 0 0 10px rgba(212,88,10,0)} 100%{box-shadow:0 2px 8px rgba(212,88,10,0.15)} }
+.send-sim-btn.firing { animation:sendPulse 0.5s ease forwards; }
+</style>
+</head>
+<body>
+
+<!-- ══ TOP NAV ══ -->
+<nav class="app-shell-nav">
+  <div class="app-shell-nav-inner">
+    <div class="app-logo">RLC CIRCUIT LAB</div>
+    <button class="tool-tab active"    id="tab-sim"  onclick="showTool('sim')">⚡ SIMULATOR</button>
+    <button class="tool-tab prac-tab"  id="tab-prac" onclick="showTool('prac')">✎ PRACTICE</button>
+    <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" aria-label="Toggle dark mode">
+      <span id="darkIcon">☾</span>
+      <div class="dark-toggle-track"><div class="dark-toggle-thumb"></div></div>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     SIMULATOR VIEW
+══════════════════════════════════════════ -->
+<div class="tool-view sim-wrap active" id="view-sim">
+
+<header class="app-header">
+  <div class="logo">RLC PHASE SIMULATOR</div>
+  <div class="header-stats desktop-only">
+    <div class="hstat">V<sub>rms</sub> <span id="hVpeak_hdr" style="color:var(--v-color)">—</span></div>
+    <div class="hstat">|Z| <span id="hZ_hdr">—</span></div>
+    <div class="hstat">I<sub>rms</sub> <span id="hI_hdr" style="color:var(--i-color)">—</span></div>
+    <div class="hstat">Phase <span id="hPhi_hdr">—</span></div>
+  </div>
+  <div class="phone-stat-row">
+    <div class="hstat"><span style="font-size:9px;color:var(--muted);display:block">Vrms</span><span id="hVpeak_ph" style="color:var(--v-color);font-size:11px;font-weight:700;font-family:'DM Mono',monospace">—</span></div>
+    <div class="hstat"><span style="font-size:9px;color:var(--muted);display:block">|Z|</span><span id="hZ_ph" style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace">—</span></div>
+    <div class="hstat"><span style="font-size:9px;color:var(--muted);display:block">Irms</span><span id="hI_ph" style="color:var(--i-color);font-size:11px;font-weight:700;font-family:'DM Mono',monospace">—</span></div>
+    <div class="hstat"><span style="font-size:9px;color:var(--muted);display:block">φ</span><span id="hPhi_ph" style="font-size:11px;font-weight:700;font-family:'DM Mono',monospace">—</span></div>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="simShowTab('controls',this)">⚙ CONTROLS</button>
+  <button class="tab-btn"        onclick="simShowTab('waveform',this)">〰 WAVEFORM</button>
+  <button class="tab-btn"        onclick="simShowTab('phasor',this)">↻ PHASOR</button>
+  <button class="tab-btn"        onclick="simShowTab('analysis',this)">≡ ANALYSIS</button>
+</nav>
+
+<div class="layout">
+  <div class="title-bar">
+    <div class="logo">RLC PHASE SIMULATOR</div>
+    <div class="header-stats">
+      <div class="hstat">V<sub>rms</sub> <span id="hVpeak" style="color:var(--v-color)">—</span></div>
+      <div class="hstat">|Z| <span id="hZ">—</span></div>
+      <div class="hstat">I<sub>rms</sub> <span id="hI" style="color:var(--i-color)">—</span></div>
+      <div class="hstat">Phase <span id="hPhi">—</span></div>
+    </div>
+  </div>
+
+  <div class="controls-panel tab-active" id="panel-controls">
+    <div class="section-label">Circuit Type</div>
+    <div class="mode-toggle">
+      <button class="mode-btn active" onclick="simSetMode('series')"   id="sim-btn-series">SERIES</button>
+      <button class="mode-btn"        onclick="simSetMode('parallel')" id="sim-btn-parallel">PARALLEL</button>
+    </div>
+    <div id="circuit-badge" class="circuit-badge"></div>
+    <div class="section-label">Source</div>
+    <div class="ctrl">
+      <div class="ctrl-header-row"><span class="ctrl-name" style="color:var(--v-color)">Frequency (f)</span><div class="ctrl-num-row"><input type="number" class="num-input f-inp" id="numF" min="0" max="400" value="60" step="0.001"><span class="unit-label">Hz</span></div></div>
+      <div class="ctrl-input-row"><input type="range" class="f-slider" id="slF" min="0" max="400" value="60" step="0.001"></div>
+    </div>
+    <div class="ctrl">
+      <div class="ctrl-header-row"><span class="ctrl-name" style="color:var(--v-color)">Voltage V<sub>rms</sub></span><div class="ctrl-num-row"><input type="number" class="num-input v-inp" id="numV" min="0" max="1000" value="120" step="0.001"><span class="unit-label">V</span></div></div>
+      <div class="ctrl-input-row"><input type="range" class="f-slider" id="slV" min="0" max="1000" value="120" step="0.001"></div>
+    </div>
+    <div class="section-label">Components</div>
+    <div class="ctrl">
+      <div class="ctrl-header-row"><span class="ctrl-name" style="color:var(--r-color)">Resistance (R)</span><div class="ctrl-num-row"><input type="number" class="num-input r-inp" id="numR" min="0" max="1000" value="100" step="0.001"><span class="unit-label">Ω</span></div></div>
+      <div class="ctrl-input-row"><input type="range" class="r-slider" id="slR" min="0" max="1000" value="100" step="0.001"></div>
+    </div>
+    <div class="ctrl">
+      <div class="ctrl-header-row"><span class="ctrl-name" style="color:var(--l-color)">Inductance (L)</span><div class="ctrl-num-row"><input type="number" class="num-input l-inp" id="numL" min="0" max="10000" value="100" step="0.001"><span class="unit-label">mH</span></div></div>
+      <div class="ctrl-input-row"><input type="range" class="l-slider" id="slL" min="0" max="10000" value="100" step="0.001"></div>
+    </div>
+    <div class="ctrl">
+      <div class="ctrl-header-row"><span class="ctrl-name" style="color:var(--c-color)">Capacitance (C)</span><div class="ctrl-num-row"><input type="number" class="num-input c-inp" id="numC" min="0" max="200" value="100" step="0.001"><span class="unit-label">μF</span></div></div>
+      <div class="ctrl-input-row"><input type="range" class="c-slider" id="slC" min="0" max="200" value="100" step="0.001"></div>
+    </div>
+    <button class="resonate-btn" id="resonateBtn" onclick="snapToResonance()"><span class="btn-icon">⚡</span> FIND RESONANT FREQUENCY</button>
+    <div class="imp-box">
+      <div class="imp-row"><span class="imp-label">XL (Inductive)</span>   <span id="xLVal"   style="color:var(--l-color)">—</span></div>
+      <div class="imp-row"><span class="imp-label">XC (Capacitive)</span>  <span id="xCVal"   style="color:var(--c-color)">—</span></div>
+      <div class="imp-row"><span class="imp-label">X (Net Reactance)</span><span id="xNetVal">—</span></div>
+      <div class="imp-row"><span class="imp-label">|Z| (Impedance)</span>  <span id="zMagVal">—</span></div>
+    </div>
+    <div id="resonanceAlert" class="resonance-alert"></div>
+
+    <div class="import-box">
+      <div class="section-label" style="margin-top:0">Import from Practice Sheet</div>
+      <div class="import-row">
+        <textarea class="import-input" id="importCode" rows="2" placeholder="Paste export code here…"></textarea>
+        <button class="import-btn" onclick="importFromCode()">⎘ LOAD</button>
+      </div>
+      <div class="import-status" id="importStatus"></div>
+    </div>
+    <div class="sim-copyright">© 2026 Matt Knox · ETI Indianapolis · Educational use only</div>
+  </div><!-- /controls-panel -->
+
+  <div class="stat-grid-row">
+    <div class="hstat">V<sub>rms</sub> <span id="hVpeak_tab" style="color:var(--v-color)">—</span></div>
+    <div class="hstat">|Z| <span id="hZ_tab">—</span></div>
+    <div class="hstat">I<sub>rms</sub> <span id="hI_tab" style="color:var(--i-color)">—</span></div>
+    <div class="hstat">Phase <span id="hPhi_tab">—</span></div>
+  </div>
+
+  <div class="waveform-panel" id="panel-waveform">
+    <div class="panel-title">
+      <span>WAVEFORM DISPLAY</span>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div class="legend">
+          <div class="legend-item"><div class="legend-line" style="background:var(--v-color)"></div>Voltage</div>
+          <div class="legend-item"><div class="legend-line" style="background:var(--i-color)"></div>Current</div>
+          <div class="legend-item"><svg width="20" height="3" style="overflow:visible;display:block"><line x1="0" y1="1.5" x2="20" y2="1.5" stroke="#1a6dbf" stroke-width="2" stroke-dasharray="4,3"/></svg><span id="waveLegL">V<sub>L</sub></span></div>
+          <div class="legend-item"><svg width="20" height="3" style="overflow:visible;display:block"><line x1="0" y1="1.5" x2="20" y2="1.5" stroke="#d4580a" stroke-width="2" stroke-dasharray="4,3"/></svg><span id="waveLegC">V<sub>C</sub></span></div>
+        </div>
+        <button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸ PAUSE</button>
+      </div>
+    </div>
+    <div class="canvas-wrap"><canvas id="waveCanvas"></canvas></div>
+    <div class="scrub-row" id="scrubRow">
+      <input type="range" class="scrub-slider" id="scrubSlider" min="0" max="628" value="0" step="1">
+      <div class="scrub-ticks"><span class="scrub-tick">0°</span><span class="scrub-tick">90°</span><span class="scrub-tick">180°</span><span class="scrub-tick">270°</span><span class="scrub-tick">360°</span></div>
+    </div>
+  </div>
+
+  <div class="bottom-row" id="panel-bottom">
+    <div class="phasor-panel" id="panel-phasor">
+      <div class="panel-title">PHASOR DIAGRAM</div>
+      <div class="phasor-wrap"><canvas id="phasorCanvas"></canvas></div>
+    </div>
+    <div class="info-panel" id="panel-analysis">
+      <div class="panel-title">CIRCUIT ANALYSIS</div>
+      <div class="phase-readout">
+        <span class="phase-label">PHASE ANGLE (φ)</span>
+        <span class="big" id="phaseAngle">0°</span>
+        <span id="phaseDesc" style="font-size:12px;color:var(--muted);display:block">Resistive</span>
+      </div>
+      <div class="info-cards">
+        <div class="icard r"><div class="icard-label" id="labelR">V<sub>R</sub> (in-phase)</div> <div class="icard-val" id="vR" style="color:var(--r-color)">—</div></div>
+        <div class="icard l"><div class="icard-label" id="labelL">V<sub>L</sub> (leads 90°)</div><div class="icard-val" id="vL" style="color:var(--l-color)">—</div></div>
+        <div class="icard c"><div class="icard-label" id="labelC">V<sub>C</sub> (lags 90°)</div> <div class="icard-val" id="vC" style="color:var(--c-color)">—</div></div>
+        <div class="icard z"><div class="icard-label">Power Factor</div>                          <div class="icard-val" id="pf"  style="color:var(--v-color)">—</div></div>
+      </div>
+      <div class="explain-box" id="circuitExplain"></div>
+    </div>
+  </div>
+</div><!-- /layout -->
+</div><!-- /sim-wrap -->
+
+<!-- ══════════════════════════════════════════
+     PRACTICE VIEW
+══════════════════════════════════════════ -->
+<div class="tool-view prac-wrap" id="view-prac">
+
+<!-- Practice control strip -->
+<div class="prac-title-bar">
+
+  <!-- Logo -->
+  <div class="prac-logo-row">
+    <div class="prac-logo" id="pracLogo">RLC PRACTICE SHEET</div>
+  </div>
+
+  <!-- Control strip: horizontal row of labelled vertical groups -->
+  <div class="prac-control-strip">
+
+    <!-- GROUP 1: Circuit configuration -->
+    <div class="ctrl-group">
+      <div class="ctrl-group-label">Circuit</div>
+      <div class="ctrl-group-btns vertical" style="gap:4px">
+        <!-- Series/Parallel -->
+        <div class="cs-toggle" id="prac-mode-toggle">
+          <button class="cs-btn active" id="prac-opt-series"   onclick="pracSetMode('series')">SERIES</button>
+          <button class="cs-btn"        id="prac-opt-parallel" onclick="pracSetMode('parallel')">PARALLEL</button>
+        </div>
+        <!-- Circuit type -->
+        <div class="cs-toggle" id="circuitTypeSelector">
+          <button id="ctRLC" class="cs-btn ct-active" onclick="setCircuitType('RLC')">RLC</button>
+          <button id="ctRL"  class="cs-btn"           onclick="setCircuitType('RL')">RL</button>
+          <button id="ctRC"  class="cs-btn"           onclick="setCircuitType('RC')">RC</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP 2: Generate + Complexity (mirrors Circuit group layout) -->
+    <div class="ctrl-group">
+      <div class="ctrl-group-label">Generate</div>
+      <div class="ctrl-group-btns vertical" style="gap:4px">
+        <!-- Complexity selector — top row, like SERIES/PARALLEL -->
+        <div class="cs-toggle" id="complexitySelector">
+          <button id="selAny" class="cs-btn sel-active" onclick="setComplexity(0)">ANY</button>
+          <button id="sel1"   class="cs-btn"            onclick="setComplexity(1)">1</button>
+          <button id="sel2"   class="cs-btn"            onclick="setComplexity(2)">2</button>
+          <button id="sel3"   class="cs-btn"            onclick="setComplexity(3)">3</button>
+        </div>
+        <!-- Generate button — bottom row, like RLC/RL/RC -->
+        <div class="cs-toggle" style="border-color:var(--z-color)">
+          <button class="cs-btn cs-btn-generate" id="genBtn" onclick="pracGenerate()">&#10022; GENERATE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP 3: Actions -->
+    <div class="ctrl-group">
+      <div class="ctrl-group-label">Actions</div>
+      <div class="ctrl-group-btns vertical" style="gap:4px">
+        <!-- Top: Simulator — wide -->
+        <div class="cs-toggle" style="border-color:var(--p-color)">
+          <button class="cs-btn cs-btn-sim" id="sendSimBtn" onclick="sendToSimulator()" disabled>↗ SIMULATOR</button>
+        </div>
+        <!-- Bottom: Solve + Clear side by side -->
+        <div class="cs-toggle" style="border-color:var(--border2)">
+          <button class="cs-btn cs-btn-solve" id="solveBtn" onclick="pracSolve()" disabled>⚡ SOLVE</button>
+          <button class="cs-btn cs-btn-clear" onclick="pracClearConfirm()">✕ CLEAR</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP 4: Import / Export -->
+    <div class="ctrl-group ctrl-group-io" id="ioGroup">
+      <!-- Import panel - label and content as direct flex children, matching other groups -->
+      <div id="ioImport" style="display:contents">
+        <div class="ctrl-group-label">Import Code</div>
+        <textarea class="io-textarea" id="pracImportCode" rows="1" placeholder="Paste export code here…" spellcheck="false"></textarea>
+        <div class="cs-toggle" style="border-color:var(--l-color)">
+          <button class="cs-btn io-load-btn" onclick="pracLoadCodeFrom('pracImportCode')">&#8680; LOAD</button>
+        </div>
+        <div class="prac-import-status" id="pracImportCodeStatus" style="display:none"></div>
+      </div>
+      <!-- Export panel - shown after solve -->
+      <div id="ioExport" style="display:none">
+        <div class="ctrl-group-label">Export Code</div>
+        <textarea class="io-textarea" id="exportCode" rows="1" readonly spellcheck="false"></textarea>
+        <div class="cs-toggle" style="border-color:var(--l-color)">
+          <button class="cs-btn io-copy-btn" id="exportCopyBtn" onclick="copyExportCode()">&#8680; COPY</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invisible element kept for JS compatibility -->
+    <div id="genComplexityBadge" style="display:none"></div>
+
+  </div><!-- /prac-control-strip -->
+
+</div><!-- /prac-title-bar -->
+
+<!-- Status strip -->
+<div class="prac-status-strip" id="pracStatusStrip" style="display:none">
+  <div class="status-pill conflict" id="statusBox"></div>
+</div>
+
+<!-- Input grid — 4 category panels side by side -->
+<div class="prac-input-grid">
+
+  <!-- TOTAL CIRCUIT -->
+  <div class="prac-cat-panel">
+    <div class="prac-cat-title" style="color:var(--v-color)">Total Circuit</div>
+    <div class="given-row" id="row-E"><span class="given-icon" style="color:var(--v-color)">E</span><span class="given-label">E<sub>rms</sub></span><input type="number" class="given-input" id="inp-E" placeholder="—" min="0" step="any"><span class="given-unit">V</span><button class="clear-btn" onclick="pracClearField('E')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-I"><span class="given-icon" style="color:var(--i-color)">I</span><span class="given-label">I<sub>rms</sub></span><input type="number" class="given-input" id="inp-I" placeholder="—" min="0" step="any"><span class="given-unit">A</span><button class="clear-btn" onclick="pracClearField('I')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-Z"><span class="given-icon" style="color:var(--z-color)">Z</span><span class="given-label">|Z|</span><input type="number" class="given-input" id="inp-Z" placeholder="—" min="0" step="any"><span class="given-unit">Ω</span><button class="clear-btn" onclick="pracClearField('Z')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-S"><span class="given-icon" style="color:var(--z-color)">S</span><span class="given-label">S</span><input type="number" class="given-input" id="inp-S" placeholder="—" min="0" step="any"><span class="given-unit">VA</span><button class="clear-btn" onclick="pracClearField('S')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-f"><span class="given-icon" style="color:var(--v-color)">f</span><span class="given-label">f</span><input type="number" class="given-input" id="inp-f" placeholder="—" min="0" step="any"><span class="given-unit">Hz</span><button class="clear-btn" onclick="pracClearField('f')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-PF"><span class="given-icon" style="color:var(--p-color)">pf</span><span class="given-label">PF</span><input type="number" class="given-input" id="inp-PF" placeholder="—" min="0" max="100" step="any"><span class="given-unit">%</span><button class="clear-btn" onclick="pracClearField('PF')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-phi"><span class="given-icon" style="color:var(--p-color)">φ</span><span class="given-label">φ</span><input type="number" class="given-input" id="inp-phi" placeholder="—" min="-90" max="90" step="any"><span class="given-unit">°</span><button class="clear-btn" onclick="pracClearField('phi')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-f0"><span class="given-icon" style="color:var(--p-color)">f<sub>r</sub></span><span class="given-label">f<sub>r</sub></span><input type="number" class="given-input" id="inp-f0" placeholder="—" min="0" step="any"><span class="given-unit">Hz</span><button class="clear-btn" onclick="pracClearField('f0')" title="Clear">✕</button></div>
+  </div>
+
+  <!-- RESISTOR -->
+  <div class="prac-cat-panel r-cat">
+    <div class="prac-cat-title" style="color:var(--r-color)">Resistor</div>
+    <div class="given-row" id="row-ER"><span class="given-icon" style="color:var(--r-color)">E<sub>R</sub></span><span class="given-label">E<sub>R</sub></span><input type="number" class="given-input" id="inp-ER" placeholder="—" min="0" step="any"><span class="given-unit">V</span><button class="clear-btn" onclick="pracClearField('ER')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-IR"><span class="given-icon" style="color:var(--r-color)">I<sub>R</sub></span><span class="given-label">I<sub>R</sub></span><input type="number" class="given-input" id="inp-IR" placeholder="—" min="0" step="any"><span class="given-unit">A</span><button class="clear-btn" onclick="pracClearField('IR')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-R"><span class="given-icon" style="color:var(--r-color)">R</span><span class="given-label">R</span><input type="number" class="given-input" id="inp-R" placeholder="—" min="0" step="any"><span class="given-unit">Ω</span><button class="clear-btn" onclick="pracClearField('R')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-PR"><span class="given-icon" style="color:var(--r-color)">P<sub>R</sub></span><span class="given-label">P<sub>R</sub></span><input type="number" class="given-input" id="inp-PR" placeholder="—" min="0" step="any"><span class="given-unit">W</span><button class="clear-btn" onclick="pracClearField('PR')" title="Clear">✕</button></div>
+  </div>
+
+  <!-- INDUCTOR -->
+  <div class="prac-cat-panel l-cat">
+    <div class="prac-cat-title" style="color:var(--l-color)">Inductor</div>
+    <div class="given-row" id="row-EL"><span class="given-icon" style="color:var(--l-color)">E<sub>L</sub></span><span class="given-label">E<sub>L</sub></span><input type="number" class="given-input" id="inp-EL" placeholder="—" min="0" step="any"><span class="given-unit">V</span><button class="clear-btn" onclick="pracClearField('EL')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-IL"><span class="given-icon" style="color:var(--l-color)">I<sub>L</sub></span><span class="given-label">I<sub>L</sub></span><input type="number" class="given-input" id="inp-IL" placeholder="—" min="0" step="any"><span class="given-unit">A</span><button class="clear-btn" onclick="pracClearField('IL')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-XL"><span class="given-icon" style="color:var(--l-color)">X<sub>L</sub></span><span class="given-label">X<sub>L</sub></span><input type="number" class="given-input" id="inp-XL" placeholder="—" min="0" step="any"><span class="given-unit">Ω</span><button class="clear-btn" onclick="pracClearField('XL')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-QL"><span class="given-icon" style="color:var(--l-color)">Q<sub>L</sub></span><span class="given-label">Q<sub>L</sub></span><input type="number" class="given-input" id="inp-QL" placeholder="—" min="0" step="any"><span class="given-unit">VAR</span><button class="clear-btn" onclick="pracClearField('QL')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-L"><span class="given-icon" style="color:var(--l-color)">L</span><span class="given-label">L</span><input type="number" class="given-input" id="inp-L" placeholder="—" min="0" step="any"><span class="given-unit">mH</span><button class="clear-btn" onclick="pracClearField('L')" title="Clear">✕</button></div>
+  </div>
+
+  <!-- CAPACITOR -->
+  <div class="prac-cat-panel c-cat">
+    <div class="prac-cat-title" style="color:var(--c-color)">Capacitor</div>
+    <div class="given-row" id="row-EC"><span class="given-icon" style="color:var(--c-color)">E<sub>C</sub></span><span class="given-label">E<sub>C</sub></span><input type="number" class="given-input" id="inp-EC" placeholder="—" min="0" step="any"><span class="given-unit">V</span><button class="clear-btn" onclick="pracClearField('EC')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-IC"><span class="given-icon" style="color:var(--c-color)">I<sub>C</sub></span><span class="given-label">I<sub>C</sub></span><input type="number" class="given-input" id="inp-IC" placeholder="—" min="0" step="any"><span class="given-unit">A</span><button class="clear-btn" onclick="pracClearField('IC')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-XC"><span class="given-icon" style="color:var(--c-color)">X<sub>C</sub></span><span class="given-label">X<sub>C</sub></span><input type="number" class="given-input" id="inp-XC" placeholder="—" min="0" step="any"><span class="given-unit">Ω</span><button class="clear-btn" onclick="pracClearField('XC')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-QC"><span class="given-icon" style="color:var(--c-color)">Q<sub>C</sub></span><span class="given-label">Q<sub>C</sub></span><input type="number" class="given-input" id="inp-QC" placeholder="—" min="0" step="any"><span class="given-unit">VAR</span><button class="clear-btn" onclick="pracClearField('QC')" title="Clear">✕</button></div>
+    <div class="given-row" id="row-C"><span class="given-icon" style="color:var(--c-color)">C</span><span class="given-label">C</span><input type="number" class="given-input" id="inp-C" placeholder="—" min="0" step="any"><span class="given-unit">μF</span><button class="clear-btn" onclick="pracClearField('C')" title="Clear">✕</button></div>
+  </div>
+
+</div><!-- /prac-input-grid -->
+
+<div class="prac-copyright">© 2026 Matt Knox · ETI Indianapolis · Educational use only</div>
+
+<!-- Results -->
+<div class="prac-results-wrap">
+  <!-- Pre-solve row: awaiting input + import box -->
+  <div class="prac-presolve-row" id="pracPresolveRow">
+    <div class="empty-state-wrap">
+      <div class="empty-state">
+        <div class="empty-icon">⚡</div>
+        <div class="empty-title">Awaiting Input</div>
+        <div class="empty-desc">Enter known values above and press Solve.</div>
+      </div>
+    </div>
+
+      <div class="prac-import-status" id="pracImportCodeStatus"></div>
+    </div>
+  </div>
+  <!-- Results — hidden until solved -->
+  <div class="results-panel" id="resultsPanel" style="display:none;"></div>
+</div>
+
+</div><!-- /prac-wrap -->
+
+<script>
+'use strict';
+
+/* ══════════════════════════════════════════
+   SHARED: tool switcher
+══════════════════════════════════════════ */
+function showTool(name) {
+  document.querySelectorAll('.tool-view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  // restart animation loop visibility when switching to simulator
+  if (name === 'sim') { simActiveTab = 'controls'; }
+}
+
+/* ══════════════════════════════════════════
+   SHARED: fmt
+══════════════════════════════════════════ */
+function fmt(n) {
+  if (n === undefined || n === null || isNaN(n) || !isFinite(n)) return '—';
+  if (Math.abs(n) === 0) return '0';
+  return parseFloat(n.toFixed(3)).toString();
+}
+
+/* ══════════════════════════════════════════
+   SHARED: circuit mode (separate per tool)
+══════════════════════════════════════════ */
+let simMode  = 'series';
+let pracMode = 'series';
+
+/* ══════════════════════════════════════════
+   ── SIMULATOR JS ──
+══════════════════════════════════════════ */
+let animT = 0;
+let simActiveTab = 'controls';
+let paused = false;
+const committed = { numF:60, numV:120, numR:100, numL:100, numC:100 };
+
+function simSetMode(m) {
+  simMode = m;
+  document.getElementById('sim-btn-series').classList.toggle('active',   m==='series');
+  document.getElementById('sim-btn-parallel').classList.toggle('active', m==='parallel');
+  simRecalc();
+}
+
+function simShowTab(name, btn) {
+  simActiveTab = name;
+  const isPhone = window.innerWidth < 600;
+  if (isPhone) {
+    ['panel-controls','panel-waveform','panel-bottom'].forEach(id => document.getElementById(id).classList.remove('tab-active'));
+    ['panel-phasor','panel-analysis'].forEach(id => document.getElementById(id).classList.remove('tab-active'));
+    if (name==='controls')  document.getElementById('panel-controls').classList.add('tab-active');
+    else if (name==='waveform') document.getElementById('panel-waveform').classList.add('tab-active');
+    else if (name==='phasor')   { document.getElementById('panel-bottom').classList.add('tab-active'); document.getElementById('panel-phasor').classList.add('tab-active'); }
+    else if (name==='analysis') { document.getElementById('panel-bottom').classList.add('tab-active'); document.getElementById('panel-analysis').classList.add('tab-active'); }
+  }
+  document.querySelectorAll('.sim-wrap .tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+function getVals() {
+  const f=committed.numF, Vrms=committed.numV, R=committed.numR;
+  const Lmh=committed.numL, Cuf=committed.numC;
+  const L=Lmh*0.001, C=Cuf*1e-6, w=2*Math.PI*f;
+  const XL=(L>0&&f>0)?w*L:0, XCraw=(C>0&&f>0)?1/(w*C):0;
+  let Z,phi,Irms;
+  if (simMode==='series') {
+    const Xn=XL-XCraw; Z=Math.sqrt(R*R+Xn*Xn);
+    phi=Z>0?Math.atan2(Xn,R):0; Irms=Z>0?Vrms/Z:0;
+  } else {
+    const YR=R>0?1/R:0,YL=XL>0?1/XL:0,YC=XCraw>0?1/XCraw:0;
+    const Bn=YC-YL,Ym=Math.sqrt(YR*YR+Bn*Bn);
+    Z=Ym>0?1/Ym:0; phi=Ym>0?-Math.atan2(Bn,YR):0; Irms=Z>0?Vrms/Z:0;
+  }
+  if (!isFinite(Z)) Z=0; if (!isFinite(Irms)) Irms=0;
+  const Vpeak=Vrms*Math.SQRT2,Ipeak=Irms*Math.SQRT2;
+  return {f,Vrms,Vpeak,R,L,C,w,XL,XC:XCraw,Z,phi,Irms,Ipeak};
+}
+
+function snapToResonance() {
+  const L=(committed.numL||0)*0.001, C=(committed.numC||0)*1e-6;
+  if(L<=0||C<=0){document.getElementById('resonanceAlert').textContent='Set L and C > 0 first';return;}
+  const f0=Math.max(0,Math.min(400,parseFloat((1/(2*Math.PI*Math.sqrt(L*C))).toFixed(3))));
+  const btn=document.getElementById('resonateBtn');
+  btn.classList.remove('firing'); void btn.offsetWidth; btn.classList.add('firing');
+  setTimeout(()=>btn.classList.remove('firing'),800);
+  const sl=document.getElementById('slF'), startF=committed.numF; let step=0;
+  (function sweep(){
+    step++;
+    const t=step/45,e=t<0.5?2*t*t:-1+(4-2*t)*t;
+    const cur=parseFloat((startF+(f0-startF)*e).toFixed(3));
+    sl.value=cur; document.getElementById('numF').value=cur;
+    sl.style.setProperty('--pct',(cur/400*100)+'%');
+    committed.numF=cur; simRecalc();
+    if(step<45) requestAnimationFrame(sweep);
+  })();
+}
+
+function bindSliders() {
+  [{sl:'slF',num:'numF',min:0,max:400},{sl:'slV',num:'numV',min:0,max:1000},
+   {sl:'slR',num:'numR',min:0,max:1000},{sl:'slL',num:'numL',min:0,max:10000},
+   {sl:'slC',num:'numC',min:0,max:200}
+  ].forEach(p=>{
+    const sl=document.getElementById(p.sl), num=document.getElementById(p.num);
+    const clamp=v=>Math.max(p.min,Math.min(p.max,+parseFloat(v).toFixed(3)));
+    const pct=v=>sl.style.setProperty('--pct',(p.max>0?v/p.max*100:0)+'%');
+    sl.addEventListener('input',()=>{const v=clamp(+sl.value);if(document.activeElement!==num)num.value=v;sl.value=v;pct(v);committed[p.num]=v;simRecalc();});
+    const commit=()=>{const r=parseFloat(num.value);const v=isNaN(r)?clamp(p.min):clamp(r);num.value=v;sl.value=v;pct(v);committed[p.num]=v;simRecalc();};
+    num.addEventListener('keydown',e=>{if(e.key==='Enter'){commit();num.blur();}});
+    num.addEventListener('blur',()=>{num.value=committed[p.num];});
+    const iv=clamp(+sl.value); sl.value=iv; num.value=iv; pct(iv); committed[p.num]=iv;
+  });
+}
+
+function simRecalc() {
+  const v=getVals(), pd=v.phi*180/Math.PI;
+  function setStat(base,text){['','_tab','_ph','_hdr'].forEach(sfx=>{const el=document.getElementById(base+sfx);if(el)el.textContent=text;});}
+  setStat('hVpeak',v.Vrms.toFixed(3)+'V'); setStat('hZ',v.Z.toFixed(3)+'Ω');
+  setStat('hI',v.Irms.toFixed(3)+'A'); setStat('hPhi',pd.toFixed(3)+'°');
+  document.getElementById('xLVal').textContent=v.XL.toFixed(3)+' Ω';
+  document.getElementById('xCVal').textContent=v.XC.toFixed(3)+' Ω';
+  const Xn=v.XL-v.XC, xEl=document.getElementById('xNetVal');
+  xEl.textContent=Xn.toFixed(3)+' Ω'; xEl.style.color=Xn>0?'var(--l-color)':Xn<0?'var(--c-color)':'var(--i-color)';
+  document.getElementById('zMagVal').textContent=v.Z.toFixed(3)+' Ω';
+  if(simMode==='series'){
+    document.getElementById('labelR').innerHTML='V<sub>R</sub> (in-phase)';
+    document.getElementById('labelL').innerHTML='V<sub>L</sub> (leads 90°)';
+    document.getElementById('labelC').innerHTML='V<sub>C</sub> (lags 90°)';
+    document.getElementById('vR').textContent=(v.Irms*v.R).toFixed(3)+'V';
+    document.getElementById('vL').textContent=(v.Irms*v.XL).toFixed(3)+'V';
+    document.getElementById('vC').textContent=(v.Irms*v.XC).toFixed(3)+'V';
+  } else {
+    document.getElementById('labelR').innerHTML='I<sub>R</sub> (in-phase)';
+    document.getElementById('labelL').innerHTML='I<sub>L</sub> (lags 90°)';
+    document.getElementById('labelC').innerHTML='I<sub>C</sub> (leads 90°)';
+    document.getElementById('vR').textContent=(v.R>0?v.Vrms/v.R:0).toFixed(3)+'A';
+    document.getElementById('vL').textContent=(v.XL>0?v.Vrms/v.XL:0).toFixed(3)+'A';
+    document.getElementById('vC').textContent=(v.XC>0?v.Vrms/v.XC:0).toFixed(3)+'A';
+  }
+  document.getElementById('pf').textContent=(Math.cos(v.phi)*100).toFixed(2)+'%';
+  const pa=document.getElementById('phaseAngle'); pa.textContent=pd.toFixed(3)+'°';
+  pa.style.color=pd>5?'var(--l-color)':pd<-5?'var(--c-color)':'var(--i-color)';
+  document.getElementById('phaseDesc').textContent=Math.abs(pd)<3?'⚡ Resonance — max current, unity PF':pd>0?`Current LAGS voltage by ${pd.toFixed(3)}° — Inductive`:`Current LEADS voltage by ${Math.abs(pd).toFixed(3)}° — Capacitive`;
+  const ex=document.getElementById('circuitExplain');
+  if(Math.abs(pd)<3) ex.innerHTML=`<strong style="color:var(--i-color)">Resonance!</strong> XL = XC ≈ ${v.XL.toFixed(3)}Ω.`;
+  else if(pd>30) ex.innerHTML=`Circuit is <strong style="color:var(--l-color)">strongly inductive</strong>. XL (${v.XL.toFixed(3)}Ω) > XC (${v.XC.toFixed(3)}Ω).`;
+  else if(pd<-30) ex.innerHTML=`Circuit is <strong style="color:var(--c-color)">strongly capacitive</strong>. XC (${v.XC.toFixed(3)}Ω) > XL (${v.XL.toFixed(3)}Ω).`;
+  else if(pd>0) ex.innerHTML=`Circuit is <strong style="color:var(--l-color)">mildly inductive</strong>. Current lags voltage by ${pd.toFixed(3)}°.`;
+  else ex.innerHTML=`Circuit is <strong style="color:var(--c-color)">mildly capacitive</strong>. Current leads voltage by ${Math.abs(pd).toFixed(3)}°.`;
+  const f0=1/(2*Math.PI*Math.sqrt(v.L*v.C)), al=document.getElementById('resonanceAlert');
+  if(Math.abs(v.f-f0)/f0<0.04){al.className='resonance-alert';al.style.cssText='';al.textContent='⚡ AT RESONANCE — φ ≈ 0°';}
+  else{al.className='resonance-alert'; al.style.cssText='';al.textContent=`Resonant fᵣ = ${f0.toFixed(3)} Hz`;}
+  const isP=simMode==='parallel';
+  document.getElementById('waveLegL').innerHTML=isP?'I<sub>L</sub>':'V<sub>L</sub>';
+  document.getElementById('waveLegC').innerHTML=isP?'I<sub>C</sub>':'V<sub>C</sub>';
+  const bd=document.getElementById('circuit-badge');
+  bd.textContent=simMode==='series'?'SERIES RLC':'PARALLEL RLC';
+  bd.className = simMode==='series' ? 'circuit-badge-series' : 'circuit-badge-parallel';
+  bd.style.cssText = '';
+}
+
+/* ── Waveform ── */
+const wC=document.getElementById('waveCanvas'), wX=wC.getContext('2d');
+function drawWaveform(){
+  wC.width=wC.offsetWidth; wC.height=wC.offsetHeight;
+  const w=wC.width,h=wC.height,cy=h/2,amp=(h/2)*0.82,pts=600,cyc=2.5;
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  wX.fillStyle=isDark?'#1a1f2a':'#f8fbff'; wX.fillRect(0,0,w,h);
+  wX.strokeStyle=isDark?'#343d52':'#dde8f2'; wX.lineWidth=1;
+  for(let i=1;i<4;i++){const y=h*i/4;wX.beginPath();wX.moveTo(0,y);wX.lineTo(w,y);wX.stroke();}
+  for(let i=0;i<=cyc;i++){const x=(i/cyc)*w;wX.setLineDash([4,4]);wX.beginPath();wX.moveTo(x,0);wX.lineTo(x,h);wX.stroke();wX.setLineDash([]);}
+  wX.strokeStyle=isDark?'#3f4d66':'#b8ccd8'; wX.lineWidth=1.5; wX.beginPath();wX.moveTo(0,cy);wX.lineTo(w,cy);wX.stroke();
+  wX.fillStyle='#8aa0b0'; wX.font='10px DM Mono,monospace';
+  wX.fillText('+V',4,14); wX.fillText('−V',4,h-4); wX.fillText('0',4,cy+4);
+  const v=getVals(), ps=-v.phi;
+  function sine(col,as,po,lw,dash){
+    wX.strokeStyle=col; wX.lineWidth=lw; if(dash)wX.setLineDash(dash);
+    wX.beginPath();
+    for(let i=0;i<=pts;i++){const t=(i/pts)*cyc*2*Math.PI+animT;const y=cy-Math.sin(t+po)*amp*Math.min(as,1);i===0?wX.moveTo((i/pts)*w,y):wX.lineTo((i/pts)*w,y);}
+    wX.stroke(); wX.setLineDash([]);
+  }
+  wX.strokeStyle=isDark?'rgba(255,255,255,0.18)':'rgba(0,0,0,0.14)'; wX.lineWidth=1.5; wX.setLineDash([4,3]);
+  wX.beginPath();wX.moveTo(0,0);wX.lineTo(0,h);wX.stroke(); wX.setLineDash([]);
+  // Current waveform amplitude:
+  // Series:   anchored at resonance (Z=R, max I). iScale=0.7 at resonance,
+  //           falls toward 0.15 as circuit becomes more reactive.
+  // Parallel: anchored at resonance (reactive currents cancel, min I). iScale=0.15
+  //           at resonance (φ=0), rises toward 0.7 as φ approaches ±90°.
+  //           Formula: 0.15 + 0.55×|sin(φ)| — smooth, physics-correct.
+  const iRef=v.Vrms>0&&v.R>0?v.Vrms/v.R:1;
+  const iScale=simMode==='parallel'
+    ?0.15+0.55*Math.abs(Math.sin(v.phi))
+    :Math.max(0.15,Math.min(0.9,(v.Irms/iRef)*0.7));
+  sine('rgba(26,109,191,0.45)',Math.min((v.Ipeak*v.XL)/v.Vpeak,0.9),ps+Math.PI/2,1.5,[5,5]);
+  sine('rgba(212,88,10,0.45)',Math.min((v.Ipeak*v.XC)/v.Vpeak,0.9),ps-Math.PI/2,1.5,[5,5]);
+  sine('#0a8f5c',iScale,ps,2.5,null);
+  sine('#c47a00',1.0,0,3,null);
+  const pd=v.phi*180/Math.PI;
+  if(Math.abs(pd)>3){
+    const vx=w/(4*cyc),ix=vx+(-ps/(cyc*2*Math.PI))*w;
+    wX.strokeStyle=isDark?'rgba(255,255,255,0.15)':'rgba(0,0,0,0.12)'; wX.lineWidth=1; wX.setLineDash([3,3]);
+    wX.beginPath();wX.moveTo(vx,0);wX.lineTo(vx,h);wX.stroke();
+    wX.beginPath();wX.moveTo(Math.max(0,Math.min(w,ix)),0);wX.lineTo(Math.max(0,Math.min(w,ix)),h);wX.stroke();
+    wX.setLineDash([]);
+    wX.fillStyle='rgba(0,0,0,0.38)'; wX.font='bold 11px DM Mono,monospace';
+    wX.fillText(`φ = ${pd.toFixed(1)}°`,10,cy-amp*0.90);
+  }
+}
+
+/* ── Phasor ── */
+const pC=document.getElementById('phasorCanvas'), pX=pC.getContext('2d');
+function drawPhasor(){
+  const wrap=pC.parentElement, size=Math.min(wrap.offsetWidth,wrap.offsetHeight);
+  pC.width=size; pC.height=size;
+  const w=pC.width,h=pC.height,cx=w/2,cy=h/2,rad=Math.min(cx,cy)*0.88;
+  const isDarkP=document.documentElement.getAttribute('data-theme')==='dark';
+  pX.fillStyle=isDarkP?'#1a1f2a':'#f8fbff'; pX.fillRect(0,0,w,h);
+  pX.strokeStyle=isDarkP?'#343d52':'#dde8f2'; pX.lineWidth=1;
+  [0.33,0.66,1.0].forEach(r=>{pX.beginPath();pX.arc(cx,cy,rad*r,0,Math.PI*2);pX.stroke();});
+  pX.strokeStyle=isDarkP?'#3f4d66':'#b8ccd8'; pX.lineWidth=1.5;
+  pX.beginPath();pX.moveTo(cx-rad-5,cy);pX.lineTo(cx+rad+5,cy);pX.stroke();
+  pX.beginPath();pX.moveTo(cx,cy-rad-5);pX.lineTo(cx,cy+rad+5);pX.stroke();
+  pX.fillStyle='#8aa0b0'; pX.font='10px DM Mono,monospace';
+  pX.fillText('+Re',cx+rad-20,cy-6); pX.fillText('+Im',cx+4,cy-rad+12); pX.fillText('(leads)',cx+4,cy-rad+24);
+  const v=getVals();
+  function arrow(ang,mag,col,lbl,lw){
+    const rot=ang+animT,ex=cx+Math.cos(rot)*rad*mag,ey=cy-Math.sin(rot)*rad*mag;
+    pX.strokeStyle=col; pX.lineWidth=lw;
+    pX.beginPath();pX.moveTo(cx,cy);pX.lineTo(ex,ey);pX.stroke();
+    const a2=Math.atan2(ey-cy,ex-cx); pX.fillStyle=col;
+    pX.beginPath();pX.moveTo(ex,ey);
+    pX.lineTo(ex-9*Math.cos(a2-0.4),ey-9*Math.sin(a2-0.4));
+    pX.lineTo(ex-9*Math.cos(a2+0.4),ey-9*Math.sin(a2+0.4));
+    pX.closePath();pX.fill();
+    pX.font='bold 11px DM Mono,monospace';
+    pX.fillText(lbl,cx+Math.cos(rot)*(rad*mag+16)-8,cy-Math.sin(rot)*(rad*mag+16)+4);
+  }
+  const {phi:ph,Irms:Ir,Vrms:Vr,XL,XC,R:Rc,Z}=v, isP=simMode==='parallel';
+  if(!isP){
+    const vR=Vr>0?Math.min((Ir*Rc)/Vr,0.95):0;
+    const vL=Vr>0?Math.min((Ir*XL)/Vr,0.95):0;
+    const vC=Vr>0?Math.min((Ir*XC)/Vr,0.95):0;
+    const iMag=Vr>0?Math.min((Ir*Z)/Vr*0.7,0.9):0;
+    arrow(-ph,vR,'#c0392b','VR',2); arrow(-ph+Math.PI/2,vL,'#1a6dbf','VL',2);
+    arrow(-ph-Math.PI/2,vC,'#d4580a','VC',2); arrow(-ph,iMag,'#0a8f5c','I',2.5);
+    arrow(0,1.0,'#c47a00','VS',3);
+  } else {
+    const iR=Ir>0&&Rc>0?Math.min((Vr/Rc)/Ir,0.95):0;
+    const iL=Ir>0&&XL>0?Math.min((Vr/XL)/Ir,0.95):0;
+    const iC=Ir>0&&XC>0?Math.min((Vr/XC)/Ir,0.95):0;
+    arrow(-ph,iR,'#c0392b','IR',2); arrow(-ph+Math.PI/2,iL,'#1a6dbf','IL',2);
+    arrow(-ph-Math.PI/2,iC,'#d4580a','IC',2); arrow(-ph,1.0,'#0a8f5c','I',2.5);
+    arrow(0,0.7,'#c47a00','VS',3);
+  }
+  const its=isP
+    ?[{c:'#0a8f5c',l:'I (ref = Irms)'},{c:'#c47a00',l:'VS'},{c:'#c0392b',l:'IR'},{c:'#1a6dbf',l:'IL'},{c:'#d4580a',l:'IC'}]
+    :[{c:'#c47a00',l:'VS (ref = Vrms)'},{c:'#0a8f5c',l:'I (total)'},{c:'#c0392b',l:'VR'},{c:'#1a6dbf',l:'VL'},{c:'#d4580a',l:'VC'}];
+  pX.font='10px DM Mono,monospace';
+  its.forEach((it,i)=>{pX.fillStyle=it.c;pX.fillRect(6,6+i*16,12,3);pX.fillText(it.l,22,12+i*16);});
+}
+
+/* ── Animation ── */
+function togglePause(){
+  paused=!paused;
+  const btn=document.getElementById('pauseBtn'), row=document.getElementById('scrubRow'), sl=document.getElementById('scrubSlider');
+  btn.textContent=paused?'▶ RESUME':'⏸ PAUSE'; btn.classList.toggle('paused',paused);
+  if(paused){const norm=((animT%(2*Math.PI))+2*Math.PI)%(2*Math.PI);sl.value=Math.round(norm*100);sl.style.setProperty('--pct',(norm/(2*Math.PI)*100)+'%');row.classList.add('visible');}
+  else row.classList.remove('visible');
+}
+document.getElementById('scrubSlider').addEventListener('input',function(){
+  const v=+this.value; animT=v/100; this.style.setProperty('--pct',(v/628*100)+'%');
+  drawWaveform(); drawPhasor();
+});
+function animate(){
+  if(!paused){const speed=Math.max(0.005,0.025*(committed.numF/60)); animT+=speed;}
+  const isPhone=window.innerWidth<600;
+  const simVisible=document.getElementById('view-sim').classList.contains('active');
+  if(simVisible){
+    if(!isPhone||simActiveTab==='waveform') drawWaveform();
+    if(!isPhone||simActiveTab==='phasor')   drawPhasor();
+  }
+  requestAnimationFrame(animate);
+}
+
+/* ── Import from practice ── */
+function importFromCode(){
+  const raw=document.getElementById('importCode').value.trim();
+  const status=document.getElementById('importStatus');
+  if(!raw){status.className='import-status err';status.textContent='✕ Nothing pasted.';return;}
+  let payload;
+  try{payload=JSON.parse(atob(raw));}catch(e){status.className='import-status err';status.textContent='✕ Invalid code.';return;}
+  if(!payload||(payload.v!==1&&payload.v!==2)){status.className='import-status err';status.textContent='✕ Unrecognised format.';return;}
+  const clampF=v=>Math.max(0,Math.min(400,+parseFloat(v||0).toFixed(3)));
+  const clampV=v=>Math.max(0,Math.min(1000,+parseFloat(v||0).toFixed(3)));
+  const clampR=v=>Math.max(0,Math.min(1000,+parseFloat(v||0).toFixed(3)));
+  const clampL=v=>Math.max(0,Math.min(10000,+parseFloat(v||0).toFixed(3)));
+  const clampC=v=>Math.max(0,Math.min(200,+parseFloat(v||0).toFixed(3)));
+  // v2: prefer solved state (payload.s) over given (payload.g) for simulator fields
+  // since solved state has complete values; fall back to given if no solved state
+  const g=payload.v===2?(payload.s||payload.g||{}):{};
+  const f=clampF((payload.v===2||payload.v===3)?(g.f??60):(payload.f??60));
+  const Vrms=clampV((payload.v===2||payload.v===3)?(g.E??120):(payload.Vrms??120));
+  const R=clampR((payload.v===2||payload.v===3)?(g.R??0):(payload.R??0));
+  const L=clampL((payload.v===2||payload.v===3)?(g.L??0):(payload.L??0));
+  const C=clampC((payload.v===2||payload.v===3)?(g.C??0):(payload.C??0));
+  const m=payload.mode==='parallel'?'parallel':'series';
+  function applySlider(slId,numId,key,val,max){
+    const sl=document.getElementById(slId),num=document.getElementById(numId);
+    sl.value=val; num.value=val; sl.style.setProperty('--pct',(max>0?val/max*100:0)+'%'); committed[key]=val;
+  }
+  applySlider('slF','numF','numF',f,400); applySlider('slV','numV','numV',Vrms,1000);
+  applySlider('slR','numR','numR',R,1000); applySlider('slL','numL','numL',L,10000); applySlider('slC','numC','numC',C,200);
+  simSetMode(m); simRecalc();
+  status.className='import-status ok';
+  status.textContent=`✓ Loaded: ${m} · f=${f} Hz · E=${Vrms} V · R=${R} Ω · L=${L} mH · C=${C} μF`;
+  document.getElementById('importCode').value='';
+}
+
+/* ══════════════════════════════════════════
+   ── PRACTICE JS ──
+══════════════════════════════════════════ */
+const PRAC_FIELDS=['E','I','Z','S','f','PF','phi','f0','ER','IR','R','PR','EL','IL','XL','QL','L','EC','IC','XC','QC','C'];
+const pracVals={};
+
+function pracSetMode(m){
+  pracMode=m;
+  document.getElementById('prac-opt-series').classList.toggle('active',   m==='series');
+  document.getElementById('prac-opt-parallel').classList.toggle('active', m==='parallel');
+  pracCheckStatus();
+}
+
+function pracToStored(k,raw){ return k==='PF'?raw/100:raw; }
+function pracDisplayVal(k,v){ return k==='PF'?fmt(v*100):fmt(v); }
+
+PRAC_FIELDS.forEach(k=>{
+  const inp=document.getElementById('inp-'+k), row=document.getElementById('row-'+k);
+  if(!inp) return;
+  inp.addEventListener('focus',()=>row.classList.add('active'));
+  inp.addEventListener('blur',()=>{
+    row.classList.remove('active');
+    inp.value=pracVals[k]!==undefined?pracDisplayVal(k,pracVals[k]):'';
+  });
+  inp.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      const raw=parseFloat(inp.value);
+      if(!isNaN(raw)&&raw>=0){pracVals[k]=pracToStored(k,raw);inp.value=pracDisplayVal(k,pracVals[k]);row.classList.add('has-value');}
+      else{delete pracVals[k];inp.value='';row.classList.remove('has-value');}
+      inp.blur(); pracCheckStatus();
+    }
+    if(e.key==='Escape') inp.blur();
+  });
+});
+
+function pracClearField(k){
+  delete pracVals[k];
+  const inp=document.getElementById('inp-'+k); if(inp) inp.value='';
+  document.getElementById('row-'+k).classList.remove('has-value');
+  pracCheckStatus();
+}
+
+function pracClearConfirm(){
+  // Only prompt if there are values to lose
+  if(Object.keys(pracVals).length===0){return;}
+  document.getElementById('clearConfirmModal').classList.add('open');
+}
+
+function pracClearAll(){
+  PRAC_FIELDS.forEach(k=>pracClearField(k));
+  document.getElementById('pracPresolveRow').style.display='';
+  const rp2=document.getElementById('resultsPanel'); rp2.style.display='none'; rp2.innerHTML='';
+  document.getElementById('sendSimBtn').disabled=true;
+  const ioImp2=document.getElementById('ioImport');
+  const ioExp2=document.getElementById('ioExport');
+  if(ioExp2) ioExp2.style.display='none';
+  if(ioImp2) ioImp2.style.display='';
+}
+
+function pracCheckStatus(){
+  const nGiven=Object.keys(pracVals).length;
+  const btn=document.getElementById('solveBtn');
+  const box=document.getElementById('statusBox');
+  const strip=document.getElementById('pracStatusStrip');
+  if(nGiven===0){btn.disabled=true;document.getElementById('sendSimBtn').disabled=true;if(strip)strip.style.display='none';return;}
+  const res=pracTrysolve(pracVals,pracMode,pracCircuitType);
+  if(res.error==='conflict'){
+    if(box){box.className='status-pill conflict';box.innerHTML=`<span class="status-icon">✕</span>${res.message}`;}
+    if(strip)strip.style.display='';
+    btn.disabled=true;document.getElementById('sendSimBtn').disabled=true;
+  } else {
+    if(strip)strip.style.display='none';
+    if(res.error){btn.disabled=true;document.getElementById('sendSimBtn').disabled=true;}
+    else{btn.disabled=false;document.getElementById('sendSimBtn').disabled=false;}
+  }
+}
+
+
+// Circuit type: 'RLC', 'RL', or 'RC'
+let pracCircuitType = 'RLC';
+
+function setCircuitType(ct) {
+  pracCircuitType = ct;
+  // Update button states
+  ['RLC','RL','RC'].forEach(t => {
+    const el = document.getElementById('ct' + t);
+    if (el) el.classList.toggle('ct-active', t === ct);
+  });
+  // Update logo
+  const logo = document.querySelector('.prac-logo');
+  if (logo) logo.textContent = ct + ' PRACTICE SHEET';
+  // Show/hide input panels
+  const grid = document.querySelector('.prac-input-grid');
+  if (grid) {
+    grid.classList.toggle('hide-C', ct === 'RL');
+    grid.classList.toggle('hide-L', ct === 'RC');
+  }
+  // Hide fr row — only relevant for RLC
+  const rowF0 = document.getElementById('row-f0');
+  if (rowF0) rowF0.style.display = ct === 'RLC' ? '' : 'none';
+  // Clear any values from the hidden branch and re-check status
+  if (ct === 'RL') {
+    ['EC','IC','XC','QC','C','f0'].forEach(k => {
+      delete pracVals[k];
+      const inp = document.getElementById('inp-' + k);
+      if (inp) inp.value = '';
+      const row = document.getElementById('row-' + k);
+      if (row) row.classList.remove('has-value');
+    });
+  } else if (ct === 'RC') {
+    ['EL','IL','XL','QL','L','f0'].forEach(k => {
+      delete pracVals[k];
+      const inp = document.getElementById('inp-' + k);
+      if (inp) inp.value = '';
+      const row = document.getElementById('row-' + k);
+      if (row) row.classList.remove('has-value');
+    });
+  }
+  pracCheckStatus();
+}
+
+function pracBuildSI(given){
+  const s={};
+  for(const k of Object.keys(given)){
+    if(k==='L')s.L=given.L*0.001;
+    else if(k==='C')s.C=given.C*1e-6;
+    else s[k]=given[k];
+  }
+  return s;
+}
+
+function pracTrysolve(given,mode,circuitType){
+  const s=pracBuildSI(given), steps=[];
+  const R_FIELDS=['R','ER','IR','PR'], L_FIELDS=['L','XL','EL','IL','QL'], C_FIELDS=['C','XC','EC','IC','QC'];
+  const hasR=R_FIELDS.some(k=>given[k]!==undefined);
+  const hasL=L_FIELDS.some(k=>given[k]!==undefined)||(given.f0!==undefined&&C_FIELDS.some(k=>given[k]!==undefined));
+  const hasC=C_FIELDS.some(k=>given[k]!==undefined)||(given.f0!==undefined&&L_FIELDS.some(k=>given[k]!==undefined));
+  // Determine which elements are absent — circuit type overrides hasL/hasC when set
+  const ct = circuitType || 'RLC';
+  const noL = ct==='RC' || (!hasL && ct==='RLC');
+  const noC = ct==='RL' || (!hasC && ct==='RLC');
+  if(mode==='series'){
+    if(!hasR){s.R=0;steps.push('R = 0 Ω  (no resistor in circuit)');}
+    if(noL){s.XL=0;if(!hasL)steps.push('X<sub>L</sub> = 0 Ω  (no inductor in circuit)');}
+    if(noC){s.XC=0;if(!hasC)steps.push('X<sub>C</sub> = 0 Ω  (no capacitor in circuit)');}
+  }
+  for(let iter=0;iter<40;iter++){
+    const snap=JSON.stringify(s);
+    if(mode==='series') pracSeriesRules(s,steps,noL,noC);
+    else pracParallelRules(s,steps,noL,noC);
+    const cf=pracConflictCheck(s,mode);
+    if(cf) return{error:'conflict',message:cf};
+    if(JSON.stringify(s)===snap) break;
+  }
+  const seededKeys=(!hasR?1:0)+(noL?1:0)+(noC&&mode==='series'?1:0);
+  const nSolved=Object.keys(s).filter(k=>!k.startsWith('_')).length-seededKeys;
+  const nGiven=Object.keys(given).length;
+  if(nSolved<=nGiven&&nGiven<2) return{error:'need-more',message:'Enter at least 2 values to begin solving.'};
+  if(nSolved<=nGiven) return{error:'need-more',message:'Cannot derive more values. Try adding another quantity.'};
+  return{solved:s,steps,hasR,hasL,hasC};
+}
+
+function pracSet(s,k,v,steps,desc){
+  if(s[k]!==undefined) return;
+  if(v===undefined||v===null||!isFinite(v)||isNaN(v)||v<0) return;
+  s[k]=v; if(desc) steps.push(desc);
+}
+
+function pracSeriesRules(s,steps,noL,noC){
+  const w=(s.f!==undefined&&s.f>0)?2*Math.PI*s.f:undefined;
+  if(w&&s.L!==undefined) pracSet(s,'XL',w*s.L,steps,`X<sub>L</sub> = 2πfL = 2π·${fmt(s.f)}·${fmt(s.L*1000)} = <em>${fmt(w*s.L)} Ω</em>`);
+  if(w&&s.XL!==undefined) pracSet(s,'L',s.XL/w,steps,`L = X<sub>L</sub>/(2πf) = ${fmt(s.XL)}/(2π·${fmt(s.f)}) = <em>${fmt(s.XL/w*1000)} mH</em>`);
+  if(s.L!==undefined&&s.XL!==undefined&&s.f===undefined&&s.XL>0&&s.L>0) pracSet(s,'f',s.XL/(2*Math.PI*s.L),steps,`f = X<sub>L</sub>/(2πL) = ${fmt(s.XL)}/(2π·${fmt(s.L*1000)} mH) = <em>${fmt(s.XL/(2*Math.PI*s.L))} Hz</em>`);
+  if(w&&s.C!==undefined) pracSet(s,'XC',1/(w*s.C),steps,`X<sub>C</sub> = 1/(2πfC) = 1/(2π·${fmt(s.f)}·${fmt(s.C*1e6)} μF) = <em>${fmt(1/(w*s.C))} Ω</em>`);
+  if(w&&s.XC!==undefined) pracSet(s,'C',1/(w*s.XC),steps,`C = 1/(2πfX<sub>C</sub>) = 1/(2π·${fmt(s.f)}·${fmt(s.XC)}) = <em>${fmt(1e6/(w*s.XC))} μF</em>`);
+  if(s.C!==undefined&&s.XC!==undefined&&s.f===undefined&&s.XC>0&&s.C>0) pracSet(s,'f',1/(2*Math.PI*s.C*s.XC),steps,`f = 1/(2πCX<sub>C</sub>) = 1/(2π·${fmt(s.C*1e6)} μF·${fmt(s.XC)}) = <em>${fmt(1/(2*Math.PI*s.C*s.XC))} Hz</em>`);
+  // ── Resonant frequency rules (topology-independent) ──
+  // f0 = 1/(2π√(LC)),  C = 1/(4π²f0²L),  L = 1/(4π²f0²C)
+  if(s.L!==undefined&&s.C!==undefined&&s.L>0&&s.C>0)
+    pracSet(s,'f0',1/(2*Math.PI*Math.sqrt(s.L*s.C)),steps,`f<sub>r</sub> = 1/(2π√(L·C)) = 1/(2π√(${fmt(s.L*1000)} mH × ${fmt(s.C*1e6)} μF)) = <em>${fmt(1/(2*Math.PI*Math.sqrt(s.L*s.C)))} Hz</em>`);
+  if(s.f0!==undefined&&s.L!==undefined&&s.L>0&&s.C===undefined){
+    const Cv=1/(4*Math.PI*Math.PI*s.f0*s.f0*s.L);
+    pracSet(s,'C',Cv,steps,`C = 1/(4π²f<sub>r</sub>²·L) = 1/(4π²·${fmt(s.f0)}²·${fmt(s.L*1000)} mH) = <em>${fmt(Cv*1e6)} μF</em>`);
+  }
+  if(s.f0!==undefined&&s.C!==undefined&&s.C>0&&s.L===undefined){
+    const Lv=1/(4*Math.PI*Math.PI*s.f0*s.f0*s.C);
+    pracSet(s,'L',Lv,steps,`L = 1/(4π²f<sub>r</sub>²·C) = 1/(4π²·${fmt(s.f0)}²·${fmt(s.C*1e6)} μF) = <em>${fmt(Lv*1000)} mH</em>`);
+  }
+  const I=s.I;
+  if(I!==undefined){pracSet(s,'IR',I,steps,null);pracSet(s,'IL',I,steps,null);pracSet(s,'IC',I,steps,null);}
+  if(s.IR!==undefined&&s.I===undefined) pracSet(s,'I',s.IR,steps,`I = I<sub>R</sub> = ${fmt(s.IR)} = <em>${fmt(s.IR)} A</em>  (series)`);
+  if(s.IL!==undefined&&s.I===undefined) pracSet(s,'I',s.IL,steps,`I = I<sub>L</sub> = ${fmt(s.IL)} = <em>${fmt(s.IL)} A</em>  (series)`);
+  if(s.IC!==undefined&&s.I===undefined) pracSet(s,'I',s.IC,steps,`I = I<sub>C</sub> = ${fmt(s.IC)} = <em>${fmt(s.IC)} A</em>  (series)`);
+  if(s.R!==undefined&&s.I!==undefined) pracSet(s,'ER',s.R*s.I,steps,`E<sub>R</sub> = R·I = ${fmt(s.R)}·${fmt(s.I)} = <em>${fmt(s.R*s.I)} V</em>`);
+  if(s.ER!==undefined&&s.I!==undefined&&s.I>0) pracSet(s,'R',s.ER/s.I,steps,`R = E<sub>R</sub>/I = ${fmt(s.ER)}/${fmt(s.I)} = <em>${fmt(s.ER/s.I)} Ω</em>`);
+  if(s.ER!==undefined&&s.R!==undefined&&s.R>0) pracSet(s,'I',s.ER/s.R,steps,`I = E<sub>R</sub>/R = ${fmt(s.ER)}/${fmt(s.R)} = <em>${fmt(s.ER/s.R)} A</em>`);
+  if(s.IR!==undefined&&s.R!==undefined) pracSet(s,'ER',s.IR*s.R,steps,`E<sub>R</sub> = I<sub>R</sub>·R = ${fmt(s.IR)}·${fmt(s.R)} = <em>${fmt(s.IR*s.R)} V</em>`);
+  if(s.IR!==undefined&&s.ER!==undefined&&s.IR>0) pracSet(s,'R',s.ER/s.IR,steps,`R = E<sub>R</sub>/I<sub>R</sub> = ${fmt(s.ER)}/${fmt(s.IR)} = <em>${fmt(s.ER/s.IR)} Ω</em>`);
+  if(s.XL!==undefined&&s.I!==undefined) pracSet(s,'EL',s.XL*s.I,steps,`E<sub>L</sub> = X<sub>L</sub>·I = ${fmt(s.XL)}·${fmt(s.I)} = <em>${fmt(s.XL*s.I)} V</em>`);
+  if(s.EL!==undefined&&s.I!==undefined&&s.I>0) pracSet(s,'XL',s.EL/s.I,steps,`X<sub>L</sub> = E<sub>L</sub>/I = ${fmt(s.EL)}/${fmt(s.I)} = <em>${fmt(s.EL/s.I)} Ω</em>`);
+  if(s.EL!==undefined&&s.XL!==undefined&&s.XL>0) pracSet(s,'I',s.EL/s.XL,steps,`I = E<sub>L</sub>/X<sub>L</sub> = ${fmt(s.EL)}/${fmt(s.XL)} = <em>${fmt(s.EL/s.XL)} A</em>`);
+  if(s.IL!==undefined&&s.XL!==undefined) pracSet(s,'EL',s.IL*s.XL,steps,`E<sub>L</sub> = I<sub>L</sub>·X<sub>L</sub> = ${fmt(s.IL)}·${fmt(s.XL)} = <em>${fmt(s.IL*s.XL)} V</em>`);
+  if(s.IL!==undefined&&s.EL!==undefined&&s.IL>0) pracSet(s,'XL',s.EL/s.IL,steps,`X<sub>L</sub> = E<sub>L</sub>/I<sub>L</sub> = ${fmt(s.EL)}/${fmt(s.IL)} = <em>${fmt(s.EL/s.IL)} Ω</em>`);
+  if(s.XC!==undefined&&s.I!==undefined) pracSet(s,'EC',s.XC*s.I,steps,`E<sub>C</sub> = X<sub>C</sub>·I = ${fmt(s.XC)}·${fmt(s.I)} = <em>${fmt(s.XC*s.I)} V</em>`);
+  if(s.EC!==undefined&&s.I!==undefined&&s.I>0) pracSet(s,'XC',s.EC/s.I,steps,`X<sub>C</sub> = E<sub>C</sub>/I = ${fmt(s.EC)}/${fmt(s.I)} = <em>${fmt(s.EC/s.I)} Ω</em>`);
+  if(s.EC!==undefined&&s.XC!==undefined&&s.XC>0) pracSet(s,'I',s.EC/s.XC,steps,`I = E<sub>C</sub>/X<sub>C</sub> = ${fmt(s.EC)}/${fmt(s.XC)} = <em>${fmt(s.EC/s.XC)} A</em>`);
+  if(s.IC!==undefined&&s.XC!==undefined) pracSet(s,'EC',s.IC*s.XC,steps,`E<sub>C</sub> = I<sub>C</sub>·X<sub>C</sub> = ${fmt(s.IC)}·${fmt(s.XC)} = <em>${fmt(s.IC*s.XC)} V</em>`);
+  if(s.IC!==undefined&&s.EC!==undefined&&s.IC>0) pracSet(s,'XC',s.EC/s.IC,steps,`X<sub>C</sub> = E<sub>C</sub>/I<sub>C</sub> = ${fmt(s.EC)}/${fmt(s.IC)} = <em>${fmt(s.EC/s.IC)} Ω</em>`);
+  // Component power
+  if(s.ER!==undefined&&s.IR!==undefined) pracSet(s,'PR',s.ER*s.IR,steps,`P<sub>R</sub> = E<sub>R</sub>·I<sub>R</sub> = ${fmt(s.ER)}·${fmt(s.IR)} = <em>${fmt(s.ER*s.IR)} W</em>`);
+  if(s.IR!==undefined&&s.R!==undefined) pracSet(s,'PR',s.IR*s.IR*s.R,steps,`P<sub>R</sub> = I<sub>R</sub>²·R = ${fmt(s.IR)}²·${fmt(s.R)} = <em>${fmt(s.IR*s.IR*s.R)} W</em>`);
+  if(s.ER!==undefined&&s.R!==undefined&&s.R>0) pracSet(s,'PR',s.ER*s.ER/s.R,steps,`P<sub>R</sub> = E<sub>R</sub>²/R = ${fmt(s.ER)}²/${fmt(s.R)} = <em>${fmt(s.ER*s.ER/s.R)} W</em>`);
+  if(s.PR!==undefined&&s.R!==undefined&&s.R>0) pracSet(s,'IR',Math.sqrt(s.PR/s.R),steps,`I<sub>R</sub> = √(P<sub>R</sub>/R) = √(${fmt(s.PR)}/${fmt(s.R)}) = <em>${fmt(Math.sqrt(s.PR/s.R))} A</em>`);
+  if(s.PR!==undefined&&s.IR!==undefined&&s.IR>0) pracSet(s,'ER',s.PR/s.IR,steps,`E<sub>R</sub> = P<sub>R</sub>/I<sub>R</sub> = ${fmt(s.PR)}/${fmt(s.IR)} = <em>${fmt(s.PR/s.IR)} V</em>`);
+  if(s.PR!==undefined&&s.ER!==undefined&&s.ER>0) pracSet(s,'IR',s.PR/s.ER,steps,`I<sub>R</sub> = P<sub>R</sub>/E<sub>R</sub> = ${fmt(s.PR)}/${fmt(s.ER)} = <em>${fmt(s.PR/s.ER)} A</em>`);
+  if(s.PR!==undefined&&s.IR!==undefined&&s.IR>0) pracSet(s,'R',s.PR/(s.IR*s.IR),steps,`R = P<sub>R</sub>/I<sub>R</sub>² = ${fmt(s.PR)}/${fmt(s.IR)}² = <em>${fmt(s.PR/(s.IR*s.IR))} Ω</em>`);
+  if(s.EL!==undefined&&s.IL!==undefined) pracSet(s,'QL',s.EL*s.IL,steps,`Q<sub>L</sub> = E<sub>L</sub>·I<sub>L</sub> = ${fmt(s.EL)}·${fmt(s.IL)} = <em>${fmt(s.EL*s.IL)} VAR</em>`);
+  if(s.QL!==undefined&&s.IL!==undefined&&s.IL>0) pracSet(s,'EL',s.QL/s.IL,steps,`E<sub>L</sub> = Q<sub>L</sub>/I<sub>L</sub> = ${fmt(s.QL)}/${fmt(s.IL)} = <em>${fmt(s.QL/s.IL)} V</em>`);
+  if(s.QL!==undefined&&s.EL!==undefined&&s.EL>0) pracSet(s,'IL',s.QL/s.EL,steps,`I<sub>L</sub> = Q<sub>L</sub>/E<sub>L</sub> = ${fmt(s.QL)}/${fmt(s.EL)} = <em>${fmt(s.QL/s.EL)} A</em>`);
+  if(s.QL!==undefined&&s.XL!==undefined&&s.XL>0) pracSet(s,'IL',Math.sqrt(s.QL/s.XL),steps,`I<sub>L</sub> = √(Q<sub>L</sub>/X<sub>L</sub>) = √(${fmt(s.QL)}/${fmt(s.XL)}) = <em>${fmt(Math.sqrt(s.QL/s.XL))} A</em>`);
+  if(s.EC!==undefined&&s.IC!==undefined) pracSet(s,'QC',s.EC*s.IC,steps,`Q<sub>C</sub> = E<sub>C</sub>·I<sub>C</sub> = ${fmt(s.EC)}·${fmt(s.IC)} = <em>${fmt(s.EC*s.IC)} VAR</em>`);
+  if(s.QC!==undefined&&s.IC!==undefined&&s.IC>0) pracSet(s,'EC',s.QC/s.IC,steps,`E<sub>C</sub> = Q<sub>C</sub>/I<sub>C</sub> = ${fmt(s.QC)}/${fmt(s.IC)} = <em>${fmt(s.QC/s.IC)} V</em>`);
+  if(s.QC!==undefined&&s.EC!==undefined&&s.EC>0) pracSet(s,'IC',s.QC/s.EC,steps,`I<sub>C</sub> = Q<sub>C</sub>/E<sub>C</sub> = ${fmt(s.QC)}/${fmt(s.EC)} = <em>${fmt(s.QC/s.EC)} A</em>`);
+  if(s.QC!==undefined&&s.XC!==undefined&&s.XC>0) pracSet(s,'IC',Math.sqrt(s.QC/s.XC),steps,`I<sub>C</sub> = √(Q<sub>C</sub>/X<sub>C</sub>) = √(${fmt(s.QC)}/${fmt(s.XC)}) = <em>${fmt(Math.sqrt(s.QC/s.XC))} A</em>`);
+
+  // ── Power triangle: derive S from PR, QL, QC ──
+  if(s.PR!==undefined&&s.QL!==undefined&&s.QC!==undefined){
+    const Qnet=s.QC-s.QL;
+    const Sc=Math.sqrt(s.PR*s.PR+Qnet*Qnet);
+    pracSet(s,'S',Sc,steps,`S = √(P<sub>R</sub>²+(Q<sub>C</sub>−Q<sub>L</sub>)²) = √(${fmt(s.PR)}²+(${fmt(s.QC)}−${fmt(s.QL)})²) = <em>${fmt(Sc)} VA</em>`);
+  }
+  if(s.S!==undefined&&s.PR!==undefined&&s.S>=s.PR){
+    const Qnet=Math.sqrt(Math.max(0,s.S*s.S-s.PR*s.PR));
+    if(!noC&&s.QL!==undefined&&s.QC===undefined) pracSet(s,'QC',s.QL+Qnet,steps,`Q<sub>C</sub> = Q<sub>L</sub>+√(S²−P²) = ${fmt(s.QL)}+√(${fmt(s.S)}²−${fmt(s.PR)}²) = <em>${fmt(s.QL+Qnet)} VAR</em>`);
+    if(!noL&&s.QC!==undefined&&s.QL===undefined){const ql=s.QC-Qnet;pracSet(s,'QL',Math.abs(ql),steps,`Q<sub>L</sub> = Q<sub>C</sub>−√(S²−P²) = ${fmt(s.QC)}−√(${fmt(s.S)}²−${fmt(s.PR)}²) = <em>${fmt(Math.abs(ql))} VAR</em>`);}
+  }
+  if(s.S!==undefined&&s.QL!==undefined&&s.QC!==undefined&&s.PR===undefined){
+    const Qnet=s.QC-s.QL,PRsq=s.S*s.S-Qnet*Qnet;
+    if(PRsq>=0) pracSet(s,'PR',Math.sqrt(PRsq),steps,`P<sub>R</sub> = √(S²−(Q<sub>C</sub>−Q<sub>L</sub>)²) = √(${fmt(s.S)}²−(${fmt(s.QC)}−${fmt(s.QL)})²) = <em>${fmt(Math.sqrt(PRsq))} W</em>`);
+  }
+  // Branch currents from Q and X: Q=I_branch²·X → I_branch=√(Q/X)
+  if(s.QL!==undefined&&s.XL!==undefined&&s.XL>0) pracSet(s,'IL',Math.sqrt(s.QL/s.XL),steps,`I<sub>L</sub> = √(Q<sub>L</sub>/X<sub>L</sub>) = √(${fmt(s.QL)}/${fmt(s.XL)}) = <em>${fmt(Math.sqrt(s.QL/s.XL))} A</em>`);
+  if(s.QC!==undefined&&s.XC!==undefined&&s.XC>0) pracSet(s,'IC',Math.sqrt(s.QC/s.XC),steps,`I<sub>C</sub> = √(Q<sub>C</sub>/X<sub>C</sub>) = √(${fmt(s.QC)}/${fmt(s.XC)}) = <em>${fmt(Math.sqrt(s.QC/s.XC))} A</em>`);
+  if(s.PR!==undefined&&s.R!==undefined&&s.R>0) pracSet(s,'IR',Math.sqrt(s.PR/s.R),steps,`I<sub>R</sub> = √(P<sub>R</sub>/R) = √(${fmt(s.PR)}/${fmt(s.R)}) = <em>${fmt(Math.sqrt(s.PR/s.R))} A</em>`);
+  if(s.E!==undefined&&s.I!==undefined) pracSet(s,'S',s.E*s.I,steps,`S = E·I = ${fmt(s.E)}·${fmt(s.I)} = <em>${fmt(s.E*s.I)} VA</em>`);
+  if(s.S!==undefined&&s.I!==undefined&&s.I>0) pracSet(s,'E',s.S/s.I,steps,`E = S/I = ${fmt(s.S)}/${fmt(s.I)} = <em>${fmt(s.S/s.I)} V</em>`);
+  if(s.S!==undefined&&s.E!==undefined&&s.E>0) pracSet(s,'I',s.S/s.E,steps,`I = S/E = ${fmt(s.S)}/${fmt(s.E)} = <em>${fmt(s.S/s.E)} A</em>`);
+  if(s.S!==undefined&&s.PF!==undefined){pracSet(s,'PR',s.S*s.PF,steps,`P<sub>R</sub> = S·PF = ${fmt(s.S)}·${fmt(s.PF*100)}% = <em>${fmt(s.S*s.PF)} W</em>`);s._Qtot=s.S*Math.sqrt(Math.max(0,1-s.PF*s.PF));}
+  if(s.PR!==undefined&&s.S!==undefined&&s.S>0) pracSet(s,'PF',s.PR/s.S,steps,`PF = P<sub>R</sub>/S = ${fmt(s.PR)}/${fmt(s.S)} = <em>${fmt(s.PR/s.S*100)}%</em>`);
+  // Impedance
+  const Xnet=(s.XL!==undefined&&s.XC!==undefined)?s.XL-s.XC:undefined;
+  if(s.R!==undefined&&Xnet!==undefined){const Zc=Math.sqrt(s.R*s.R+Xnet*Xnet);pracSet(s,'Z',Zc,steps,`|Z| = √(R²+(X<sub>L</sub>−X<sub>C</sub>)²) = √(${fmt(s.R)}²+(${fmt(s.XL)}−${fmt(s.XC)})²) = <em>${fmt(Zc)} Ω</em>`);}
+  // R = √(Z² − X²) when Z and both reactances are known
+  if(s.Z!==undefined&&Xnet!==undefined&&s.R===undefined){
+    const Rsq=s.Z*s.Z-Xnet*Xnet;
+    if(Rsq>=0) pracSet(s,'R',Math.sqrt(Rsq),steps,`R = √(|Z|²−(X<sub>L</sub>−X<sub>C</sub>)²) = √(${fmt(s.Z)}²−(${fmt(s.XL)}−${fmt(s.XC)})²) = <em>${fmt(Math.sqrt(Rsq))} Ω</em>`);
+  }
+  if(s.E!==undefined&&s.I!==undefined&&s.I>0) pracSet(s,'Z',s.E/s.I,steps,`|Z| = E/I = ${fmt(s.E)}/${fmt(s.I)} = <em>${fmt(s.E/s.I)} Ω</em>`);
+  if(s.I!==undefined&&s.Z!==undefined) pracSet(s,'E',s.I*s.Z,steps,`E = I·|Z| = ${fmt(s.I)}·${fmt(s.Z)} = <em>${fmt(s.I*s.Z)} V</em>`);
+  if(s.E!==undefined&&s.Z!==undefined&&s.Z>0) pracSet(s,'I',s.E/s.Z,steps,`I = E/|Z| = ${fmt(s.E)}/${fmt(s.Z)} = <em>${fmt(s.E/s.Z)} A</em>`);
+  if(s.R!==undefined&&s.Z!==undefined&&s.Z>0) pracSet(s,'PF',s.R/s.Z,steps,`PF = R/|Z| = ${fmt(s.R)}/${fmt(s.Z)} = <em>${fmt(s.R/s.Z*100)}%</em>`);
+  if(s.PF!==undefined&&s.Z!==undefined) pracSet(s,'R',s.PF*s.Z,steps,`R = PF·|Z| = ${fmt(s.PF*100)}%·${fmt(s.Z)} = <em>${fmt(s.PF*s.Z)} Ω</em>`);
+  if(s.PF!==undefined&&s.R!==undefined&&s.PF>0) pracSet(s,'Z',s.R/s.PF,steps,`|Z| = R/PF = ${fmt(s.R)}/${fmt(s.PF*100)}% = <em>${fmt(s.R/s.PF)} Ω</em>`);
+  if(s.Z!==undefined&&s.R!==undefined&&s.Z>=s.R){
+    const Xm=Math.sqrt(Math.max(0,s.Z*s.Z-s.R*s.R));
+    if(!noC&&s.XL!==undefined&&s.XC===undefined){const xc=s.XL-Xm,best=xc>=0?xc:s.XL+Xm;pracSet(s,'XC',best,steps,`X<sub>C</sub> = X<sub>L</sub>±√(|Z|²−R²) = ${fmt(s.XL)}±√(${fmt(s.Z)}²−${fmt(s.R)}²) = <em>${fmt(best)} Ω</em>`);}
+    if(!noL&&s.XC!==undefined&&s.XL===undefined) pracSet(s,'XL',s.XC+Xm,steps,`X<sub>L</sub> = X<sub>C</sub>+√(|Z|²−R²) = ${fmt(s.XC)}+√(${fmt(s.Z)}²−${fmt(s.R)}²) = <em>${fmt(s.XC+Xm)} Ω</em>`);
+  }
+  // ── Phase angle rules (series) ──
+  // phi stored in degrees; PF = cos(φ), R = Z·cos(φ), Xnet = Z·sin(φ)
+  if(s.phi!==undefined&&s.PF===undefined){const r=s.phi*Math.PI/180;pracSet(s,'PF',Math.cos(r),steps,`PF = cos(φ) = cos(${fmt(s.phi)}°) = <em>${fmt(Math.cos(r)*100)}%</em>`);}
+  if(s.PF!==undefined&&s.phi===undefined){const a=Math.acos(Math.min(1,Math.max(0,s.PF)))*180/Math.PI;pracSet(s,'phi',a,steps,`φ = acos(PF) = acos(${fmt(s.PF*100)}%) = <em>${fmt(a)}°</em>`);}
+  if(s.phi!==undefined&&s.Z!==undefined&&s.R===undefined){const r=s.phi*Math.PI/180;const Rv=s.Z*Math.cos(r);pracSet(s,'R',Rv,steps,`R = |Z|·cos(φ) = ${fmt(s.Z)}·cos(${fmt(s.phi)}°) = <em>${fmt(Rv)} Ω</em>`);}
+  if(s.phi!==undefined&&s.Z!==undefined){const r=s.phi*Math.PI/180;const Xv=s.Z*Math.abs(Math.sin(r));if(!noC&&s.XL!==undefined&&s.XC===undefined)pracSet(s,'XC',Math.max(0,s.XL-Xv),steps,`X<sub>C</sub> = X<sub>L</sub>−|Z|·sin(φ) = ${fmt(s.XL)}−${fmt(s.Z)}·sin(${fmt(s.phi)}°) = <em>${fmt(Math.max(0,s.XL-Xv))} Ω</em>`);if(!noL&&s.XC!==undefined&&s.XL===undefined)pracSet(s,'XL',s.XC+Xv,steps,`X<sub>L</sub> = X<sub>C</sub>+|Z|·sin(φ) = ${fmt(s.XC)}+${fmt(s.Z)}·sin(${fmt(s.phi)}°) = <em>${fmt(s.XC+Xv)} Ω</em>`);}
+  if(s.R!==undefined&&s.phi!==undefined&&s.Z===undefined){const r=s.phi*Math.PI/180;if(Math.cos(r)>0.001){const Zv=s.R/Math.cos(r);pracSet(s,'Z',Zv,steps,`|Z| = R/cos(φ) = ${fmt(s.R)}/cos(${fmt(s.phi)}°) = <em>${fmt(Zv)} Ω</em>`);}}
+  if(s.PF!==undefined&&s.phi===undefined) s.phi=Math.acos(Math.min(1,Math.max(0,s.PF)))*180/Math.PI;
+  if(s.E!==undefined&&s.I!==undefined){s.S=s.E*s.I;if(s.PF!==undefined){s.P=s.S*s.PF;s.Q=s.S*Math.sqrt(Math.max(0,1-s.PF*s.PF));}}
+}
+
+function pracParallelRules(s,steps,noL,noC){
+  const w=(s.f!==undefined&&s.f>0)?2*Math.PI*s.f:undefined;
+  if(w&&s.L!==undefined) pracSet(s,'XL',w*s.L,steps,`X<sub>L</sub> = 2πfL = 2π·${fmt(s.f)}·${fmt(s.L*1000)} = <em>${fmt(w*s.L)} Ω</em>`);
+  if(w&&s.XL!==undefined) pracSet(s,'L',s.XL/w,steps,`L = X<sub>L</sub>/(2πf) = ${fmt(s.XL)}/(2π·${fmt(s.f)}) = <em>${fmt(s.XL/w*1000)} mH</em>`);
+  if(s.L!==undefined&&s.XL!==undefined&&s.f===undefined&&s.XL>0&&s.L>0) pracSet(s,'f',s.XL/(2*Math.PI*s.L),steps,`f = X<sub>L</sub>/(2πL) = ${fmt(s.XL)}/(2π·${fmt(s.L*1000)} mH) = <em>${fmt(s.XL/(2*Math.PI*s.L))} Hz</em>`);
+  if(w&&s.C!==undefined) pracSet(s,'XC',1/(w*s.C),steps,`X<sub>C</sub> = 1/(2πfC) = 1/(2π·${fmt(s.f)}·${fmt(s.C*1e6)} μF) = <em>${fmt(1/(w*s.C))} Ω</em>`);
+  if(w&&s.XC!==undefined) pracSet(s,'C',1/(w*s.XC),steps,`C = 1/(2πfX<sub>C</sub>) = 1/(2π·${fmt(s.f)}·${fmt(s.XC)}) = <em>${fmt(1e6/(w*s.XC))} μF</em>`);
+  if(s.C!==undefined&&s.XC!==undefined&&s.f===undefined&&s.XC>0&&s.C>0) pracSet(s,'f',1/(2*Math.PI*s.C*s.XC),steps,`f = 1/(2πCX<sub>C</sub>) = 1/(2π·${fmt(s.C*1e6)} μF·${fmt(s.XC)}) = <em>${fmt(1/(2*Math.PI*s.C*s.XC))} Hz</em>`);
+  // ── Resonant frequency rules (topology-independent) ──
+  // f0 = 1/(2π√(LC)),  C = 1/(4π²f0²L),  L = 1/(4π²f0²C)
+  if(s.L!==undefined&&s.C!==undefined&&s.L>0&&s.C>0)
+    pracSet(s,'f0',1/(2*Math.PI*Math.sqrt(s.L*s.C)),steps,`f<sub>r</sub> = 1/(2π√(L·C)) = 1/(2π√(${fmt(s.L*1000)} mH × ${fmt(s.C*1e6)} μF)) = <em>${fmt(1/(2*Math.PI*Math.sqrt(s.L*s.C)))} Hz</em>`);
+  if(s.f0!==undefined&&s.L!==undefined&&s.L>0&&s.C===undefined){
+    const Cv=1/(4*Math.PI*Math.PI*s.f0*s.f0*s.L);
+    pracSet(s,'C',Cv,steps,`C = 1/(4π²f<sub>r</sub>²·L) = 1/(4π²·${fmt(s.f0)}²·${fmt(s.L*1000)} mH) = <em>${fmt(Cv*1e6)} μF</em>`);
+  }
+  if(s.f0!==undefined&&s.C!==undefined&&s.C>0&&s.L===undefined){
+    const Lv=1/(4*Math.PI*Math.PI*s.f0*s.f0*s.C);
+    pracSet(s,'L',Lv,steps,`L = 1/(4π²f<sub>r</sub>²·C) = 1/(4π²·${fmt(s.f0)}²·${fmt(s.C*1e6)} μF) = <em>${fmt(Lv*1000)} mH</em>`);
+  }
+  const E=s.E;
+  if(E!==undefined){pracSet(s,'ER',E,steps,null);pracSet(s,'EL',E,steps,null);pracSet(s,'EC',E,steps,null);}
+  if(s.ER!==undefined&&s.E===undefined) pracSet(s,'E',s.ER,steps,`E = E<sub>R</sub> = ${fmt(s.ER)} = <em>${fmt(s.ER)} V</em>  (parallel)`);
+  if(!noL&&s.EL!==undefined&&s.E===undefined) pracSet(s,'E',s.EL,steps,`E = E<sub>L</sub> = ${fmt(s.EL)} = <em>${fmt(s.EL)} V</em>  (parallel)`);
+  if(!noC&&s.EC!==undefined&&s.E===undefined) pracSet(s,'E',s.EC,steps,`E = E<sub>C</sub> = ${fmt(s.EC)} = <em>${fmt(s.EC)} V</em>  (parallel)`);
+  if(s.R!==undefined&&s.E!==undefined&&s.R>0) pracSet(s,'IR',s.E/s.R,steps,`I<sub>R</sub> = E/R = ${fmt(s.E)}/${fmt(s.R)} = <em>${fmt(s.E/s.R)} A</em>`);
+  if(s.ER!==undefined&&s.R!==undefined&&s.R>0) pracSet(s,'IR',s.ER/s.R,steps,`I<sub>R</sub> = E<sub>R</sub>/R = ${fmt(s.ER)}/${fmt(s.R)} = <em>${fmt(s.ER/s.R)} A</em>`);
+  if(s.IR!==undefined&&s.R!==undefined) pracSet(s,'ER',s.IR*s.R,steps,`E<sub>R</sub> = I<sub>R</sub>·R = ${fmt(s.IR)}·${fmt(s.R)} = <em>${fmt(s.IR*s.R)} V</em>`);
+  if(s.IR!==undefined&&s.ER!==undefined&&s.IR>0) pracSet(s,'R',s.ER/s.IR,steps,`R = E<sub>R</sub>/I<sub>R</sub> = ${fmt(s.ER)}/${fmt(s.IR)} = <em>${fmt(s.ER/s.IR)} Ω</em>`);
+  if(s.IR!==undefined&&s.E!==undefined&&s.IR>0) pracSet(s,'R',s.E/s.IR,steps,`R = E/I<sub>R</sub> = ${fmt(s.E)}/${fmt(s.IR)} = <em>${fmt(s.E/s.IR)} Ω</em>`);
+  if(s.XL!==undefined&&s.E!==undefined&&s.XL>0) pracSet(s,'IL',s.E/s.XL,steps,`I<sub>L</sub> = E/X<sub>L</sub> = ${fmt(s.E)}/${fmt(s.XL)} = <em>${fmt(s.E/s.XL)} A</em>`);
+  if(s.EL!==undefined&&s.XL!==undefined&&s.XL>0) pracSet(s,'IL',s.EL/s.XL,steps,`I<sub>L</sub> = E<sub>L</sub>/X<sub>L</sub> = ${fmt(s.EL)}/${fmt(s.XL)} = <em>${fmt(s.EL/s.XL)} A</em>`);
+  if(s.IL!==undefined&&s.XL!==undefined) pracSet(s,'EL',s.IL*s.XL,steps,`E<sub>L</sub> = I<sub>L</sub>·X<sub>L</sub> = ${fmt(s.IL)}·${fmt(s.XL)} = <em>${fmt(s.IL*s.XL)} V</em>`);
+  if(s.IL!==undefined&&s.EL!==undefined&&s.IL>0) pracSet(s,'XL',s.EL/s.IL,steps,`X<sub>L</sub> = E<sub>L</sub>/I<sub>L</sub> = ${fmt(s.EL)}/${fmt(s.IL)} = <em>${fmt(s.EL/s.IL)} Ω</em>`);
+  if(s.IL!==undefined&&s.E!==undefined&&s.IL>0) pracSet(s,'XL',s.E/s.IL,steps,`X<sub>L</sub> = E/I<sub>L</sub> = ${fmt(s.E)}/${fmt(s.IL)} = <em>${fmt(s.E/s.IL)} Ω</em>`);
+  if(s.XC!==undefined&&s.E!==undefined&&s.XC>0) pracSet(s,'IC',s.E/s.XC,steps,`I<sub>C</sub> = E/X<sub>C</sub> = ${fmt(s.E)}/${fmt(s.XC)} = <em>${fmt(s.E/s.XC)} A</em>`);
+  if(s.EC!==undefined&&s.XC!==undefined&&s.XC>0) pracSet(s,'IC',s.EC/s.XC,steps,`I<sub>C</sub> = E<sub>C</sub>/X<sub>C</sub> = ${fmt(s.EC)}/${fmt(s.XC)} = <em>${fmt(s.EC/s.XC)} A</em>`);
+  if(s.IC!==undefined&&s.XC!==undefined) pracSet(s,'EC',s.IC*s.XC,steps,`E<sub>C</sub> = I<sub>C</sub>·X<sub>C</sub> = ${fmt(s.IC)}·${fmt(s.XC)} = <em>${fmt(s.IC*s.XC)} V</em>`);
+  if(s.IC!==undefined&&s.EC!==undefined&&s.IC>0) pracSet(s,'XC',s.EC/s.IC,steps,`X<sub>C</sub> = E<sub>C</sub>/I<sub>C</sub> = ${fmt(s.EC)}/${fmt(s.IC)} = <em>${fmt(s.EC/s.IC)} Ω</em>`);
+  if(s.IC!==undefined&&s.E!==undefined&&s.IC>0) pracSet(s,'XC',s.E/s.IC,steps,`X<sub>C</sub> = E/I<sub>C</sub> = ${fmt(s.E)}/${fmt(s.IC)} = <em>${fmt(s.E/s.IC)} Ω</em>`);
+  // Component power
+  if(s.ER!==undefined&&s.IR!==undefined) pracSet(s,'PR',s.ER*s.IR,steps,`P<sub>R</sub> = E<sub>R</sub>·I<sub>R</sub> = ${fmt(s.ER)}·${fmt(s.IR)} = <em>${fmt(s.ER*s.IR)} W</em>`);
+  if(s.IR!==undefined&&s.R!==undefined) pracSet(s,'PR',s.IR*s.IR*s.R,steps,`P<sub>R</sub> = I<sub>R</sub>²·R = ${fmt(s.IR)}²·${fmt(s.R)} = <em>${fmt(s.IR*s.IR*s.R)} W</em>`);
+  if(s.ER!==undefined&&s.R!==undefined&&s.R>0) pracSet(s,'PR',s.ER*s.ER/s.R,steps,`P<sub>R</sub> = E<sub>R</sub>²/R = ${fmt(s.ER)}²/${fmt(s.R)} = <em>${fmt(s.ER*s.ER/s.R)} W</em>`);
+  if(s.PR!==undefined&&s.R!==undefined&&s.R>0) pracSet(s,'IR',Math.sqrt(s.PR/s.R),steps,`I<sub>R</sub> = √(P<sub>R</sub>/R) = √(${fmt(s.PR)}/${fmt(s.R)}) = <em>${fmt(Math.sqrt(s.PR/s.R))} A</em>`);
+  if(s.PR!==undefined&&s.IR!==undefined&&s.IR>0) pracSet(s,'ER',s.PR/s.IR,steps,`E<sub>R</sub> = P<sub>R</sub>/I<sub>R</sub> = ${fmt(s.PR)}/${fmt(s.IR)} = <em>${fmt(s.PR/s.IR)} V</em>`);
+  if(s.PR!==undefined&&s.ER!==undefined&&s.ER>0) pracSet(s,'IR',s.PR/s.ER,steps,`I<sub>R</sub> = P<sub>R</sub>/E<sub>R</sub> = ${fmt(s.PR)}/${fmt(s.ER)} = <em>${fmt(s.PR/s.ER)} A</em>`);
+  if(s.PR!==undefined&&s.IR!==undefined&&s.IR>0) pracSet(s,'R',s.PR/(s.IR*s.IR),steps,`R = P<sub>R</sub>/I<sub>R</sub>² = ${fmt(s.PR)}/${fmt(s.IR)}² = <em>${fmt(s.PR/(s.IR*s.IR))} Ω</em>`);
+  if(s.EL!==undefined&&s.IL!==undefined) pracSet(s,'QL',s.EL*s.IL,steps,`Q<sub>L</sub> = E<sub>L</sub>·I<sub>L</sub> = ${fmt(s.EL)}·${fmt(s.IL)} = <em>${fmt(s.EL*s.IL)} VAR</em>`);
+  if(s.QL!==undefined&&s.IL!==undefined&&s.IL>0) pracSet(s,'EL',s.QL/s.IL,steps,`E<sub>L</sub> = Q<sub>L</sub>/I<sub>L</sub> = ${fmt(s.QL)}/${fmt(s.IL)} = <em>${fmt(s.QL/s.IL)} V</em>`);
+  if(s.QL!==undefined&&s.EL!==undefined&&s.EL>0) pracSet(s,'IL',s.QL/s.EL,steps,`I<sub>L</sub> = Q<sub>L</sub>/E<sub>L</sub> = ${fmt(s.QL)}/${fmt(s.EL)} = <em>${fmt(s.QL/s.EL)} A</em>`);
+  if(s.QL!==undefined&&s.XL!==undefined&&s.XL>0) pracSet(s,'IL',Math.sqrt(s.QL/s.XL),steps,`I<sub>L</sub> = √(Q<sub>L</sub>/X<sub>L</sub>) = √(${fmt(s.QL)}/${fmt(s.XL)}) = <em>${fmt(Math.sqrt(s.QL/s.XL))} A</em>`);
+  if(s.EC!==undefined&&s.IC!==undefined) pracSet(s,'QC',s.EC*s.IC,steps,`Q<sub>C</sub> = E<sub>C</sub>·I<sub>C</sub> = ${fmt(s.EC)}·${fmt(s.IC)} = <em>${fmt(s.EC*s.IC)} VAR</em>`);
+  if(s.QC!==undefined&&s.IC!==undefined&&s.IC>0) pracSet(s,'EC',s.QC/s.IC,steps,`E<sub>C</sub> = Q<sub>C</sub>/I<sub>C</sub> = ${fmt(s.QC)}/${fmt(s.IC)} = <em>${fmt(s.QC/s.IC)} V</em>`);
+  if(s.QC!==undefined&&s.EC!==undefined&&s.EC>0) pracSet(s,'IC',s.QC/s.EC,steps,`I<sub>C</sub> = Q<sub>C</sub>/E<sub>C</sub> = ${fmt(s.QC)}/${fmt(s.EC)} = <em>${fmt(s.QC/s.EC)} A</em>`);
+  if(s.QC!==undefined&&s.XC!==undefined&&s.XC>0) pracSet(s,'IC',Math.sqrt(s.QC/s.XC),steps,`I<sub>C</sub> = √(Q<sub>C</sub>/X<sub>C</sub>) = √(${fmt(s.QC)}/${fmt(s.XC)}) = <em>${fmt(Math.sqrt(s.QC/s.XC))} A</em>`);
+  // Z derived from E/I after total current found via phasor sum
+  if(s.IR!==undefined&&s.IL!==undefined&&s.IC!==undefined){const It=Math.sqrt(s.IR*s.IR+Math.pow(s.IL-s.IC,2));pracSet(s,'I',It,steps,`I = √(I<sub>R</sub>²+(I<sub>L</sub>−I<sub>C</sub>)²) = √(${fmt(s.IR)}²+(${fmt(s.IL)}−${fmt(s.IC)})²) = <em>${fmt(It)} A</em>`);}
+  // RL parallel phasor sum: I = √(IR²+IL²)  — no capacitor
+  if(noC&&s.IR!==undefined&&s.IL!==undefined&&s.I===undefined){const It=Math.sqrt(s.IR*s.IR+s.IL*s.IL);pracSet(s,'I',It,steps,`I = √(I<sub>R</sub>²+I<sub>L</sub>²) = √(${fmt(s.IR)}²+${fmt(s.IL)}²) = <em>${fmt(It)} A</em>`);}
+  // RC parallel phasor sum: I = √(IR²+IC²)  — no inductor
+  if(noL&&s.IR!==undefined&&s.IC!==undefined&&s.I===undefined){const It=Math.sqrt(s.IR*s.IR+s.IC*s.IC);pracSet(s,'I',It,steps,`I = √(I<sub>R</sub>²+I<sub>C</sub>²) = √(${fmt(s.IR)}²+${fmt(s.IC)}²) = <em>${fmt(It)} A</em>`);}
+
+  // ── Power triangle: derive S from PR, QL, QC ──
+  if(s.PR!==undefined&&s.QL!==undefined&&s.QC!==undefined){
+    const Qnet=s.QC-s.QL;
+    const Sc=Math.sqrt(s.PR*s.PR+Qnet*Qnet);
+    pracSet(s,'S',Sc,steps,`S = √(P<sub>R</sub>²+(Q<sub>C</sub>−Q<sub>L</sub>)²) = √(${fmt(s.PR)}²+(${fmt(s.QC)}−${fmt(s.QL)})²) = <em>${fmt(Sc)} VA</em>`);
+  }
+  if(s.S!==undefined&&s.PR!==undefined&&s.S>=s.PR){
+    const Qnet=Math.sqrt(Math.max(0,s.S*s.S-s.PR*s.PR));
+    if(!noC&&s.QL!==undefined&&s.QC===undefined) pracSet(s,'QC',s.QL+Qnet,steps,`Q<sub>C</sub> = Q<sub>L</sub>+√(S²−P²) = ${fmt(s.QL)}+√(${fmt(s.S)}²−${fmt(s.PR)}²) = <em>${fmt(s.QL+Qnet)} VAR</em>`);
+    if(!noL&&s.QC!==undefined&&s.QL===undefined){const ql=s.QC-Qnet;pracSet(s,'QL',Math.abs(ql),steps,`Q<sub>L</sub> = Q<sub>C</sub>−√(S²−P²) = ${fmt(s.QC)}−√(${fmt(s.S)}²−${fmt(s.PR)}²) = <em>${fmt(Math.abs(ql))} VAR</em>`);}
+  }
+  if(s.S!==undefined&&s.QL!==undefined&&s.QC!==undefined&&s.PR===undefined){
+    const Qnet=s.QC-s.QL,PRsq=s.S*s.S-Qnet*Qnet;
+    if(PRsq>=0) pracSet(s,'PR',Math.sqrt(PRsq),steps,`P<sub>R</sub> = √(S²−(Q<sub>C</sub>−Q<sub>L</sub>)²) = √(${fmt(s.S)}²−(${fmt(s.QC)}−${fmt(s.QL)})²) = <em>${fmt(Math.sqrt(PRsq))} W</em>`);
+  }
+  // Branch currents from Q and X: Q=I_branch²·X → I_branch=√(Q/X)
+  if(s.QL!==undefined&&s.XL!==undefined&&s.XL>0) pracSet(s,'IL',Math.sqrt(s.QL/s.XL),steps,`I<sub>L</sub> = √(Q<sub>L</sub>/X<sub>L</sub>) = √(${fmt(s.QL)}/${fmt(s.XL)}) = <em>${fmt(Math.sqrt(s.QL/s.XL))} A</em>`);
+  if(s.QC!==undefined&&s.XC!==undefined&&s.XC>0) pracSet(s,'IC',Math.sqrt(s.QC/s.XC),steps,`I<sub>C</sub> = √(Q<sub>C</sub>/X<sub>C</sub>) = √(${fmt(s.QC)}/${fmt(s.XC)}) = <em>${fmt(Math.sqrt(s.QC/s.XC))} A</em>`);
+  if(s.PR!==undefined&&s.R!==undefined&&s.R>0) pracSet(s,'IR',Math.sqrt(s.PR/s.R),steps,`I<sub>R</sub> = √(P<sub>R</sub>/R) = √(${fmt(s.PR)}/${fmt(s.R)}) = <em>${fmt(Math.sqrt(s.PR/s.R))} A</em>`);
+  if(s.E!==undefined&&s.I!==undefined) pracSet(s,'S',s.E*s.I,steps,`S = E·I = ${fmt(s.E)}·${fmt(s.I)} = <em>${fmt(s.E*s.I)} VA</em>`);
+  if(s.S!==undefined&&s.I!==undefined&&s.I>0) pracSet(s,'E',s.S/s.I,steps,`E = S/I = ${fmt(s.S)}/${fmt(s.I)} = <em>${fmt(s.S/s.I)} V</em>`);
+  if(s.S!==undefined&&s.E!==undefined&&s.E>0) pracSet(s,'I',s.S/s.E,steps,`I = S/E = ${fmt(s.S)}/${fmt(s.E)} = <em>${fmt(s.S/s.E)} A</em>`);
+  if(s.E!==undefined&&s.I!==undefined&&s.I>0) pracSet(s,'Z',s.E/s.I,steps,`|Z| = E/I = ${fmt(s.E)}/${fmt(s.I)} = <em>${fmt(s.E/s.I)} Ω</em>`);
+  if(s.I!==undefined&&s.Z!==undefined) pracSet(s,'E',s.I*s.Z,steps,`E = I·|Z| = ${fmt(s.I)}·${fmt(s.Z)} = <em>${fmt(s.I*s.Z)} V</em>`);
+  if(s.E!==undefined&&s.Z!==undefined&&s.Z>0) pracSet(s,'I',s.E/s.Z,steps,`I = E/|Z| = ${fmt(s.E)}/${fmt(s.Z)} = <em>${fmt(s.E/s.Z)} A</em>`);
+  if(s.Z!==undefined&&s.R!==undefined&&s.R>0) pracSet(s,'PF',s.Z/s.R,steps,`PF = |Z|/R = ${fmt(s.Z)}/${fmt(s.R)} = <em>${fmt(s.Z/s.R*100)}%</em>`);
+  if(s.PF!==undefined&&s.Z!==undefined&&s.PF>0) pracSet(s,'R',s.Z/s.PF,steps,`R = |Z|/PF = ${fmt(s.Z)}/${fmt(s.PF*100)}% = <em>${fmt(s.Z/s.PF)} Ω</em>`);
+  if(s.S!==undefined&&s.PF!==undefined){pracSet(s,'PR',s.S*s.PF,steps,`P<sub>R</sub> = S·PF = ${fmt(s.S)}·${fmt(s.PF*100)}% = <em>${fmt(s.S*s.PF)} W</em>`);s._Qtot=s.S*Math.sqrt(Math.max(0,1-s.PF*s.PF));}
+  if(s.PR!==undefined&&s.S!==undefined&&s.S>0) pracSet(s,'PF',s.PR/s.S,steps,`PF = P<sub>R</sub>/S = ${fmt(s.PR)}/${fmt(s.S)} = <em>${fmt(s.PR/s.S*100)}%</em>`);
+  // ── Phase angle rules (parallel) ──
+  // phi stored in degrees; PF = cos(φ), R = Z/cos(φ) (parallel: PF = Z/R)
+  if(s.phi!==undefined&&s.PF===undefined){const r=s.phi*Math.PI/180;pracSet(s,'PF',Math.cos(r),steps,`PF = cos(φ) = cos(${fmt(s.phi)}°) = <em>${fmt(Math.cos(r)*100)}%</em>`);}
+  if(s.PF!==undefined&&s.phi===undefined){const a=Math.acos(Math.min(1,Math.max(0,s.PF)))*180/Math.PI;pracSet(s,'phi',a,steps,`φ = acos(PF) = acos(${fmt(s.PF*100)}%) = <em>${fmt(a)}°</em>`);}
+  if(s.phi!==undefined&&s.Z!==undefined&&s.R===undefined){const r=s.phi*Math.PI/180;if(Math.cos(r)>0.001){const Rv=s.Z/Math.cos(r);pracSet(s,'R',Rv,steps,`R = |Z|/cos(φ) = ${fmt(s.Z)}/cos(${fmt(s.phi)}°) = <em>${fmt(Rv)} Ω</em>`);}}
+  if(s.R!==undefined&&s.phi!==undefined&&s.Z===undefined){const r=s.phi*Math.PI/180;const Zv=s.R*Math.cos(r);pracSet(s,'Z',Zv,steps,`|Z| = R·cos(φ) = ${fmt(s.R)}·cos(${fmt(s.phi)}°) = <em>${fmt(Zv)} Ω</em>`);}
+  if(s.PF!==undefined&&s.phi===undefined) s.phi=Math.acos(Math.min(1,Math.max(0,s.PF)))*180/Math.PI;
+  if(s.E!==undefined&&s.I!==undefined){s.S=s.E*s.I;if(s.PF!==undefined){s.P=s.S*s.PF;s.Q=s.S*Math.sqrt(Math.max(0,1-s.PF*s.PF));}}
+}
+
+function pracConflictCheck(s,mode){
+  const tol=(a,b)=>Math.abs(a-b)/Math.max(Math.abs(a),Math.abs(b),1e-9)>0.006;
+  if(s.E!==undefined&&s.I!==undefined&&s.Z!==undefined)
+    if(tol(s.E,s.I*s.Z)) return`Conflict: E (${fmt(s.E)} V) ≠ I·Z (${fmt(s.I*s.Z)} V). Check E, I, or Z.`;
+  if(mode==='series'){
+    if(s.PF!==undefined&&s.R!==undefined&&s.Z!==undefined)
+      if(tol(s.PF,s.R/s.Z)) return`Conflict: PF (${fmt(s.PF*100)}%) ≠ R/Z (${fmt(s.R/s.Z*100)}%).`;
+    if(s.R!==undefined&&s.XL!==undefined&&s.XC!==undefined&&s.Z!==undefined){
+      const Xn=s.XL-s.XC,Zc=Math.sqrt(s.R*s.R+Xn*Xn);
+      if(tol(s.Z,Zc)) return`Conflict: |Z| (${fmt(s.Z)} Ω) ≠ √(R²+X²) (${fmt(Zc)} Ω).`;
+    }
+  } else {
+    if(s.PF!==undefined&&s.Z!==undefined&&s.R!==undefined)
+      if(tol(s.PF,s.Z/s.R)) return`Conflict: PF (${fmt(s.PF*100)}%) ≠ Z/R (${fmt(s.Z/s.R*100)}%).`;
+  }
+  if(s.PF!==undefined&&(s.PF<0||s.PF>1)) return`Power factor must be 0–100% (got ${fmt(s.PF*100)}%).`;
+  return null;
+}
+
+function pracSolve(){
+  const res=pracTrysolve(pracVals,pracMode,pracCircuitType);
+  const btn=document.getElementById('solveBtn');
+  btn.classList.remove('firing'); void btn.offsetWidth; btn.classList.add('firing');
+  setTimeout(()=>btn.classList.remove('firing'),500);
+  if(res.error) return;
+  const s=res.solved, steps=res.steps, isP=pracMode==='parallel';
+  const ct=pracCircuitType, showL=ct!=='RC', showC=ct!=='RL';
+  const {hasR,hasL,hasC}=res;
+  const gv=k=>pracVals[k]!==undefined;
+  function card(label,val,unit,color,given,customFmt){
+    if(val===undefined||val===null||isNaN(val)||!isFinite(val)) return'';
+    const dv=customFmt?customFmt(val):fmt(val);
+    const badge=given?'<span class="rcard-badge badge-given">GIVEN</span>':'<span class="rcard-badge badge-solved">SOLVED</span>';
+    return`<div class="rcard ${given?'given-card':'highlight'} animate-in" style="border-left-color:${color}"><span class="rcard-label">${label}</span><span class="rcard-val" style="color:${color}">${dv}<span style="font-size:10px;font-weight:400;color:var(--muted);margin-left:2px">${unit}</span></span>${badge}</div>`;
+  }
+  const phi=s.phi;
+  const f0=s.f0;  // derived by solver via f0 = 1/(2π√(LC))
+  const totalCards=
+    card('E<sub>rms</sub> — Source Voltage',s.E,'V','var(--v-color)',gv('E'))+
+    card('I<sub>rms</sub> — Total Current', s.I,'A','var(--i-color)',gv('I'))+
+    card('|Z| — Impedance',                s.Z,'Ω','var(--z-color)',gv('Z'))+
+    card('S — Apparent Power',             s.S,'VA','var(--z-color)',gv('S'))+
+    card('f — Frequency',                  s.f,'Hz','var(--v-color)',gv('f'))+
+    card('PF — Power Factor',s.PF!==undefined?s.PF*100:undefined,'%','var(--p-color)',gv('PF'))+
+    card(phi!==undefined&&Math.abs(phi)>3?(phi>0?'φ — Current LAGS':'φ — Current LEADS'):'φ — Phase Angle / Unity PF',s.phi,'°','var(--p-color)',gv('phi'))+
+    card('f<sub>r</sub> — Resonant Frequency',  f0,'Hz','var(--p-color)',gv('f0'));
+  const rCards=
+    card('E<sub>R</sub> — Voltage',s.ER,'V','var(--r-color)',gv('ER'))+
+    card('I<sub>R</sub> — Current',s.IR,'A','var(--r-color)',gv('IR'))+
+    card('R — Resistance',         s.R, 'Ω','var(--r-color)',gv('R'))+
+    card('P<sub>R</sub> — Power',  s.PR,'W','var(--r-color)',gv('PR'));
+  const lCards=
+    card('E<sub>L</sub> — Voltage',          s.EL,'V',  'var(--l-color)',gv('EL'))+
+    card('I<sub>L</sub> — Current',          s.IL,'A',  'var(--l-color)',gv('IL'))+
+    card('X<sub>L</sub> — Reactance',        s.XL,'Ω',  'var(--l-color)',gv('XL'))+
+    card('Q<sub>L</sub> — Reactive Power',   s.QL,'VAR','var(--l-color)',gv('QL'))+
+    card('L — Inductance',                   s.L, 'mH', 'var(--l-color)',gv('L'),v=>fmt(v*1000));
+  const cCards=
+    card('E<sub>C</sub> — Voltage',          s.EC,'V',  'var(--c-color)',gv('EC'))+
+    card('I<sub>C</sub> — Current',          s.IC,'A',  'var(--c-color)',gv('IC'))+
+    card('X<sub>C</sub> — Reactance',        s.XC,'Ω',  'var(--c-color)',gv('XC'))+
+    card('Q<sub>C</sub> — Reactive Power',   s.QC,'VAR','var(--c-color)',gv('QC'))+
+    card('C — Capacitance',                  s.C, 'μF', 'var(--c-color)',gv('C'),v=>fmt(v*1e6));
+  const stepsHTML=steps.length
+    ?steps.map((st,i)=>`<div class="step"><span class="step-num">${String(i+1).padStart(2,'0')}</span><span class="step-text">${st}</span></div>`).join('')
+    :'<div class="step"><span class="step-num">—</span><span class="step-text" style="color:var(--muted)">No derivation steps — all values were given directly.</span></div>';
+  document.getElementById('pracPresolveRow').style.display='none';
+  const rp=document.getElementById('resultsPanel'); rp.style.display=''; rp.innerHTML=`
+    <!-- 4-column results grid matching input layout -->
+    <div class="prac-results-grid animate-in">
+
+      <!-- TOTAL CIRCUIT -->
+      <div class="prac-res-col">
+        <div class="prac-cat-title" style="color:var(--v-color)">${isP?'PARALLEL':'SERIES'} · Total Circuit</div>
+        ${totalCards}
+      </div>
+
+      <!-- RESISTOR -->
+      <div class="prac-res-col r-cat">
+        <div class="prac-cat-title" style="color:var(--r-color)">Resistor</div>
+        ${rCards.trim()||'<div style="font-family:DM Mono,monospace;font-size:10px;color:var(--muted);padding:8px 0">No resistor values</div>'}
+      </div>
+
+      <!-- INDUCTOR -->
+      ${showL?`<div class="prac-res-col l-cat">
+        <div class="prac-cat-title" style="color:var(--l-color)">Inductor</div>
+        ${lCards.trim()||'<div style="font-family:DM Mono,monospace;font-size:10px;color:var(--muted);padding:8px 0">No inductor values</div>'}
+      </div>`:''}
+
+      <!-- CAPACITOR -->
+      ${showC?`<div class="prac-res-col c-cat">
+        <div class="prac-cat-title" style="color:var(--c-color)">Capacitor</div>
+        ${cCards.trim()||'<div style="font-family:DM Mono,monospace;font-size:10px;color:var(--muted);padding:8px 0">No capacitor values</div>'}
+      </div>`:''}
+
+    </div>
+
+    <!-- Steps left, Export+Import right -->
+    <div class="prac-results-footer animate-in">
+
+      <!-- LEFT: Solution Steps -->
+      <div class="prac-footer-steps result-section animate-in">
+        <div class="panel-title">SOLUTION STEPS</div>
+        <div class="steps-box">${stepsHTML}</div>
+      </div>
+
+
+        </div>
+
+      </div>
+    </div>`;
+  // Store last solved state for Send to Simulator
+  window._lastPracSolved = s;
+  window._lastPracMode   = pracMode;
+  const ioImp=document.getElementById('ioImport');
+  const ioExp=document.getElementById('ioExport');
+  if(ioImp) ioImp.style.display='none';
+  if(ioExp){
+    ioExp.style.display='';
+    const ec=document.getElementById('exportCode');
+    if(ec) ec.value=encodePractice(pracVals,pracMode,s);
+  }
+}
+
+
+/* ══════════════════════════════════════════
+   PROBLEM GENERATOR
+══════════════════════════════════════════ */
+
+// Pending generation — stored until confirmation
+let _pendingGen = null;
+
+// All 20 practice fields — a generated problem must resolve every one
+const GEN_ALL_FIELDS = ['E','I','Z','S','f','PF','phi','f0','ER','IR','R','PR','EL','IL','XL','QL','L','EC','IC','XC','QC','C'];
+
+// ── Value helpers ──
+function _pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function _rnd(min, max, step) {
+  const steps = Math.floor((max - min) / step);
+  return +(min + Math.floor(Math.random() * (steps + 1)) * step).toFixed(6);
+}
+
+const VOLTAGES = [120, 240, 277, 480];
+const FREQS    = [50, 60];
+
+// ── UNIFIED TEMPLATE POOL ──
+// Each template is a function that returns { mode, given, rating }
+// rating: 1 = ~11–12 steps, 2 = ~13–14 steps, 3 = ~15–16 steps
+// All templates validated: all 20 fields solveable, no R/L/C = 0
+
+function _buildCircuit() {
+  const E = _pick(VOLTAGES);
+  const f = _pick(FREQS);
+  const w = 2 * Math.PI * f;
+  const R   = _rnd(10,  500,  10);
+  const Lmh = _rnd(50,  2000, 50);
+  const Cuf = _rnd(5,   150,  5);
+  const L = Lmh * 0.001, C = Cuf * 1e-6;
+  const XL = w * L, XC = 1 / (w * C);
+  // Series quantities
+  const Xnet = XL - XC, Zs = Math.sqrt(R*R + Xnet*Xnet), Is = E / Zs;
+  const PRs = Is*Is*R, QLs = Is*Is*XL, QCs = Is*Is*XC, Ss = E*Is, PFs = PRs/Ss;
+  // Parallel quantities
+  const IRp = E/R, ILp = E/XL, ICp = E/XC;
+  const Ip = Math.sqrt(IRp*IRp + Math.pow(ILp-ICp, 2)), Zp = E/Ip;
+  const PRp = E*IRp, QLp = E*ILp, QCp = E*ICp, Sp = E*Ip, PFp = IRp/Ip;
+  return { E,f,w,R,Lmh,Cuf,L,C,XL,XC,
+    s:{ Xnet,Z:Zs,I:Is,PR:PRs,QL:QLs,QC:QCs,S:Ss,PF:PFs },
+    p:{ IR:IRp,IL:ILp,IC:ICp,Z:Zp,I:Ip,PR:PRp,QL:QLp,QC:QCp,S:Sp,PF:PFp } };
+}
+
+const _templates = [
+
+  // ── RATING 1: ~11–12 steps ─────────────────────────────────────
+
+  // S1: Series — component values given; derive everything via Ohm's law
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:1,
+      given:{ E:c.E, f:c.f, R:c.R, L:c.Lmh, C:c.Cuf } }; },
+
+  // S2: Series — branch voltage given instead of source; E = ER in series
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:1,
+      given:{ f:c.f, ER:+(c.s.I*c.R).toFixed(2), R:c.R, L:c.Lmh, C:c.Cuf } }; },
+
+  // S3: Series — total current and true power given; student uses either to start
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:1,
+      given:{ f:c.f, I:+c.s.I.toFixed(4), PR:+c.s.PR.toFixed(2), L:c.Lmh, C:c.Cuf } }; },
+
+  // P1: Parallel — component values given; derive everything via branch currents
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:1,
+      given:{ E:c.E, f:c.f, R:c.R, L:c.Lmh, C:c.Cuf } }; },
+
+  // P2: Parallel — total current and apparent power given; E = S/I first step
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:1,
+      given:{ f:c.f, S:+c.p.S.toFixed(2), I:+c.p.I.toFixed(4), L:c.Lmh, C:c.Cuf } }; },
+
+  // P3: Parallel — both reactive branch currents and R given
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:1,
+      given:{ E:c.E, f:c.f, IL:+c.p.IL.toFixed(4), IC:+c.p.IC.toFixed(4), R:c.R } }; },
+
+
+  // ── FREQUENCY DERIVATION ENTRY ──────────────────────────────────
+  // Student derives f = XL/(2πL) or f = 1/(2πCXC) as the first step,
+  // then uses that frequency to find the complementary reactance.
+
+  // SF1: Series — L and XL given; derive f first, then XC from f+C
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:1,
+      given:{ E:c.E, R:c.R, L:c.Lmh, XL:+(2*Math.PI*c.f*c.L).toFixed(2), C:c.Cuf } }; },
+
+  // SF2: Series — L and XL given, no R; f then XC, then Z from components
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:1,
+      given:{ E:c.E, L:c.Lmh, XL:+(2*Math.PI*c.f*c.L).toFixed(2), C:c.Cuf } }; },
+
+  // SF3: Series — C and XC given; derive f first, then XL from f+L
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:1,
+      given:{ E:c.E, R:c.R, C:c.Cuf, XC:+(1/(2*Math.PI*c.f*c.C)).toFixed(2), L:c.Lmh } }; },
+
+  // SF4: Series — C and XC given, no R; f then XL, then Z from components
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:1,
+      given:{ E:c.E, C:c.Cuf, XC:+(1/(2*Math.PI*c.f*c.C)).toFixed(2), L:c.Lmh } }; },
+
+  // PF1: Parallel — L and XL given; derive f first, then XC from f+C
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:1,
+      given:{ E:c.E, R:c.R, L:c.Lmh, XL:+(2*Math.PI*c.f*c.L).toFixed(2), C:c.Cuf } }; },
+
+  // PF2: Parallel — C and XC given; derive f first, then XL from f+L
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:1,
+      given:{ E:c.E, R:c.R, C:c.Cuf, XC:+(1/(2*Math.PI*c.f*c.C)).toFixed(2), L:c.Lmh } }; },
+
+  // ── RATING 2: ~13–14 steps ─────────────────────────────────────
+
+  // S4: Series — reactive power and reactance given; I = √(QL/XL) first step
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:2,
+      given:{ f:c.f, QL:+c.s.QL.toFixed(2), XL:+c.XL.toFixed(2), C:c.Cuf } }; },
+
+  // S5: Series — true power and resistance given; I = √(PR/R) first step
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:2,
+      given:{ f:c.f, PR:+c.s.PR.toFixed(2), R:c.R, C:c.Cuf } }; },
+
+  // P4: Parallel — reactive power and reactance given; IC = √(QC/XC) first step
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:2,
+      given:{ f:c.f, QC:+c.p.QC.toFixed(2), XC:+c.XC.toFixed(2), R:c.R, L:c.Lmh } }; },
+
+  // P5: Parallel — true power and R across two branches; IR = √(PR/R) first step
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:2,
+      given:{ f:c.f, PR:+c.p.PR.toFixed(2), R:c.R, L:c.Lmh, C:c.Cuf } }; },
+
+  // P6: Parallel — reactive power across two branches given; cross-branch derivation
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:2,
+      given:{ f:c.f, PR:+c.p.PR.toFixed(2), QL:+c.p.QL.toFixed(2), R:c.R, C:c.Cuf } }; },
+
+  // ── PF / PHASE ANGLE AS NECESSARY FIRST STEP ───────────────────
+
+  // SP1: Series — I, PF, L, C given; R = Z·PF after Z from frequency path
+  () => { const c=_buildCircuit();
+    if(c.s.PF<0.35||c.s.PF>0.97) return null;
+    return { mode:'series', rating:2,
+      given:{ f:c.f, I:+c.s.I.toFixed(4), PF:c.s.PF, L:c.Lmh, C:c.Cuf } }; },
+
+  // SP2: Series — PR, Z, PF given; R = Z·PF first, then I = √(PR/R)
+  () => { const c=_buildCircuit();
+    if(c.s.PF<0.35||c.s.PF>0.97) return null;
+    return { mode:'series', rating:2,
+      given:{ f:c.f, PR:+c.s.PR.toFixed(2), Z:+c.s.Z.toFixed(2), PF:c.s.PF, L:c.Lmh, C:c.Cuf } }; },
+
+  // PP1: Parallel — E, S, PF given; power triangle entry, then I = S/E
+  () => { const c=_buildCircuit();
+    if(c.p.PF<0.35||c.p.PF>0.97) return null;
+    return { mode:'parallel', rating:2,
+      given:{ f:c.f, E:c.E, PF:c.p.PF, S:+c.p.S.toFixed(2), L:c.Lmh, C:c.Cuf } }; },
+
+  // PP2: Parallel — E, Z, PF given; R = Z/PF as mandatory first step
+  () => { const c=_buildCircuit();
+    if(c.p.PF<0.35||c.p.PF>0.97) return null;
+    return { mode:'parallel', rating:2,
+      given:{ f:c.f, E:c.E, PF:c.p.PF, Z:+c.p.Z.toFixed(2), L:c.Lmh, C:c.Cuf } }; },
+
+  // PP3: Parallel — E, I, PF given; Z = E/I then R = Z/PF
+  () => { const c=_buildCircuit();
+    if(c.p.PF<0.35||c.p.PF>0.97) return null;
+    return { mode:'parallel', rating:2,
+      given:{ f:c.f, E:c.E, PF:c.p.PF, I:+c.p.I.toFixed(4), L:c.Lmh, C:c.Cuf } }; },
+
+  // PP4: Parallel — I, S, PF given; E = S/I then Z = E/I then R = Z/PF
+  () => { const c=_buildCircuit();
+    if(c.p.PF<0.35||c.p.PF>0.97) return null;
+    return { mode:'parallel', rating:3,
+      given:{ f:c.f, PF:c.p.PF, I:+c.p.I.toFixed(4), S:+c.p.S.toFixed(2), L:c.Lmh, C:c.Cuf } }; },
+
+  // PP5: Parallel — Z, S, PF given; E = √(S·Z) then R = Z/PF
+  () => { const c=_buildCircuit();
+    if(c.p.PF<0.35||c.p.PF>0.97) return null;
+    return { mode:'parallel', rating:3,
+      given:{ f:c.f, PF:c.p.PF, Z:+c.p.Z.toFixed(2), S:+c.p.S.toFixed(2), L:c.Lmh, C:c.Cuf } }; },
+
+  // ── RATING 3: ~15–16 steps ─────────────────────────────────────
+
+  // S6: Series — reactive power and reactance for L; no E given
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:2,
+      given:{ f:c.f, QL:+c.s.QL.toFixed(2), XL:+c.XL.toFixed(2), R:c.R, C:c.Cuf } }; },
+
+  // P7: Parallel — I, S, PF given; Z = E/I then impedance triangle required
+  () => { const c=_buildCircuit();
+    if(c.p.PF < 0.35 || c.p.PF > 0.97) return null;
+    return { mode:'parallel', rating:2,
+      given:{ f:c.f, I:+c.p.I.toFixed(4), S:+c.p.S.toFixed(2), PF:c.p.PF, L:c.Lmh, C:c.Cuf } }; },
+
+  // P8: Parallel — QC, XC, R, L given; two-branch derivation chain
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:3,
+      given:{ f:c.f, QC:+c.p.QC.toFixed(2), XC:+c.XC.toFixed(2), R:c.R, L:c.Lmh } }; },
+
+  // ── RESONANT FREQUENCY (f0) AS GIVEN ────────────────────────────
+  // f0 replaces one of L or C; student derives the missing component
+  // via C = 1/(4π²f0²L) or L = 1/(4π²f0²C) as the first step.
+
+  // SF5: Series — f0 + L given; derive C first, then full series chain
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:2,
+      given:{ E:c.E, f:c.f, R:c.R, L:c.Lmh, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // SF6: Series — f0 + C given; derive L first
+  () => { const c=_buildCircuit();
+    return { mode:'series', rating:2,
+      given:{ E:c.E, f:c.f, R:c.R, C:c.Cuf, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // SF7: Series — f0 + L, no E; I = √(PR/R) first then C from f0
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,Zs=Math.sqrt(c.R*c.R+(w*c.L-1/(w*c.C))**2),Is=c.E/Zs;
+    return { mode:'series', rating:2,
+      given:{ f:c.f, PR:+(Is*Is*c.R).toFixed(2), R:c.R, L:c.Lmh, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // SF8: Series — f0 + C, no E; I = √(PR/R) first then L from f0
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,Zs=Math.sqrt(c.R*c.R+(w*c.L-1/(w*c.C))**2),Is=c.E/Zs;
+    return { mode:'series', rating:2,
+      given:{ f:c.f, PR:+(Is*Is*c.R).toFixed(2), R:c.R, C:c.Cuf, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // PF3: Parallel — f0 + L given; derive C first, then full parallel chain
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:2,
+      given:{ E:c.E, f:c.f, R:c.R, L:c.Lmh, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // PF4: Parallel — f0 + C given; derive L first
+  () => { const c=_buildCircuit();
+    return { mode:'parallel', rating:2,
+      given:{ E:c.E, f:c.f, R:c.R, C:c.Cuf, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // PF5: Parallel — f0 + L, no E; I = √(PR/R) then C from f0
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,IRp=c.E/c.R,ILp=c.E/(w*c.L),ICp=c.E*w*c.C,PRp=c.E*IRp;
+    return { mode:'parallel', rating:2,
+      given:{ f:c.f, PR:+PRp.toFixed(2), R:c.R, L:c.Lmh, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // PF6: Parallel — f0 + C, no E; I = √(PR/R) then L from f0
+  () => { const c=_buildCircuit();
+    const IRp=c.E/c.R,PRp=c.E*IRp;
+    return { mode:'parallel', rating:2,
+      given:{ f:c.f, PR:+PRp.toFixed(2), R:c.R, C:c.Cuf, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // ── PHASE ANGLE AS GIVEN ─────────────────────────────────────────
+  // phi in degrees; student uses φ to derive PF = cos(φ), then the
+  // impedance triangle (series: R=Z·cos(φ); parallel: R=Z/cos(φ)).
+
+  // Sφ1: Series — E, f, phi, R, L, C; phi→PF→Z cross-checks R
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XL=w*c.L,XC=1/(w*c.C);
+    const Zs=Math.sqrt(c.R*c.R+(XL-XC)**2),PFs=c.R/Zs;
+    if(PFs<0.35||PFs>0.97) return null;
+    return { mode:'series', rating:2,
+      given:{ E:c.E, f:c.f, phi:+(Math.acos(PFs)*180/Math.PI).toFixed(2), R:c.R, L:c.Lmh, C:c.Cuf } }; },
+
+  // Sφ2: Series — f, phi, Z, PR, L, C; R=Z·cos(φ) then I=√(PR/R)
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XL=w*c.L,XC=1/(w*c.C);
+    const Zs=Math.sqrt(c.R*c.R+(XL-XC)**2),Is=c.E/Zs,PFs=c.R/Zs;
+    if(PFs<0.35||PFs>0.97) return null;
+    return { mode:'series', rating:3,
+      given:{ f:c.f, phi:+(Math.acos(PFs)*180/Math.PI).toFixed(2), Z:+Zs.toFixed(2), PR:+(Is*Is*c.R).toFixed(2), L:c.Lmh, C:c.Cuf } }; },
+
+  // Sφ3: Series — E, f, phi, R, L, f0; f0 replaces C
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XL=w*c.L,XC=1/(w*c.C);
+    const Zs=Math.sqrt(c.R*c.R+(XL-XC)**2),PFs=c.R/Zs;
+    if(PFs<0.35||PFs>0.97) return null;
+    return { mode:'series', rating:3,
+      given:{ E:c.E, f:c.f, phi:+(Math.acos(PFs)*180/Math.PI).toFixed(2), R:c.R, L:c.Lmh, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // Sφ4: Series — E, f, phi, R, C, f0; f0 replaces L
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XL=w*c.L,XC=1/(w*c.C);
+    const Zs=Math.sqrt(c.R*c.R+(XL-XC)**2),PFs=c.R/Zs;
+    if(PFs<0.35||PFs>0.97) return null;
+    return { mode:'series', rating:3,
+      given:{ E:c.E, f:c.f, phi:+(Math.acos(PFs)*180/Math.PI).toFixed(2), R:c.R, C:c.Cuf, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // Pφ1: Parallel — E, f, phi, R, L, C; phi→PF→Z via R·cos(φ)
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,IRp=c.E/c.R,ILp=c.E/(w*c.L),ICp=c.E*w*c.C;
+    const Ip=Math.sqrt(IRp*IRp+(ILp-ICp)**2),PFp=IRp/Ip;
+    if(PFp<0.35||PFp>0.97) return null;
+    return { mode:'parallel', rating:2,
+      given:{ E:c.E, f:c.f, phi:+(Math.acos(PFp)*180/Math.PI).toFixed(2), R:c.R, L:c.Lmh, C:c.Cuf } }; },
+
+  // Pφ2: Parallel — E, f, phi, Z, L, C; R=Z/cos(φ) first step
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,IRp=c.E/c.R,ILp=c.E/(w*c.L),ICp=c.E*w*c.C;
+    const Ip=Math.sqrt(IRp*IRp+(ILp-ICp)**2),Zp=c.E/Ip,PFp=IRp/Ip;
+    if(PFp<0.35||PFp>0.97) return null;
+    return { mode:'parallel', rating:2,
+      given:{ E:c.E, f:c.f, phi:+(Math.acos(PFp)*180/Math.PI).toFixed(2), Z:+Zp.toFixed(2), L:c.Lmh, C:c.Cuf } }; },
+
+  // Pφ3: Parallel — f, phi, Z, I, L, C; E=I·Z then R=Z/cos(φ)
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,IRp=c.E/c.R,ILp=c.E/(w*c.L),ICp=c.E*w*c.C;
+    const Ip=Math.sqrt(IRp*IRp+(ILp-ICp)**2),Zp=c.E/Ip,PFp=IRp/Ip;
+    if(PFp<0.35||PFp>0.97) return null;
+    return { mode:'parallel', rating:3,
+      given:{ f:c.f, phi:+(Math.acos(PFp)*180/Math.PI).toFixed(2), Z:+Zp.toFixed(2), I:+Ip.toFixed(4), L:c.Lmh, C:c.Cuf } }; },
+
+  // Pφ4: Parallel — E, f, phi, R, L, f0; f0 replaces C
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,IRp=c.E/c.R,ILp=c.E/(w*c.L),ICp=c.E*w*c.C;
+    const Ip=Math.sqrt(IRp*IRp+(ILp-ICp)**2),PFp=IRp/Ip;
+    if(PFp<0.35||PFp>0.97) return null;
+    return { mode:'parallel', rating:3,
+      given:{ E:c.E, f:c.f, phi:+(Math.acos(PFp)*180/Math.PI).toFixed(2), R:c.R, L:c.Lmh, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // Pφ5: Parallel — E, f, phi, Z, L, f0; two indirect steps
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,IRp=c.E/c.R,ILp=c.E/(w*c.L),ICp=c.E*w*c.C;
+    const Ip=Math.sqrt(IRp*IRp+(ILp-ICp)**2),Zp=c.E/Ip,PFp=IRp/Ip;
+    if(PFp<0.35||PFp>0.97) return null;
+    return { mode:'parallel', rating:3,
+      given:{ E:c.E, f:c.f, phi:+(Math.acos(PFp)*180/Math.PI).toFixed(2), Z:+Zp.toFixed(2), L:c.Lmh, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+  // Pφ6: Parallel — f, phi, Z, I, L, f0; highest complexity — no E, no C
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,IRp=c.E/c.R,ILp=c.E/(w*c.L),ICp=c.E*w*c.C;
+    const Ip=Math.sqrt(IRp*IRp+(ILp-ICp)**2),Zp=c.E/Ip,PFp=IRp/Ip;
+    if(PFp<0.35||PFp>0.97) return null;
+    return { mode:'parallel', rating:3,
+      given:{ f:c.f, phi:+(Math.acos(PFp)*180/Math.PI).toFixed(2), Z:+Zp.toFixed(2), I:+Ip.toFixed(4), L:c.Lmh, f0:+(1/(2*Math.PI*Math.sqrt(c.L*c.C))).toFixed(4) } }; },
+
+
+  // ══════════════════════════════════════════
+  // RL CIRCUIT TEMPLATES
+  // ══════════════════════════════════════════
+
+  // RL-S1: Series RL — E, f, R, L given
+  () => { const c=_buildCircuit();
+    return { circuitType:'RL', mode:'series', rating:1,
+      given:{ E:c.E, f:c.f, R:c.R, L:c.Lmh } }; },
+
+  // RL-S2: Series RL — ER, f, R, L given (branch voltage entry)
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XL=w*c.L,Z=Math.sqrt(c.R*c.R+XL*XL),I=c.E/Z;
+    return { circuitType:'RL', mode:'series', rating:1,
+      given:{ f:c.f, ER:+(I*c.R).toFixed(2), R:c.R, L:c.Lmh } }; },
+
+  // RL-S3: Series RL — f, PR, R, L given; I=√(PR/R) entry
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XL=w*c.L,Z=Math.sqrt(c.R*c.R+XL*XL),I=c.E/Z;
+    return { circuitType:'RL', mode:'series', rating:2,
+      given:{ f:c.f, PR:+(I*I*c.R).toFixed(2), R:c.R, L:c.Lmh } }; },
+
+  // RL-S4: Series RL — f, QL, XL given; I=√(QL/XL) entry
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XL=w*c.L,Z=Math.sqrt(c.R*c.R+XL*XL),I=c.E/Z;
+    return { circuitType:'RL', mode:'series', rating:2,
+      given:{ f:c.f, QL:+(I*I*XL).toFixed(2), XL:+XL.toFixed(2), R:c.R } }; },
+
+  // RL-S5: Series RL — f, phi, R, L given; phi as entry
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XL=w*c.L,Z=Math.sqrt(c.R*c.R+XL*XL),PF=c.R/Z;
+    if(PF<0.35||PF>0.97) return null;
+    return { circuitType:'RL', mode:'series', rating:2,
+      given:{ E:c.E, f:c.f, phi:+(Math.acos(PF)*180/Math.PI).toFixed(2), R:c.R, L:c.Lmh } }; },
+
+  // RL-P1: Parallel RL — E, f, R, L given
+  () => { const c=_buildCircuit();
+    return { circuitType:'RL', mode:'parallel', rating:1,
+      given:{ E:c.E, f:c.f, R:c.R, L:c.Lmh } }; },
+
+  // RL-P2: Parallel RL — f, PR, R, L given; IR=√(PR/R) entry
+  () => { const c=_buildCircuit();
+    return { circuitType:'RL', mode:'parallel', rating:2,
+      given:{ f:c.f, PR:+(c.E*c.E/c.R).toFixed(2), R:c.R, L:c.Lmh } }; },
+
+  // RL-P3: Parallel RL — f, QL, XL, R given; IL=√(QL/XL) entry
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XL=w*c.L,IL=c.E/XL;
+    return { circuitType:'RL', mode:'parallel', rating:2,
+      given:{ f:c.f, QL:+(c.E*IL).toFixed(2), XL:+XL.toFixed(2), R:c.R } }; },
+
+  // ── RC CIRCUIT TEMPLATES ──────────────────────────────────────────
+
+  // RC-S1: Series RC — E, f, R, C given
+  () => { const c=_buildCircuit();
+    return { circuitType:'RC', mode:'series', rating:1,
+      given:{ E:c.E, f:c.f, R:c.R, C:c.Cuf } }; },
+
+  // RC-S2: Series RC — ER, f, R, C given (branch voltage entry)
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XC=1/(w*c.C),Z=Math.sqrt(c.R*c.R+XC*XC),I=c.E/Z;
+    return { circuitType:'RC', mode:'series', rating:1,
+      given:{ f:c.f, ER:+(I*c.R).toFixed(2), R:c.R, C:c.Cuf } }; },
+
+  // RC-S3: Series RC — f, PR, R, C given; I=√(PR/R) entry
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XC=1/(w*c.C),Z=Math.sqrt(c.R*c.R+XC*XC),I=c.E/Z;
+    return { circuitType:'RC', mode:'series', rating:2,
+      given:{ f:c.f, PR:+(I*I*c.R).toFixed(2), R:c.R, C:c.Cuf } }; },
+
+  // RC-S4: Series RC — f, QC, XC given; I=√(QC/XC) entry
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XC=1/(w*c.C),Z=Math.sqrt(c.R*c.R+XC*XC),I=c.E/Z;
+    return { circuitType:'RC', mode:'series', rating:2,
+      given:{ f:c.f, QC:+(I*I*XC).toFixed(2), XC:+XC.toFixed(2), R:c.R } }; },
+
+  // RC-S5: Series RC — f, phi, R, C given; phi as entry
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XC=1/(w*c.C),Z=Math.sqrt(c.R*c.R+XC*XC),PF=c.R/Z;
+    if(PF<0.35||PF>0.97) return null;
+    return { circuitType:'RC', mode:'series', rating:2,
+      given:{ E:c.E, f:c.f, phi:+(Math.acos(PF)*180/Math.PI).toFixed(2), R:c.R, C:c.Cuf } }; },
+
+  // RC-P1: Parallel RC — E, f, R, C given
+  () => { const c=_buildCircuit();
+    return { circuitType:'RC', mode:'parallel', rating:1,
+      given:{ E:c.E, f:c.f, R:c.R, C:c.Cuf } }; },
+
+  // RC-P2: Parallel RC — f, PR, R, C given; IR=√(PR/R) entry
+  () => { const c=_buildCircuit();
+    return { circuitType:'RC', mode:'parallel', rating:2,
+      given:{ f:c.f, PR:+(c.E*c.E/c.R).toFixed(2), R:c.R, C:c.Cuf } }; },
+
+  // RC-P3: Parallel RC — f, QC, XC, R given; IC=√(QC/XC) entry
+  () => { const c=_buildCircuit();
+    const w=2*Math.PI*c.f,XC=1/(w*c.C),IC=c.E/XC;
+    return { circuitType:'RC', mode:'parallel', rating:2,
+      given:{ f:c.f, QC:+(c.E*IC).toFixed(2), XC:+XC.toFixed(2), R:c.R } }; },
+
+
+];
+
+// Pre-index templates by rating — built once at startup
+// Each template is sampled up to 10 times to handle PF-guard templates that may return null
+const _ratedPools = {1:[], 2:[], 3:[]};
+_templates.forEach(t => { for(let i=0;i<10;i++){const p=t(); if(p){_ratedPools[p.rating].push(t);break;}} });
+
+// Complexity selector — 0 = any, 1/2/3 = specific rating
+let _selectedRating = 0;
+function setComplexity(r) {
+  _selectedRating = r;
+  ['selAny','sel1','sel2','sel3'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('sel-active', i === r);
+  });
+}
+
+// Pick a random template, validate completeness, retry up to 50 times
+function _genFromPool(rating, circuitType, mode) {
+  const ct = circuitType || 'RLC';
+  // Filter templates by circuit type, rating, and mode
+  let pool = _templates.filter(t => {
+    const p = t();
+    if (!p) return false;
+    if (rating && rating!==0 && p.rating !== rating) return false;
+    if (p.circuitType && p.circuitType !== ct) return false;
+    if (!p.circuitType && ct !== 'RLC') return false;
+    if (mode && p.mode !== mode) return false;
+    return true;
+  });
+  if (!pool.length) pool = _templates;  // fallback to all if no match
+  const activePool = pool;
+  for (let attempt = 0; attempt < 50; attempt++) {
+    const tmpl = _pick(activePool);
+    const prob = tmpl();
+    if (!prob) continue;
+    const g = prob.given;
+    // Core component guard — L and C must be present as given OR derivable
+    const ct = prob.circuitType || 'RLC';
+    const res = pracTrysolve(g, prob.mode, ct);
+    if (res.error) continue;
+    const s = res.solved;
+    // Component guard depends on circuit type
+    if (!s.R||s.R<=0) continue;
+    if (ct!=='RC'&&(!s.L||s.L<=0||!s.XL||s.XL<=0)) continue;
+    if (ct!=='RL'&&(!s.C||s.C<=0||!s.XC||s.XC<=0)) continue;
+    // Field completeness check — use appropriate field list
+    const L_FIELDS_GEN=['EL','IL','XL','QL','L'];
+    const C_FIELDS_GEN=['EC','IC','XC','QC','C'];
+    const F0_FIELD=['f0'];
+    const activeFields = GEN_ALL_FIELDS.filter(k => {
+      if(ct==='RL'&&(C_FIELDS_GEN.includes(k)||k==='f0')) return false;
+      if(ct==='RC'&&(L_FIELDS_GEN.includes(k)||k==='f0')) return false;
+      return true;
+    });
+    const missing = activeFields.filter(k => s[k] === undefined);
+    if (missing.length > 0) continue;
+    return { ...prob, steps: res.steps.length };
+  }
+  return null;
+}
+
+function pracGenerate() {
+  const prob = _genFromPool(_selectedRating, pracCircuitType, pracMode);
+  if (!prob) return;
+  _pendingGen = prob;
+
+  const hasValues = Object.keys(pracVals).length > 0;
+  if (hasValues) {
+    const modal = document.getElementById('genConfirmModal');
+    modal.classList.add('open');
+    document.getElementById('genConfirmOk').onclick = () => {
+      modal.classList.remove('open');
+      _applyGenerated(_pendingGen);
+      _pendingGen = null;
+    };
+  } else {
+    _applyGenerated(prob);
+    _pendingGen = null;
+  }
+}
+
+function _applyGenerated(prob) {
+  pracClearAll();
+  pracSetMode(prob.mode);
+  if (prob.circuitType) setCircuitType(prob.circuitType);
+  for (const [k, v] of Object.entries(prob.given)) {
+    pracVals[k] = v;
+    const inp = document.getElementById('inp-' + k);
+    const row = document.getElementById('row-' + k);
+    if (inp) inp.value = k === 'PF' ? +(v * 100).toFixed(4) : +v.toFixed(4);
+    if (row) row.classList.add('has-value');
+  }
+  pracCheckStatus();
+}
+
+/* ── Export codes ── */
+
+// v3: full practice export — encodes given fields + solved state
+// given = pracVals (display units: L in mH, C in μF, PF as decimal, f0 in Hz, phi in degrees)
+// solved = SI-unit solved state from pracTrysolve (optional)
+// Backward compatible: v1 and v2 codes decode correctly (new fields simply absent)
+function encodePractice(given, mode, solved) {
+  const payload = { v:3, mode, g:{} };
+  const displayUnits = { PF: v=>+(v*100).toFixed(6) };
+  // Encode given fields (display units)
+  for (const [k,v] of Object.entries(given)) {
+    payload.g[k] = displayUnits[k] ? displayUnits[k](v) : +v.toFixed(6);
+  }
+  // Encode solved state for simulator compatibility (SI → display units)
+  if (solved) {
+    payload.s = {
+      f:    +(solved.f   !== undefined ? solved.f          : 0).toFixed(6),
+      E:    +(solved.E   !== undefined ? solved.E          : 0).toFixed(6),
+      R:    +(solved.R   !== undefined ? solved.R          : 0).toFixed(6),
+      L:    +(solved.L   !== undefined ? solved.L * 1000   : 0).toFixed(6),
+      C:    +(solved.C   !== undefined ? solved.C * 1e6    : 0).toFixed(6),
+      PF:   +(solved.PF  !== undefined ? solved.PF * 100   : 0).toFixed(6),
+    };
+  }
+  return btoa(JSON.stringify(payload));
+}
+
+// Decode and apply a v2 practice export code
+function decodePractice(raw) {
+  let payload;
+  try { payload = JSON.parse(atob(raw.trim())); } catch(e) { return { error:'Invalid code — could not decode.' }; }
+  if (!payload || (payload.v !== 2 && payload.v !== 3)) return { error:'Not a valid export code (requires v2 or v3).' };
+  // Apply mode
+  pracSetMode(payload.mode === 'parallel' ? 'parallel' : 'series');
+  // Clear existing values
+  PRAC_FIELDS.forEach(k => {
+    delete pracVals[k];
+    const inp = document.getElementById('inp-'+k);
+    if (inp) inp.value = '';
+    const row = document.getElementById('row-'+k);
+    if (row) row.classList.remove('has-value');
+  });
+  // Apply given values
+  const given = payload.g || {};
+  let loaded = 0;
+  for (const [k, v] of Object.entries(given)) {
+    if (!PRAC_FIELDS.includes(k)) continue;
+    // Convert display→stored units
+    let stored = v;
+    if (k === 'PF') stored = v / 100; // PF exported as %, stored as decimal
+    // L stored in mH, C stored in μF — no conversion needed
+    pracVals[k] = stored;
+    const inp = document.getElementById('inp-'+k);
+    if (inp) { inp.value = v; }
+    const row = document.getElementById('row-'+k);
+    if (row) row.classList.add('has-value');
+    loaded++;
+  }
+  pracCheckStatus();
+  return { ok: true, count: loaded, mode: payload.mode };
+}
+
+function copyExportCode() {
+  const el = document.getElementById('exportCode');
+  if (!el) return;
+  navigator.clipboard.writeText(el.value).then(() => {
+    const btn = document.getElementById('exportCopyBtn');
+    btn.textContent = '✓ COPIED';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '⎘ COPY'; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => { el.select(); document.execCommand('copy'); });
+}
+
+/* ── Practice import ── */
+function pracLoadCodeFrom(inputId) {
+  const statusId = inputId + 'Status';
+  const raw = document.getElementById(inputId).value.trim();
+  const status = document.getElementById(statusId);
+  if (!status) return;
+  if (!raw) { status.style.display=''; status.className='prac-import-status err'; status.textContent='✕ Nothing pasted.'; return; }
+  const result = decodePractice(raw);
+  if (result.error) {
+    status.style.display='';
+    status.className='prac-import-status err';
+    status.textContent='✕ ' + result.error;
+  } else {
+    status.style.display='none';
+    status.textContent='';
+    document.getElementById(inputId).value='';
+    // Auto-solve if enough values
+    const res=pracTrysolve(pracVals,pracMode,pracCircuitType);
+    if(!res.error) { pracSolve(); }
+  }
+}
+
+/* ── Send to Simulator ── */
+function sendToSimulator(){
+  const s=window._lastPracSolved;
+  if(!s) return;
+  const clampF=v=>Math.max(0,Math.min(400,+parseFloat(v||0).toFixed(3)));
+  const clampV=v=>Math.max(0,Math.min(1000,+parseFloat(v||0).toFixed(3)));
+  const clampR=v=>Math.max(0,Math.min(1000,+parseFloat(v||0).toFixed(3)));
+  const clampL=v=>Math.max(0,Math.min(10000,+parseFloat(v||0).toFixed(3)));
+  const clampC=v=>Math.max(0,Math.min(200,+parseFloat(v||0).toFixed(3)));
+  const f    = clampF(s.f);
+  const Vrms = clampV(s.E);
+  const R    = clampR(s.R);
+  const L    = clampL(s.L !== undefined ? s.L*1000 : 0);
+  const C    = clampC(s.C !== undefined ? s.C*1e6  : 0);
+  function applySlider(slId,numId,key,val,max){
+    const sl=document.getElementById(slId),num=document.getElementById(numId);
+    sl.value=val; num.value=val; sl.style.setProperty('--pct',(max>0?val/max*100:0)+'%'); committed[key]=val;
+  }
+  applySlider('slF','numF','numF',f,400); applySlider('slV','numV','numV',Vrms,1000);
+  applySlider('slR','numR','numR',R,1000); applySlider('slL','numL','numL',L,10000); applySlider('slC','numC','numC',C,200);
+  simSetMode(window._lastPracMode||'series');
+  simRecalc();
+  // Animate the button then switch tabs
+  const btn=document.getElementById('sendSimBtn');
+  btn.classList.remove('firing'); void btn.offsetWidth; btn.classList.add('firing');
+  setTimeout(()=>{btn.classList.remove('firing'); showTool('sim');}, 400);
+}
+
+/* ══ INIT ══ */
+bindSliders(); simRecalc(); animate();
+window.addEventListener('resize', simRecalc);
+pracCheckStatus();
+
+// ── Dark mode ──────────────────────────────────────────────────────────
+function applyTheme(dark) {
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  document.getElementById('darkIcon').textContent = dark ? '☀' : '☾';
+}
+function toggleDark() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const next = !isDark;
+  applyTheme(next);
+  try { localStorage.setItem('rlc-theme', next ? 'dark' : 'light'); } catch(e) {}
+}
+// Restore saved theme on load
+(function() {
+  try {
+    const saved = localStorage.getItem('rlc-theme');
+    if (saved === 'dark') applyTheme(true);
+  } catch(e) {}
+})();
+
+</script>
+
+
+<!-- ── Problem generator confirmation modal ── -->
+<div class="gen-confirm-modal" id="genConfirmModal">
+  <div class="gen-confirm-box">
+    <div class="gen-confirm-header">GENERATE NEW PROBLEM</div>
+    <div class="gen-confirm-body">This will clear all current values and load a new practice problem. Are you sure?</div>
+    <div class="gen-confirm-btns">
+      <button class="gen-confirm-cancel" onclick="document.getElementById('genConfirmModal').classList.remove('open')">CANCEL</button>
+      <button class="gen-confirm-ok" id="genConfirmOk">GENERATE</button>
+    </div>
+  </div>
+</div>
+<!-- ── Clear confirmation modal ── -->
+<div class="gen-confirm-modal" id="clearConfirmModal">
+  <div class="gen-confirm-box">
+    <div class="gen-confirm-header" style="background:var(--r-color)">CLEAR ALL VALUES</div>
+    <div class="gen-confirm-body">This will remove all entered values. This cannot be undone. Are you sure?</div>
+    <div class="gen-confirm-btns">
+      <button class="gen-confirm-cancel" onclick="document.getElementById('clearConfirmModal').classList.remove('open')">CANCEL</button>
+      <button class="gen-confirm-ok" style="border-color:var(--r-color);background:linear-gradient(135deg,var(--r-color),#c0392b)"
+              onclick="document.getElementById('clearConfirmModal').classList.remove('open');pracClearAll()">CLEAR</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
