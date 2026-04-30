@@ -156,7 +156,7 @@
       --b2: rgba(255, 255, 255, .30);
       --tx: #e8eaf0;
       --tx2: #a8afc4;
-      --tx3: #606880;
+      --tx3: #8b90a8;
       /* Green: bright emerald — income, positive, assets */
       --g: #2dd078;
       --g2: #4ae090;
@@ -1314,6 +1314,7 @@
       border-radius: var(--ra);
       padding: 14px 16px;
       margin-bottom: 8px;
+      touch-action: none;
       display: flex;
       align-items: flex-start;
       gap: 12px;
@@ -1476,6 +1477,7 @@
       display: block;
       break-inside: avoid;
       margin-bottom: 12px;
+      touch-action: none;
     }
 
     @media(max-width:800px) {
@@ -1667,6 +1669,7 @@
       display: block;
       break-inside: avoid;
       margin-bottom: 12px;
+      touch-action: none;
       transition: box-shadow .18s, border-color .18s, opacity .2s, transform .22s cubic-bezier(.25,.46,.45,.94)
     }
 
@@ -1737,6 +1740,7 @@
       display: block;
       break-inside: avoid;
       margin-bottom: 12px;
+      touch-action: none;
       transition: box-shadow .18s, border-color .18s, opacity .2s, transform .22s cubic-bezier(.25,.46,.45,.94)
     }
 
@@ -1833,6 +1837,7 @@
       display: block;
       break-inside: avoid;
       margin-bottom: 12px;
+      touch-action: none;
       transition: box-shadow .18s, border-color .18s, opacity .2s, transform .22s cubic-bezier(.25,.46,.45,.94)
     }
 
@@ -1886,6 +1891,7 @@
       display: block;
       break-inside: avoid;
       margin-bottom: 12px;
+      touch-action: none;
       transition: box-shadow .18s, border-color .18s, opacity .2s, transform .22s cubic-bezier(.25,.46,.45,.94)
     }
 
@@ -2437,6 +2443,100 @@
     .bak-meta-row strong {
       color: var(--tx);
       font-weight: 600
+    }
+
+    /* ── Settings hub grid ───────────────────────────────────────────────────── */
+    .st-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .st-tile {
+      background: var(--sf);
+      border: 1.5px solid var(--b2);
+      border-radius: var(--ra);
+      padding: 18px 16px 16px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: background .15s, border-color .15s;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
+    .st-tile:hover {
+      background: var(--sf2);
+    }
+    .st-tile:active {
+      background: var(--sf3);
+    }
+    .st-tile.danger {
+      border-color: var(--r);
+    }
+    .st-tile-icon {
+      display: none;
+    }
+    .st-tile-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--tx);
+      line-height: 1.2;
+    }
+    .st-tile.danger .st-tile-label {
+      color: var(--r);
+    }
+    .st-tile-sub {
+      font-size: 12px;
+      color: var(--tx3);
+      line-height: 1.4;
+    }
+
+
+    /* ── Settings panel (slide-in) ───────────────────────────────────────────── */
+    .st-panel-wrap {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform .22s cubic-bezier(.4,0,.2,1);
+      z-index: 200;
+    }
+    .st-panel-wrap.open {
+      transform: translateX(0);
+    }
+    .st-panel-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--b1);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 1;
+    }
+    .st-panel-back {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--tx2);
+      font-size: 18px;
+      padding: 2px 6px 2px 0;
+      line-height: 1;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .st-panel-back:hover { color: var(--tx); }
+    .st-panel-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--tx);
+    }
+    .st-panel-body {
+      padding: 18px 16px 32px;
     }
 
     .bak-actions {
@@ -3387,8 +3487,7 @@
       <div id="ov-grid">
 
         <!-- ov-card: Summary -->
-        <div class="card ov-card ov-full" data-ov-key="summary" draggable="true"
-          ondragstart="_ovDragStart(event)" ondragover="_ovDragOver(event)" ondrop="_ovDrop(event)" ondragend="_ovDragEnd(event)">
+        <div class="card ov-card ov-full" data-ov-key="summary">
           <div style="position:relative;padding-right:36px;margin-bottom:10px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2)">
               <span class="ov-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3407,8 +3506,7 @@
 
 
         <!-- ov-card: Net Worth -->
-        <div class="card ov-card ov-full" data-ov-key="nw" draggable="true"
-          ondragstart="_ovDragStart(event)" ondragover="_ovDragOver(event)" ondrop="_ovDrop(event)" ondragend="_ovDragEnd(event)">
+        <div class="card ov-card ov-full" data-ov-key="nw">
           <div style="position:relative;padding-right:36px;margin-bottom:9px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:6px">
               <span class="ov-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3434,8 +3532,7 @@
         </div>
 
         <!-- ov-card: Cash Flow -->
-        <div class="card ov-card ov-full" data-ov-key="cashflow" draggable="true"
-          ondragstart="_ovDragStart(event)" ondragover="_ovDragOver(event)" ondrop="_ovDrop(event)" ondragend="_ovDragEnd(event)">
+        <div class="card ov-card ov-full" data-ov-key="cashflow">
           <div style="position:relative;padding-right:36px;margin-bottom:10px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:6px">
               <span class="ov-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3467,8 +3564,7 @@
         </div>
 
         <!-- ov-card: Spending Breakdown -->
-        <div class="card ov-card" data-ov-key="spending" draggable="true"
-          ondragstart="_ovDragStart(event)" ondragover="_ovDragOver(event)" ondrop="_ovDrop(event)" ondragend="_ovDragEnd(event)">
+        <div class="card ov-card" data-ov-key="spending">
           <div style="position:relative;padding-right:80px;margin-bottom:8px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:6px">
               <span class="ov-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3515,8 +3611,7 @@
         </div>
 
         <!-- ov-card: Upcoming -->
-        <div class="card ov-card" id="upcomingCard" data-ov-key="upcoming" draggable="true"
-          ondragstart="_ovDragStart(event)" ondragover="_ovDragOver(event)" ondrop="_ovDrop(event)" ondragend="_ovDragEnd(event)">
+        <div class="card ov-card" id="upcomingCard" data-ov-key="upcoming">
           <div style="position:relative;padding-right:36px;margin-bottom:10px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:6px">
               <span class="ov-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3567,8 +3662,7 @@
       <div id="bud-grid">
 
         <!-- bud-card: Period (time-range selector) -->
-        <div class="card bud-card bud-full" data-bud-key="period" draggable="true"
-          ondragstart="_budDragStart(event)" ondragover="_budDragOver(event)" ondrop="_budDrop(event)" ondragend="_budDragEnd(event)">
+        <div class="card bud-card bud-full" data-bud-key="period">
           <div style="position:relative;padding-right:36px;margin-bottom:10px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2)">
               <span class="bud-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3606,8 +3700,7 @@
         </div>
 
         <!-- bud-card: Budgeted Income -->
-        <div class="card bud-card bud-full" data-bud-key="income" draggable="true"
-          ondragstart="_budDragStart(event)" ondragover="_budDragOver(event)" ondrop="_budDrop(event)" ondragend="_budDragEnd(event)">
+        <div class="card bud-card bud-full" data-bud-key="income">
           <div style="position:relative;padding-right:36px;margin-bottom:10px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2)">
               <span class="bud-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3644,8 +3737,7 @@
         </div>
 
         <!-- bud-card: Spending Groups (Needs / Wants / Goals) -->
-        <div class="card bud-card bud-full" data-bud-key="groups" draggable="true"
-          ondragstart="_budDragStart(event)" ondragover="_budDragOver(event)" ondrop="_budDrop(event)" ondragend="_budDragEnd(event)">
+        <div class="card bud-card bud-full" data-bud-key="groups">
           <div style="position:relative;padding-right:36px;margin-bottom:12px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2)">
               <span class="bud-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3664,8 +3756,7 @@
         </div>
 
         <!-- bud-card: Spending Flow (Sankey) -->
-        <div class="card bud-card bud-full" data-bud-key="sankey" id="budgetSankeyCard" draggable="true"
-          ondragstart="_budDragStart(event)" ondragover="_budDragOver(event)" ondrop="_budDrop(event)" ondragend="_budDragEnd(event)">
+        <div class="card bud-card bud-full" data-bud-key="sankey" id="budgetSankeyCard">
           <div style="position:relative;padding-right:36px;margin-bottom:10px">
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
               <span class="bud-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3697,8 +3788,7 @@
         </div>
 
         <!-- bud-card: Expenses -->
-        <div class="card bud-card bud-full" data-bud-key="expenses" draggable="true"
-          ondragstart="_budDragStart(event)" ondragover="_budDragOver(event)" ondrop="_budDrop(event)" ondragend="_budDragEnd(event)"
+        <div class="card bud-card bud-full" data-bud-key="expenses"
           style="padding:0;overflow:clip">
           <div style="padding:12px 16px 8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative;padding-right:44px">
             <span class="bud-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3731,8 +3821,7 @@
         </div>
 
         <!-- bud-card: Transfers -->
-        <div class="card bud-card bud-full" data-bud-key="transfers" id="budgetTrCard" draggable="true"
-          ondragstart="_budDragStart(event)" ondragover="_budDragOver(event)" ondrop="_budDrop(event)" ondragend="_budDragEnd(event)"
+        <div class="card bud-card bud-full" data-bud-key="transfers" id="budgetTrCard"
           style="display:none;padding:0;overflow:clip">
           <div style="padding:12px 16px 8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative;padding-right:44px">
             <span class="bud-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3775,8 +3864,7 @@
       <div id="tx-grid">
 
         <!-- tx-card: Filter -->
-        <div class="card tx-card" data-tx-key="filter" draggable="true"
-          ondragstart="_txDragStart(event)" ondragover="_txDragOver(event)" ondrop="_txDrop(event)" ondragend="_txDragEnd(event)">
+        <div class="card tx-card" data-tx-key="filter">
           <div style="position:relative;padding-right:36px;margin-bottom:10px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2)">
               <span class="tx-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3835,8 +3923,7 @@
         </div>
 
         <!-- tx-card: Recurring Rules -->
-        <div class="card tx-card" data-tx-key="recurring" draggable="true"
-          ondragstart="_txDragStart(event)" ondragover="_txDragOver(event)" ondrop="_txDrop(event)" ondragend="_txDragEnd(event)">
+        <div class="card tx-card" data-tx-key="recurring">
           <div style="position:relative;padding-right:36px;margin-bottom:10px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2)">
               <span class="tx-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -3855,8 +3942,7 @@
         </div>
 
         <!-- tx-card: Transactions table -->
-        <div class="card tx-card tx-full" data-tx-key="table" draggable="true"
-          ondragstart="_txDragStart(event)" ondragover="_txDragOver(event)" ondrop="_txDrop(event)" ondragend="_txDragEnd(event)"
+        <div class="card tx-card tx-full" data-tx-key="table"
           style="padding:0;overflow:clip">
           <div style="position:relative;padding:14px 50px 0 14px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:10px">
@@ -3931,7 +4017,7 @@
         <button class="acc-cat-pill" onclick="setAccCat('asset',this)">Assets</button>
         <button class="acc-cat-pill" onclick="setAccCat('debt',this)">Liabilities</button>
       </div>
-      <div id="accList" ondragover="_accDragOver(event)" ondrop="_accDrop(event)"></div>
+      <div id="accList"></div>
     </div>
 
     <!-- GOALS -->
@@ -3988,8 +4074,7 @@
       <div id="fc-grid">
 
         <!-- fc-card: Summary (Pay Off + Save Up) -->
-        <div class="card fc-card fc-full" data-fc-key="payoff-summary" draggable="true"
-          ondragstart="_fcDragStart(event)" ondragover="_fcDragOver(event)" ondrop="_fcDrop(event)" ondragend="_fcDragEnd(event)">
+        <div class="card fc-card fc-full" data-fc-key="payoff-summary">
           <div style="position:relative;padding-right:36px;margin-bottom:12px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.06em">
               <span class="fc-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -4018,8 +4103,7 @@
         </div>
 
         <!-- fc-card: Goal Toggles (combined) -->
-        <div class="card fc-card" data-fc-key="payoff-controls" draggable="true"
-          ondragstart="_fcDragStart(event)" ondragover="_fcDragOver(event)" ondrop="_fcDrop(event)" ondragend="_fcDragEnd(event)">
+        <div class="card fc-card" data-fc-key="payoff-controls">
           <div style="position:relative;padding-right:36px;margin-bottom:9px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2)">
               <span class="fc-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -4053,8 +4137,7 @@
         </div>
 
         <!-- fc-card: Balance Projections (combined) -->
-        <div class="card fc-card" data-fc-key="payoff-chart" draggable="true"
-          ondragstart="_fcDragStart(event)" ondragover="_fcDragOver(event)" ondrop="_fcDrop(event)" ondragend="_fcDragEnd(event)">
+        <div class="card fc-card" data-fc-key="payoff-chart">
           <div style="position:relative;padding-right:36px;margin-bottom:10px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:6px">
               <span class="fc-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -4092,8 +4175,7 @@
         </div>
 
         <!-- fc-card: Goal Timeline -->
-        <div class="card fc-card fc-full" data-fc-key="goal-timeline" draggable="true"
-          ondragstart="_fcDragStart(event)" ondragover="_fcDragOver(event)" ondrop="_fcDrop(event)" ondragend="_fcDragEnd(event)">
+        <div class="card fc-card fc-full" data-fc-key="goal-timeline">
           <div style="position:relative;padding-right:36px;margin-bottom:12px">
             <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.06em">
               <span class="fc-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>
@@ -4189,14 +4271,62 @@
     <div id="T-data" style="display:none">
       <div class="stitle">Settings</div>
 
-      <!-- General -->
-      <div class="bak-card bak-section">
-        <button onclick="dzToggle('st-display',this)"
-          style="width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0;text-align:left">
-          <div class="bak-section-title" style="margin-bottom:0">General</div>
-          <span class="dz-chevron" style="font-size:14px;transition:transform .2s;display:inline-block;transform:rotate(180deg)">▼</span>
+      <!-- ── Settings hub grid ──────────────────────────────────────────────── -->
+      <div class="st-grid">
+
+        <button class="st-tile" onclick="openStPanel('stp-appearance')">
+          <div class="st-tile-icon">🎨</div>
+          <div class="st-tile-label">Appearance</div>
+          <div class="st-tile-sub">Display mode &amp; currency</div>
         </button>
-        <div id="st-display" style="display:none;margin-top:12px">
+
+        <button class="st-tile" onclick="openStPanel('stp-backup')">
+          <div class="st-tile-icon">💾</div>
+          <div class="st-tile-label">Backup &amp; Restore</div>
+          <div class="st-tile-sub">Export, restore &amp; backup history</div>
+        </button>
+
+        <button class="st-tile" onclick="openStPanel('stp-import')">
+          <div class="st-tile-icon">📥</div>
+          <div class="st-tile-label">Import</div>
+          <div class="st-tile-sub">Transactions &amp; accounts CSV</div>
+        </button>
+
+        <button class="st-tile" onclick="openStPanel('stp-support')">
+          <div class="st-tile-icon">⚖</div>
+          <div class="st-tile-label">Support Fulcrum</div>
+          <div class="st-tile-sub">Supporter badge &amp; funding</div>
+        </button>
+
+        <button class="st-tile" onclick="openStPanel('stp-update')">
+          <div class="st-tile-icon">🔄</div>
+          <div class="st-tile-label">Check for Update</div>
+          <div class="st-tile-sub">Verify you have the latest version</div>
+        </button>
+
+        <button class="st-tile" onclick="openStPanel('stp-about')">
+          <div class="st-tile-icon">ℹ️</div>
+          <div class="st-tile-label">About</div>
+          <div class="st-tile-sub">Version, contact &amp; legal</div>
+        </button>
+
+        <button class="st-tile danger" onclick="openStPanel('stp-delete')" style="grid-column:1/-1">
+          <div class="st-tile-icon">🗑️</div>
+          <div class="st-tile-label">Delete Data</div>
+          <div class="st-tile-sub">Permanently remove accounts, transactions, goals, or all local data</div>
+        </button>
+
+      </div>
+
+      <!-- ── Slide-in panels ────────────────────────────────────────────────── -->
+
+      <!-- Appearance -->
+      <div class="st-panel-wrap" id="stp-appearance">
+        <div class="st-panel-head">
+          <button class="st-panel-back" onclick="closeStPanel('stp-appearance')" aria-label="Back">&#8592;</button>
+          <div class="st-panel-title">Appearance</div>
+        </div>
+        <div class="st-panel-body">
           <div class="bak-section-sub" style="margin-bottom:4px">Select a display mode.</div>
           <div class="theme-mode-group">
             <button class="theme-mode-btn" id="tmb-gray"  onclick="applyTheme('gray')"  title="Grayscale — e-ink optimized">
@@ -4213,8 +4343,7 @@
             </button>
           </div>
           <div style="margin-top:16px;padding-top:14px;border-top:.5px solid var(--b1)">
-            <div class="bak-section-sub" style="margin-bottom:8px">Select the currency symbol used throughout the app.
-            </div>
+            <div class="bak-section-sub" style="margin-bottom:8px">Select the currency symbol used throughout the app.</div>
             <select id="currencySel" onchange="setCurrency(this.value)" style="width:auto;min-width:180px">
               <option value="USD">USD — $ US Dollar</option>
               <option value="EUR">EUR — € Euro</option>
@@ -4231,69 +4360,129 @@
         </div>
       </div>
 
-      <!-- Import & Export (CSV + App Backup) -->
-      <div class="bak-card bak-section">
-        <button onclick="dzToggle('st-importexport',this)"
-          style="width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0;text-align:left">
-          <div class="bak-section-title" style="margin-bottom:0">Import &amp; Export</div>
-          <span class="dz-chevron" style="font-size:14px;transition:transform .2s;display:inline-block;transform:rotate(180deg)">&#9660;</span>
-        </button>
-        <div id="st-importexport" style="display:none;margin-top:12px">
-
-          <!-- Transactions CSV -->
-          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);margin-bottom:8px">Transactions</div>
-          <div class="bak-section-sub" style="margin-bottom:10px">Import from Monarch Money, YNAB, Mint, Quicken, Copilot, or most bank CSV exports. Duplicates are skipped automatically. Export the currently filtered view as a spreadsheet-ready CSV.</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <button class="btn" style="width:100%;min-width:0" onclick="document.getElementById('fileInput').click()">&#8593; Import</button>
-            <button class="btn" style="width:100%;min-width:0" onclick="exportTxCSV()">&#8595; Export</button>
+      <!-- Backup & Restore -->
+      <div class="st-panel-wrap" id="stp-backup">
+        <div class="st-panel-head">
+          <button class="st-panel-back" onclick="closeStPanel('stp-backup')" aria-label="Back">&#8592;</button>
+          <div class="st-panel-title">Backup &amp; Restore</div>
+        </div>
+        <div class="st-panel-body">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);margin-bottom:8px">App Backup<span class="tip" tabindex="0" data-tip="Downloads a .fulcrum.json file with all your accounts, transactions, goals, net worth history, and settings. Store it in at least two places — cloud storage and a local drive.">?</span></div>
+          <div class="bak-section-sub" style="margin-bottom:10px">Downloads a complete <code>.fulcrum.json</code> file containing all your accounts, transactions, goals, net worth history, and settings. Store it somewhere safe — cloud storage, a USB drive, or email it to yourself.</div>
+          <div class="bak-meta" id="exportMeta" style="margin-bottom:8px"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+            <button class="btn pri" style="width:100%;min-width:0" onclick="doExport()">&#8595; Download backup</button>
+            <button class="btn" style="width:100%;min-width:0" onclick="document.getElementById('bakInput').click()">&#8593; Restore backup</button>
           </div>
-
-          <!-- Accounts CSV -->
-          <div style="border-top:.5px solid var(--b1);padding-top:14px;margin-top:14px">
-            <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);margin-bottom:8px">Accounts</div>
-            <div class="bak-section-sub" style="margin-bottom:10px">Import account balances from a Monarch Money or compatible CSV. Export your current account list with balances and rates.</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              <button class="btn" style="width:100%;min-width:0" onclick="document.getElementById('univAccInput').click()">&#8593; Import</button>
-              <button class="btn" style="width:100%;min-width:0" onclick="exportAccCSV()">&#8595; Export</button>
-            </div>
-          </div>
-
-          <!-- App Backup -->
-          <div style="border-top:.5px solid var(--b1);padding-top:14px;margin-top:14px">
-            <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);margin-bottom:8px">App Backup<span class="tip" tabindex="0" data-tip="Downloads a .fulcrum.json file with all your accounts, transactions, goals, net worth history, and settings. Store it in at least two places — cloud storage and a local drive.">?</span></div>
-            <div class="bak-section-sub" style="margin-bottom:10px">Downloads a complete <code>.fulcrum.json</code> file containing all your accounts, transactions, goals, net worth history, and settings. Store it somewhere safe — cloud storage, a USB drive, or email it to yourself.</div>
-            <div class="bak-meta" id="exportMeta" style="margin-bottom:8px"></div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
-              <button class="btn pri" style="width:100%;min-width:0" onclick="doExport()">&#8595; Download backup</button>
-              <button class="btn" style="width:100%;min-width:0" onclick="document.getElementById('bakInput').click()">&#8593; Restore backup</button>
-            </div>
-            <input type="file" id="bakInput" accept=".json,.fulcrum.json,.bookkeeper.json" onchange="loadBackupFile(event)" style="display:none" />
-            <div id="restorePreview"></div>
-          </div>
-
-          <!-- Backup History -->
+          <input type="file" id="bakInput" accept=".json,.fulcrum.json,.bookkeeper.json" onchange="loadBackupFile(event)" style="display:none" />
+          <div id="restorePreview"></div>
           <div style="border-top:.5px solid var(--b1);padding-top:14px;margin-top:14px">
             <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);margin-bottom:8px">Backup history</div>
             <div class="bak-section-sub" style="margin-bottom:8px">Timestamps of the last 20 backups exported from this browser. This is stored locally and does not track file content.</div>
             <div id="bakHistory"></div>
           </div>
+        </div>
+      </div>
 
+      <!-- Import -->
+      <div class="st-panel-wrap" id="stp-import">
+        <div class="st-panel-head">
+          <button class="st-panel-back" onclick="closeStPanel('stp-import')" aria-label="Back">&#8592;</button>
+          <div class="st-panel-title">Import</div>
+        </div>
+        <div class="st-panel-body">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);margin-bottom:8px">Transactions</div>
+          <div class="bak-section-sub" style="margin-bottom:10px">Import from Monarch Money, YNAB, Mint, Quicken, Copilot, or most bank CSV exports. Duplicates are skipped automatically. Export the currently filtered view as a spreadsheet-ready CSV.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <button class="btn" style="width:100%;min-width:0" onclick="document.getElementById('fileInput').click()">&#8593; Import CSV</button>
+            <button class="btn" style="width:100%;min-width:0" onclick="exportTxCSV()">&#8595; Export CSV</button>
+          </div>
+          <div style="border-top:.5px solid var(--b1);padding-top:14px;margin-top:14px">
+            <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);margin-bottom:8px">Accounts</div>
+            <div class="bak-section-sub" style="margin-bottom:10px">Import account balances from a Monarch Money or compatible CSV. Export your current account list with balances and rates.</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <button class="btn" style="width:100%;min-width:0" onclick="document.getElementById('univAccInput').click()">&#8593; Import CSV</button>
+              <button class="btn" style="width:100%;min-width:0" onclick="exportAccCSV()">&#8595; Export CSV</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Support Fulcrum -->
+      <div class="st-panel-wrap" id="stp-support">
+        <div class="st-panel-head">
+          <button class="st-panel-back" onclick="closeStPanel('stp-support')" aria-label="Back">&#8592;</button>
+          <div class="st-panel-title">Support Fulcrum</div>
+        </div>
+        <div class="st-panel-body">
+          <div id="support-badge-area"></div>
+          <div id="support-cta" style="display:none">
+            <div style="font-size:13px;color:var(--tx2);line-height:1.7;margin-bottom:14px">
+              Fulcrum is built and maintained by a single developer. If it's helped you take control of your finances,
+              consider becoming a supporter — you'll receive a permanent supporter badge and help fund future features
+              like the upcoming Retirement planning tab.
+            </div>
+            <button class="btn pri" style="width:100%" onclick="fulcrumPurchaseSupporter()">
+              ⚖ Become a Supporter
+            </button>
+            <div style="font-size:11px;color:var(--tx3);margin-top:8px;text-align:center">
+              One-time purchase · No subscription · No ads · Ever
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Check for Update -->
+      <div class="st-panel-wrap" id="stp-update">
+        <div class="st-panel-head">
+          <button class="st-panel-back" onclick="closeStPanel('stp-update')" aria-label="Back">&#8592;</button>
+          <div class="st-panel-title">Check for Update</div>
+        </div>
+        <div class="st-panel-body">
+          <div class="bak-section-sub" style="margin-bottom:16px">Fulcrum is served as a cached web app. Use this to check whether a newer version has been published and apply it immediately.</div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <button class="btn" onclick="checkForUpdate()" id="update-btn">Check for Update</button>
+            <span id="update-status" style="font-size:12px;color:var(--tx3)"></span>
+          </div>
+          <div style="margin-top:20px;padding-top:14px;border-top:.5px solid var(--b1)">
+            <div style="font-size:11px;color:var(--tx3);line-height:1.6">Current version: <strong id="about-version" style="color:var(--tx)"></strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="st-panel-wrap" id="stp-about">
+        <div class="st-panel-head">
+          <button class="st-panel-back" onclick="closeStPanel('stp-about')" aria-label="Back">&#8592;</button>
+          <div class="st-panel-title">About</div>
+        </div>
+        <div class="st-panel-body">
+          <div style="font-size:13px;color:var(--tx2);line-height:1.8">
+            <div style="font-weight:600;font-size:15px;color:var(--tx);margin-bottom:4px">Fulcrum — Personal Finance</div>
+            <div style="margin-top:10px">Copyright &copy; 2026 Matt Knox. All rights reserved.</div>
+            <div style="margin-top:4px;font-size:11px;color:var(--tx3)">
+              Unauthorized copying, redistribution, or modification of this software,
+              via any medium, is strictly prohibited. Proprietary and confidential.
+            </div>
+            <div style="margin-top:12px;font-size:11px;color:var(--tx3);border-top:.5px solid var(--b1);padding-top:10px">
+              This app runs entirely in your browser. No data is transmitted or stored on any server.
+            </div>
+            <div style="margin-top:10px;font-size:11px;color:var(--tx3)">
+              Questions or feedback? Reach us at <a href="mailto:matt@fulcrumpf.com" style="color:var(--g);text-decoration:none">matt@fulcrumpf.com</a>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Delete Data -->
-      <div class="bak-card bak-section" style="border-color:var(--r)">
-        <button onclick="dzToggle('st-delete',this)"
-          style="width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0;text-align:left">
-          <div class="bak-section-title" style="color:var(--r);margin-bottom:0">Delete data</div>
-          <span class="dz-chevron" style="font-size:14px;transition:transform .2s;display:inline-block;transform:rotate(180deg)">▼</span>
-        </button>
-        <div id="st-delete" style="display:none;margin-top:12px">
-          <div class="bak-section-sub">Permanently delete categories of data from this browser. These actions cannot be
-            undone. Export a backup first.</div>
-
-          <div
-            style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:14px">
+      <div class="st-panel-wrap" id="stp-delete">
+        <div class="st-panel-head">
+          <button class="st-panel-back" onclick="closeStPanel('stp-delete')" aria-label="Back">&#8592;</button>
+          <div class="st-panel-title" style="color:var(--r)">Delete Data</div>
+        </div>
+        <div class="st-panel-body">
+          <div class="bak-section-sub">Permanently delete categories of data from this browser. These actions cannot be undone. Export a backup first.</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:14px">
             <div style="background:var(--sf2);border-radius:var(--rsm);padding:11px 14px">
               <div style="font-size:12px;font-weight:600;margin-bottom:2px">Transactions</div>
               <div style="font-size:11px;color:var(--tx2);margin-bottom:8px" id="dz-tx-count">—</div>
@@ -4325,65 +4514,13 @@
               <button class="btn xs dan" onclick="clearCategory('budget')">Reset budget</button>
             </div>
           </div>
-
           <div style="border-top:.5px solid var(--r);padding-top:12px;margin-top:4px">
-            <div style="font-size:11px;color:var(--tx2);margin-bottom:8px">Remove everything — accounts, transactions,
-              goals, history, and settings.</div>
+            <div style="font-size:11px;color:var(--tx2);margin-bottom:8px">Remove everything — accounts, transactions, goals, history, and settings.</div>
             <button class="btn dan" onclick="clearAllData()">Clear all local data</button>
           </div>
         </div>
       </div>
 
-      <!-- Support Us -->
-      <div class="bak-card bak-section">
-        <button onclick="dzToggle('st-support',this)"
-          style="width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0;text-align:left">
-          <div class="bak-section-title" style="margin-bottom:0">Support Fulcrum</div>
-          <span class="dz-chevron" style="font-size:14px;transition:transform .2s;display:inline-block;transform:rotate(180deg)">▼</span>
-        </button>
-        <div id="st-support" style="display:none;margin-top:12px">
-          <div id="support-badge-area"></div>
-          <div id="support-cta" style="display:none">
-            <div style="font-size:13px;color:var(--tx2);line-height:1.7;margin-bottom:14px">
-              Fulcrum is built and maintained by a single developer. If it's helped you take control of your finances,
-              consider becoming a supporter — you'll receive a permanent supporter badge and help fund future features
-              like the upcoming Retirement planning tab.
-            </div>
-            <button class="btn pri" style="width:100%" onclick="fulcrumPurchaseSupporter()">
-              ⚖ Become a Supporter
-            </button>
-            <div style="font-size:11px;color:var(--tx3);margin-top:8px;text-align:center">
-              One-time purchase · No subscription · No ads · Ever
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- About -->
-      <div class="bak-card bak-section">
-        <button onclick="dzToggle('st-about',this)"
-          style="width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0;text-align:left">
-          <div class="bak-section-title" style="margin-bottom:0">About</div>
-          <span class="dz-chevron" style="font-size:14px;transition:transform .2s;display:inline-block;transform:rotate(180deg)">▼</span>
-        </button>
-        <div id="st-about" style="display:none;margin-top:12px">
-          <div style="font-size:13px;color:var(--tx2);line-height:1.8">
-            <div style="font-weight:600;font-size:15px;color:var(--tx);margin-bottom:4px">Fulcrum — Personal Finance</div>
-            <div>Version <strong id="about-version"></strong></div>
-            <div style="margin-top:10px">Copyright &copy; 2026 Matt Knox. All rights reserved.</div>
-            <div style="margin-top:4px;font-size:11px;color:var(--tx3)">
-              Unauthorized copying, redistribution, or modification of this software,
-              via any medium, is strictly prohibited. Proprietary and confidential.
-            </div>
-            <div style="margin-top:12px;font-size:11px;color:var(--tx3);border-top:.5px solid var(--b1);padding-top:10px">
-              This app runs entirely in your browser. No data is transmitted or stored on any server.
-            </div>
-            <div style="margin-top:10px;font-size:11px;color:var(--tx3)">
-              Questions or feedback? Reach us at <a href="mailto:matt@fulcrumpf.com" style="color:var(--g);text-decoration:none">matt@fulcrumpf.com</a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div><!-- /T-data -->
 
   </div><!-- /mn -->
@@ -4700,11 +4837,11 @@
       ['overview', 'budget', 'transactions', 'accounts', 'goals', 'forecast', 'income', 'data'].forEach(x => document.getElementById('T-' + x).style.display = x === t ? 'block' : 'none');
       document.querySelectorAll('.nb').forEach((b, i) => b.classList.toggle('on', ['overview', 'accounts', 'goals', 'forecast', 'transactions', 'budget', 'income', 'data'][i] === t));
       if (t === 'overview') renderOv();
-      if (t === 'budget') { _applyBudOrder(); _applyBudWidths(); _applyBudCollapsed(); _initBudRangeBar(); renderBudget(); }
-      if (t === 'transactions') { popTxF(true); syncTxSortUI(); _applyTxOrder(); _applyTxWidths(); _applyTxCollapsed(); renderRecurringRules(); renderTx(); }
+      if (t === 'budget') { _applyBudOrder(); _applyBudWidths(); _applyBudCollapsed(); _initBudRangeBar(); _initBudDrag(); renderBudget(); }
+      if (t === 'transactions') { popTxF(true); syncTxSortUI(); _applyTxOrder(); _applyTxWidths(); _applyTxCollapsed(); _initTxDrag(); renderRecurringRules(); renderTx(); }
       if (t === 'accounts') renderAcc();
       if (t === 'goals') { renderGoals(); renderCI() }
-      if (t === 'forecast') { const activePill = document.querySelector('#T-forecast .pill.on'); setMethod(S.method || 'snowball', activePill || document.querySelector('#T-forecast .pill')); _applyFcOrder(); _applyFcWidths(); _applyFcCollapsed(); _syncChartToggles(); updateFc(); updateSavingsFc(); }
+      if (t === 'forecast') { const activePill = document.querySelector('#T-forecast .pill.on'); setMethod(S.method || 'snowball', activePill || document.querySelector('#T-forecast .pill')); _applyFcOrder(); _applyFcWidths(); _applyFcCollapsed(); _initFcDrag(); _syncChartToggles(); updateFc(); updateSavingsFc(); }
       if (t === 'income') renderIncome();
       if (t === 'data') renderData();
     }
@@ -7202,6 +7339,939 @@
       document.getElementById('upSumNet').innerHTML = `<span style="color:${netColor}">net ${net >= 0 ? '+' : '-'}$${Math.abs(Math.round(net)).toLocaleString()}</span>`;
     }
 
+    // ── Spending Breakdown Chart ──────────────────────────────────────────────────
+
+    let sbRange = 'month';
+    let sbMode  = 'cat';  // 'cat' = by category, 'group' = needs/wants/goals
+    let _sbChart = null;
+
+    function setSbRange(range, btn) {
+      sbRange = range;
+      document.querySelectorAll('#sbRangeBtns .btn').forEach(b => b.classList.remove('on'));
+      if (btn) btn.classList.add('on');
+      renderSpendBreak();
+    }
+
+    function setSbMode(mode, btn) {
+      sbMode = mode;
+      document.querySelectorAll('#sbModeBtns .btn').forEach(b => b.classList.remove('on'));
+      if (btn) btn.classList.add('on');
+      renderSpendBreak();
+    }
+
+    function _getSbTxs() {
+      const now = new Date(), y = now.getFullYear(), m = now.getMonth();
+      let txs = S.transactions.filter(t => t.date && t.amount < 0);
+      txs = txs.filter(t => { const bc = resolveBudCat(t.category); return !(bc && bc.exclude); });
+      if (sbRange === 'month') {
+        txs = txs.filter(t => { const d = new Date(t.date + 'T00:00:00'); return d.getFullYear() === y && d.getMonth() === m; });
+      } else if (sbRange === 'prev') {
+        const pm = m === 0 ? 11 : m - 1, py = m === 0 ? y - 1 : y;
+        txs = txs.filter(t => { const d = new Date(t.date + 'T00:00:00'); return d.getFullYear() === py && d.getMonth() === pm; });
+      } else if (sbRange === '7day') {
+        const cutoff = new Date(now); cutoff.setDate(cutoff.getDate() - 6); cutoff.setHours(0,0,0,0);
+        txs = txs.filter(t => new Date(t.date + 'T00:00:00') >= cutoff);
+      } else if (sbRange === '14day') {
+        const cutoff = new Date(now); cutoff.setDate(cutoff.getDate() - 13); cutoff.setHours(0,0,0,0);
+        txs = txs.filter(t => new Date(t.date + 'T00:00:00') >= cutoff);
+      } else if (sbRange === '6mo') {
+        const cutoff = new Date(y, m - 5, 1);
+        txs = txs.filter(t => new Date(t.date + 'T00:00:00') >= cutoff);
+      } else if (sbRange === 'year') {
+        txs = txs.filter(t => new Date(t.date + 'T00:00:00').getFullYear() === y);
+      }
+      return txs;
+    }
+
+    function _getSbGroupBuckets(txs) {
+      const buckets = { needs: 0, wants: 0, goals: 0, other: 0 };
+      txs.forEach(t => {
+        const amt = Math.abs(t.amount);
+        if (t.splits && t.splits.length) {
+          t.splits.forEach(sp => {
+            const bc = resolveBudCat(sp.category);
+            const g  = (bc && buckets.hasOwnProperty(bc.group)) ? bc.group : 'other';
+            buckets[g] += Math.abs(Number(sp.amount || 0));
+          });
+        } else {
+          const bc = resolveBudCat(t.category);
+          const g  = (bc && buckets.hasOwnProperty(bc.group)) ? bc.group : 'other';
+          buckets[g] += amt;
+        }
+      });
+      return buckets;
+    }
+
+    function _updateSbSumLine(txs) {
+      const total   = txs.reduce((s, t) => s + Math.abs(t.amount), 0);
+      const buckets = _getSbGroupBuckets(txs);
+      const grandTotal = buckets.needs + buckets.wants + buckets.goals + buckets.other;
+      const pct = v => grandTotal > 0 ? Math.round(v / grandTotal * 100) : 0;
+      const elTotal = document.getElementById('sbSumTotal');
+      const elNeeds = document.getElementById('sbSumNeeds');
+      const elWants = document.getElementById('sbSumWants');
+      const elGoals = document.getElementById('sbSumGoals');
+      if (elTotal) elTotal.textContent = total > 0 ? '\u2212$' + Math.round(total).toLocaleString() : '';
+      if (elNeeds) elNeeds.textContent = grandTotal > 0 ? 'Needs ' + pct(buckets.needs) + '%' : '';
+      if (elWants) elWants.textContent = grandTotal > 0 ? 'Wants ' + pct(buckets.wants) + '%' : '';
+      if (elGoals) elGoals.textContent = grandTotal > 0 ? 'Goals ' + pct(buckets.goals) + '%' : '';
+    }
+
+    function renderSpendBreak() {
+      const canvas   = document.getElementById('sbChart');
+      const emptyEl  = document.getElementById('sbEmpty');
+      const legendEl = document.getElementById('sbLegend');
+      if (!canvas || !emptyEl || !legendEl) return;
+
+      const txs = _getSbTxs();
+      const th  = getTheme();
+
+      if (!txs.length) {
+        emptyEl.style.display = 'flex';
+        canvas.style.display  = 'none';
+        legendEl.innerHTML    = '';
+        ['sbSumTotal','sbSumNeeds','sbSumWants','sbSumGoals'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = ''; });
+        if (_sbChart) { try { _sbChart.destroy(); } catch(e){} _sbChart = null; }
+        return;
+      }
+      emptyEl.style.display = 'none';
+      canvas.style.display  = 'block';
+      _updateSbSumLine(txs);
+
+      let labels, values, colors;
+
+      if (sbMode === 'group') {
+        const buckets = _getSbGroupBuckets(txs);
+        const groupCfg = [
+          { key: 'needs', label: 'Needs', cColor: '#1452b0', dColor: '#4d9dff', gColor: '#333333' },
+          { key: 'wants', label: 'Wants', cColor: '#b56a00', dColor: '#f0a830', gColor: '#666666' },
+          { key: 'goals', label: 'Goals', cColor: '#1a7a3c', dColor: '#2dd078', gColor: '#000000' },
+          { key: 'other', label: 'Other', cColor: '#888888', dColor: '#aaaaaa', gColor: '#888888' },
+        ].filter(g => buckets[g.key] > 0);
+        labels = groupCfg.map(g => g.label);
+        values = groupCfg.map(g => Math.round(buckets[g.key] * 100) / 100);
+        colors = groupCfg.map(g => th === 'dark' ? g.dColor : th === 'color' ? g.cColor : g.gColor);
+      } else {
+        const catTotals = {};
+        txs.forEach(t => {
+          const amt = Math.abs(t.amount);
+          if (t.splits && t.splits.length) {
+            t.splits.forEach(sp => {
+              const cat = sp.category || 'Uncategorized';
+              catTotals[cat] = (catTotals[cat] || 0) + Math.abs(Number(sp.amount || 0));
+            });
+          } else {
+            const cat = t.category || 'Uncategorized';
+            catTotals[cat] = (catTotals[cat] || 0) + amt;
+          }
+        });
+        const sorted = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
+        const shown  = sorted.slice(0, 10);
+        const rest   = sorted.slice(10).reduce((s, [, v]) => s + v, 0);
+        if (rest > 0) shown.push(['Other', rest]);
+        labels = shown.map(([k]) => k);
+        values = shown.map(([, v]) => Math.round(v * 100) / 100);
+        const palette = (CHART_COLORS[th] || CHART_COLORS.color).palette;
+        colors = labels.map((_, i) => palette[i % palette.length]);
+      }
+
+      const total  = values.reduce((s, v) => s + v, 0);
+      const fmtTip = v => cs() + v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const tooltipBg = th === 'dark' ? '#1e2333' : '#ffffff';
+      const tooltipTx = th === 'dark' ? '#e8eaf0' : '#111111';
+
+      const chartData = {
+        labels,
+        datasets: [{ data: values, backgroundColor: colors,
+          borderColor: th === 'dark' ? '#161b2a' : '#ffffff', borderWidth: 2, hoverOffset: 8 }]
+      };
+
+      if (_sbChart && _sbChart.canvas && _sbChart.canvas.isConnected) {
+        _sbChart.data = chartData; _sbChart.update('active');
+      } else {
+        if (_sbChart) { try { _sbChart.destroy(); } catch(e){} }
+        _sbChart = new Chart(canvas, {
+          type: 'doughnut', data: chartData,
+          options: {
+            responsive: true, maintainAspectRatio: false, cutout: '52%',
+            animation: { duration: 350 },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: tooltipBg, titleColor: tooltipTx, bodyColor: tooltipTx,
+                borderColor: th === 'dark' ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.10)', borderWidth: 1,
+                callbacks: {
+                  title: ctx => ctx[0].label,
+                  label: ctx => {
+                    const pct = total > 0 ? Math.round(ctx.raw / total * 100) : 0;
+                    return '  ' + fmtTip(ctx.raw) + '  (' + pct + '%)';
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      legendEl.innerHTML = labels.map((lbl, i) => {
+        const pct = total > 0 ? Math.round(values[i] / total * 100) : 0;
+        return '<div style="display:flex;align-items:center;gap:4px;cursor:default" title="' + lbl + ': ' + fmtTip(values[i]) + ' (' + pct + '%)">'
+          + '<span style="width:10px;height:10px;border-radius:2px;background:' + colors[i] + ';flex-shrink:0;display:inline-block"></span>'
+          + '<span style="color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px">' + lbl + '</span>'
+          + '<span style="color:var(--tx3);font-size:10px">' + pct + '%</span>'
+          + '</div>';
+      }).join('');
+    }
+
+    // ── Collapse all / Expand all helpers ─────────────────────────────────────────
+
+    function _setAllAccCollapsed(state) {
+      if (!S.accCollapsed) S.accCollapsed = {};
+      document.querySelectorAll('#accList .ac[data-acc-id]').forEach(el => {
+        S.accCollapsed[el.dataset.accId] = state ? 1 : 0;
+      });
+      save(); _applyAccCollapsed();
+    }
+
+    function _setAllGoalCollapsed(state) {
+      if (!S.goalCollapsed) S.goalCollapsed = {};
+      document.querySelectorAll('#goalList .gc[data-gid]').forEach(el => {
+        S.goalCollapsed[el.dataset.gid] = state ? 1 : 0;
+      });
+      save(); _applyGoalCollapsed();
+    }
+
+    // ── Unified Pointer Drag Engine ─────────────────────────────────────────────
+    // Replaces all six HTML5 drag systems. Works on mouse, touch, and stylus.
+    // Each draggable card class calls _initPointerDrag(config) in its init/render.
+    //
+    // Config keys:
+    //   containerSelector  — e.g. '#ov-grid'
+    //   cardSelector       — e.g. '.ov-card'   (direct children of container)
+    //   onStart(card)      — visual setup: opacity, scale, shadow
+    //   onOver(drag,over,container) — animated reorder (setTimeout+insertBefore)
+    //   onDrop(container)  — persist new DOM order to S, call save()
+    //   onEnd(cards)       — cleanup: reset styles, remove shift classes
+    //   groupKey(el)       — optional; returns group key string (Accounts only)
+    //   skipSelector       — optional; CSS selector for children that block drag
+
+    let _pdActive = false;   // true during any active pointer drag
+    let _pdEl     = null;    // element being dragged
+    let _pdOver   = null;    // last element dragged over
+    let _pdConfig = null;    // active config
+
+    // Suppress context menu for the duration of any pointer drag
+    document.addEventListener('contextmenu', function(e) {
+      if (_pdActive) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+
+    function _initPointerDrag(config) {
+      // Called once per system (or after each render for dynamic cards).
+      // Attaches pointerdown to every card matched by cardSelector inside containerSelector.
+      const container = document.querySelector(config.containerSelector);
+      if (!container) return;
+
+      // For dynamic systems (Accounts, Goals) the caller re-runs _initPointerDrag
+      // after each render, so we only add one listener per card by guarding with a flag.
+      const cards = container.querySelectorAll(config.cardSelector);
+      cards.forEach(card => {
+        if (card._pdBound) return;
+        card._pdBound = true;
+        card.addEventListener('pointerdown', function(e) {
+          _pdPointerDown(e, card, config);
+        }, { passive: false });
+      });
+    }
+
+    const LONG_PRESS_MS  = 450;   // ms hold before drag activates
+    const LONG_PRESS_PX  = 6;    // px movement budget before long-press is cancelled
+    let   _pdLongTimer   = null;  // pending long-press timeout handle
+    let   _pdOriginX     = 0;    // pointerdown X for movement check
+    let   _pdOriginY     = 0;    // pointerdown Y for movement check
+    let   _pdPointerId   = null; // tracked pointer id during long-press window
+
+    function _pdPointerDown(e, card, config) {
+      // Ignore non-primary buttons (right-click etc.)
+      if (e.button !== undefined && e.button !== 0) return;
+      // Skip interactive children
+      const skip = config.skipSelector || 'input, textarea, select, button, a, [contenteditable]';
+      if (e.target.closest(skip)) return;
+
+      // Don't preventDefault yet — allow scroll if user moves before threshold fires.
+      // Capture origin for movement budget check.
+      _pdOriginX   = e.clientX;
+      _pdOriginY   = e.clientY;
+      _pdPointerId = e.pointerId;
+
+      // Pre-attach lightweight listeners for the long-press window
+      card.addEventListener('pointermove',   _pdPreMove,   { passive: true });
+      card.addEventListener('pointerup',     _pdPreUp,     { passive: true });
+      card.addEventListener('pointercancel', _pdPreCancel, { passive: true });
+
+      _pdLongTimer = setTimeout(() => {
+        _pdLongTimer = null;
+        // Remove pre-listeners and commit to drag
+        card.removeEventListener('pointermove',   _pdPreMove);
+        card.removeEventListener('pointerup',     _pdPreUp);
+        card.removeEventListener('pointercancel', _pdPreCancel);
+
+        _pdActive = true;
+        _pdEl     = card;
+        _pdOver   = null;
+        _pdConfig = config;
+
+        try { card.setPointerCapture(_pdPointerId); } catch(_) {}
+
+        config.onStart(card);
+
+        card.addEventListener('pointermove',   _pdPointerMove,   { passive: false });
+        card.addEventListener('pointerup',     _pdPointerUp,     { passive: false });
+        card.addEventListener('pointercancel', _pdPointerCancel, { passive: false });
+      }, LONG_PRESS_MS);
+
+      // Stash card/config so pre-listeners can reference them
+      _pdEl     = card;
+      _pdConfig = config;
+    }
+
+    // Pre-move: cancel long-press if finger strays beyond movement budget
+    function _pdPreMove(e) {
+      if (_pdLongTimer === null) return;
+      const dx = e.clientX - _pdOriginX;
+      const dy = e.clientY - _pdOriginY;
+      if (Math.sqrt(dx*dx + dy*dy) > LONG_PRESS_PX) _pdCancelLongPress();
+    }
+
+    // Pre-up: finger lifted before threshold — treat as tap, cancel drag
+    function _pdPreUp(e) { _pdCancelLongPress(); }
+    function _pdPreCancel(e) { _pdCancelLongPress(); }
+
+    function _pdCancelLongPress() {
+      if (_pdLongTimer !== null) { clearTimeout(_pdLongTimer); _pdLongTimer = null; }
+      const card = _pdEl;
+      if (card) {
+        card.removeEventListener('pointermove',   _pdPreMove);
+        card.removeEventListener('pointerup',     _pdPreUp);
+        card.removeEventListener('pointercancel', _pdPreCancel);
+      }
+      if (!_pdActive) { _pdEl = null; _pdConfig = null; }
+    }
+
+    function _pdPointerMove(e) {
+      if (!_pdActive || !_pdEl) return;
+      e.preventDefault();
+
+      const config = _pdConfig;
+      const container = document.querySelector(config.containerSelector);
+      if (!container) return;
+
+      // Temporarily hide the dragging element so elementFromPoint can see through it
+      _pdEl.style.pointerEvents = 'none';
+      const underEl = document.elementFromPoint(e.clientX, e.clientY);
+      _pdEl.style.pointerEvents = '';
+      if (!underEl) return;
+
+      // Walk up to find a sibling card in the same container
+      const overCard = underEl.closest(config.cardSelector);
+      if (!overCard || overCard === _pdEl) return;
+      if (!container.contains(overCard)) return;
+
+      // Group boundary check (Accounts system only)
+      if (config.groupKey) {
+        if (config.groupKey(_pdEl) !== config.groupKey(overCard)) return;
+      }
+
+      if (overCard === _pdOver) return;   // same card, no-op
+      _pdOver = overCard;
+
+      config.onOver(_pdEl, overCard, container);
+    }
+
+    function _pdPointerUp(e) {
+      if (!_pdActive) return;
+      e.preventDefault();
+      const config = _pdConfig;
+      const container = config ? document.querySelector(config.containerSelector) : null;
+
+      _pdEl.removeEventListener('pointermove', _pdPointerMove);
+      _pdEl.removeEventListener('pointerup',   _pdPointerUp);
+      _pdEl.removeEventListener('pointercancel', _pdPointerCancel);
+      try { _pdEl.releasePointerCapture(e.pointerId); } catch(_) {}
+
+      if (config && container) config.onDrop(container);
+
+      const cards = config ? Array.from(document.querySelectorAll(config.cardSelector)) : [];
+      if (config) config.onEnd(cards);
+
+      _pdActive = false;
+      _pdEl     = null;
+      _pdOver   = null;
+      _pdConfig = null;
+    }
+
+    function _pdPointerCancel(e) {
+      // Clean up without persisting on interrupted gestures
+      if (!_pdActive) return;
+      const config = _pdConfig;
+      const cards = config ? Array.from(document.querySelectorAll(config.cardSelector)) : [];
+      if (config) config.onEnd(cards);
+
+      _pdEl.removeEventListener('pointermove', _pdPointerMove);
+      _pdEl.removeEventListener('pointerup',   _pdPointerUp);
+      _pdEl.removeEventListener('pointercancel', _pdPointerCancel);
+      try { _pdEl.releasePointerCapture(e.pointerId); } catch(_) {}
+
+      _pdActive = false;
+      _pdEl     = null;
+      _pdOver   = null;
+      _pdConfig = null;
+    }
+
+    // ── Card order / width / collapse helpers (apply persisted state to DOM) ──────
+
+    function _applyOvOrder() {
+      const grid = document.getElementById('ov-grid');
+      if (!grid) return;
+      const order = (S.ovOrder && S.ovOrder.length === OV_DEFAULT_ORDER.length)
+        ? S.ovOrder : OV_DEFAULT_ORDER;
+      const cardMap = {};
+      grid.querySelectorAll(':scope > .ov-card').forEach(el => { cardMap[el.dataset.ovKey] = el; });
+      order.forEach((key, i) => {
+        const el = cardMap[key]; if (!el) return;
+        const ref = grid.children[i];
+        if (ref !== el) grid.insertBefore(el, ref || null);
+      });
+    }
+    function _applyOvWidths() {
+      const grid = document.getElementById('ov-grid'); if (!grid) return;
+      grid.querySelectorAll(':scope > .ov-card').forEach(el => {
+        const wide = S.ovWidths ? (S.ovWidths[el.dataset.ovKey] !== 0) : true;
+        el.classList.toggle('ov-full', wide);
+      });
+    }
+    function _toggleOvWidth(key) {
+      if (!S.ovWidths) S.ovWidths = Object.assign({}, OV_DEFAULT_WIDTHS);
+      S.ovWidths[key] = S.ovWidths[key] === 0 ? 1 : 0; save(); _applyOvWidths();
+      setTimeout(() => { try { renderNwChart(); } catch(e){} try { renderCashFlow(); } catch(e){} try { if (_sbChart) _sbChart.resize(); } catch(e){} }, 50);
+    }
+    function _applyOvCollapsed() {
+      if (!document.getElementById('ov-grid')) return;
+      document.querySelectorAll('#ov-grid .ov-card').forEach(el => {
+        const key = el.dataset.ovKey;
+        const collapsed = !!(S.ovCollapsed && S.ovCollapsed[key]);
+        el.classList.toggle('ov-collapsed', collapsed);
+        const btn = document.getElementById('ov-collapse-btn-' + key);
+        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
+      });
+    }
+    function _toggleOvCollapse(key) {
+      if (!S.ovCollapsed) S.ovCollapsed = {};
+      S.ovCollapsed[key] = S.ovCollapsed[key] ? 0 : 1; save(); _applyOvCollapsed();
+    }
+
+    function _applyFcOrder() {
+      const grid = document.getElementById('fc-grid'); if (!grid) return;
+      const order = (S.fcOrder && S.fcOrder.length === FC_DEFAULT_ORDER.length)
+        ? S.fcOrder : FC_DEFAULT_ORDER;
+      const cardMap = {};
+      grid.querySelectorAll(':scope > .fc-card').forEach(el => { cardMap[el.dataset.fcKey] = el; });
+      order.forEach((key, i) => {
+        const el = cardMap[key]; if (!el) return;
+        const ref = grid.children[i];
+        if (ref !== el) grid.insertBefore(el, ref || null);
+      });
+    }
+    function _applyFcWidths() {
+      const grid = document.getElementById('fc-grid'); if (!grid) return;
+      grid.querySelectorAll(':scope > .fc-card').forEach(el => {
+        const wide = S.fcWidths ? (S.fcWidths[el.dataset.fcKey] !== 0) : true;
+        el.classList.toggle('fc-full', wide);
+      });
+    }
+    function _toggleFcWidth(key) {
+      if (!S.fcWidths) S.fcWidths = Object.assign({}, FC_DEFAULT_WIDTHS);
+      S.fcWidths[key] = S.fcWidths[key] === 0 ? 1 : 0; save(); _applyFcWidths();
+      setTimeout(() => { try { updateFc(); } catch(e){} try { updateSavingsFc(); } catch(e){} }, 50);
+    }
+    function _applyFcCollapsed() {
+      if (!document.getElementById('fc-grid')) return;
+      document.querySelectorAll('#fc-grid .fc-card').forEach(el => {
+        const key = el.dataset.fcKey;
+        const collapsed = !!(S.fcCollapsed && S.fcCollapsed[key]);
+        el.classList.toggle('fc-collapsed', collapsed);
+        const btn = document.getElementById('fc-collapse-btn-' + key);
+        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
+      });
+    }
+    function _toggleFcCollapse(key) {
+      if (!S.fcCollapsed) S.fcCollapsed = {};
+      S.fcCollapsed[key] = S.fcCollapsed[key] ? 0 : 1; save(); _applyFcCollapsed();
+    }
+
+    function _applyTxOrder() {
+      const grid = document.getElementById('tx-grid'); if (!grid) return;
+      const order = (S.txOrder && S.txOrder.length === TX_DEFAULT_ORDER.length)
+        ? S.txOrder : TX_DEFAULT_ORDER;
+      const cardMap = {};
+      grid.querySelectorAll(':scope > .tx-card').forEach(el => { cardMap[el.dataset.txKey] = el; });
+      order.forEach((key, i) => {
+        const el = cardMap[key]; if (!el) return;
+        const ref = grid.children[i];
+        if (ref !== el) grid.insertBefore(el, ref || null);
+      });
+    }
+    function _applyTxWidths() {
+      const grid = document.getElementById('tx-grid'); if (!grid) return;
+      grid.querySelectorAll(':scope > .tx-card').forEach(el => {
+        const wide = S.txWidths ? (S.txWidths[el.dataset.txKey] !== 0) : true;
+        el.classList.toggle('tx-full', wide);
+      });
+    }
+    function _toggleTxWidth(key) {
+      if (!S.txWidths) S.txWidths = Object.assign({}, TX_DEFAULT_WIDTHS);
+      S.txWidths[key] = S.txWidths[key] === 0 ? 1 : 0; save(); _applyTxWidths();
+    }
+    function _applyTxCollapsed() {
+      if (!document.getElementById('tx-grid')) return;
+      document.querySelectorAll('#tx-grid .tx-card').forEach(el => {
+        const key = el.dataset.txKey;
+        const collapsed = !!(S.txCollapsed && S.txCollapsed[key]);
+        el.classList.toggle('tx-collapsed', collapsed);
+        const btn = document.getElementById('tx-collapse-btn-' + key);
+        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
+      });
+    }
+    function _toggleTxCollapse(key) {
+      if (!S.txCollapsed) S.txCollapsed = {};
+      S.txCollapsed[key] = S.txCollapsed[key] ? 0 : 1; save(); _applyTxCollapsed();
+    }
+
+    function _applyBudOrder() {
+      const grid = document.getElementById('bud-grid'); if (!grid) return;
+      const order = (S.budOrder && S.budOrder.length === BUD_DEFAULT_ORDER.length)
+        ? S.budOrder : BUD_DEFAULT_ORDER;
+      const cardMap = {};
+      grid.querySelectorAll(':scope > .bud-card').forEach(el => { cardMap[el.dataset.budKey] = el; });
+      order.forEach((key, i) => {
+        const el = cardMap[key]; if (!el) return;
+        const ref = grid.children[i];
+        if (ref !== el) grid.insertBefore(el, ref || null);
+      });
+    }
+    function _applyBudWidths() {
+      const grid = document.getElementById('bud-grid'); if (!grid) return;
+      grid.querySelectorAll(':scope > .bud-card').forEach(el => {
+        const wide = S.budWidths ? (S.budWidths[el.dataset.budKey] !== 0) : true;
+        el.classList.toggle('bud-full', wide);
+      });
+    }
+    function _toggleBudWidth(key) {
+      if (!S.budWidths) S.budWidths = Object.assign({}, BUD_DEFAULT_WIDTHS);
+      S.budWidths[key] = S.budWidths[key] === 0 ? 1 : 0; save(); _applyBudWidths();
+      setTimeout(() => { try { renderBudget(); } catch(e){} }, 50);
+    }
+    function _applyBudCollapsed() {
+      if (!document.getElementById('bud-grid')) return;
+      document.querySelectorAll('#bud-grid .bud-card').forEach(el => {
+        const key = el.dataset.budKey;
+        const collapsed = !!(S.budCollapsed && S.budCollapsed[key]);
+        el.classList.toggle('bud-collapsed', collapsed);
+        const btn = document.getElementById('bud-collapse-btn-' + key);
+        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
+      });
+    }
+    function _toggleBudCollapse(key) {
+      if (!S.budCollapsed) S.budCollapsed = {};
+      S.budCollapsed[key] = S.budCollapsed[key] ? 0 : 1; save(); _applyBudCollapsed();
+    }
+
+    function _applyAccWidths() {
+      document.querySelectorAll('#accList .ac[data-acc-id]').forEach(el => {
+        el.classList.toggle('ac-wide', !!(S.accWidths && S.accWidths[el.dataset.accId]));
+      });
+    }
+    function _toggleAccWidth(id) {
+      if (!S.accWidths) S.accWidths = {};
+      S.accWidths[id] = S.accWidths[id] ? 0 : 1; save();
+      const card = document.querySelector('#accList .ac[data-acc-id="' + id + '"]');
+      if (card) card.classList.toggle('ac-wide', !!S.accWidths[id]);
+    }
+    function _applyAccCollapsed() {
+      document.querySelectorAll('#accList .ac[data-acc-id]').forEach(el => {
+        const id = el.dataset.accId;
+        const collapsed = !!(S.accCollapsed && S.accCollapsed[id]);
+        el.classList.toggle('ac-collapsed', collapsed);
+        const btn = el.querySelector('.acc-collapse-btn');
+        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
+      });
+    }
+    function _toggleAccCollapse(id) {
+      if (!S.accCollapsed) S.accCollapsed = {};
+      S.accCollapsed[id] = S.accCollapsed[id] ? 0 : 1; save(); _applyAccCollapsed();
+    }
+
+    function _applyGoalWidths() {
+      document.querySelectorAll('#goalList .gc[data-gid]').forEach(el => {
+        el.classList.toggle('gc-wide', !!(S.goalWidths && S.goalWidths[el.dataset.gid]));
+      });
+    }
+    function _toggleGoalWidth(id) {
+      if (!S.goalWidths) S.goalWidths = {};
+      S.goalWidths[id] = S.goalWidths[id] ? 0 : 1; save();
+      const card = document.querySelector('#goalList .gc[data-gid="' + id + '"]');
+      if (card) card.classList.toggle('gc-wide', !!S.goalWidths[id]);
+    }
+    function _applyGoalCollapsed() {
+      document.querySelectorAll('#goalList .gc[data-gid]').forEach(el => {
+        const id = el.dataset.gid;
+        const collapsed = !!(S.goalCollapsed && S.goalCollapsed[id]);
+        el.classList.toggle('gc-collapsed', collapsed);
+        const btn = el.querySelector('.goal-collapse-btn');
+        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
+      });
+    }
+    function _toggleGoalCollapse(id) {
+      if (!S.goalCollapsed) S.goalCollapsed = {};
+      S.goalCollapsed[id] = S.goalCollapsed[id] ? 0 : 1; save(); _applyGoalCollapsed();
+    }
+    function _applyCiCollapsed() {
+      const body = document.getElementById('ci-body');
+      const btn  = document.getElementById('ci-collapse-btn');
+      if (!body) return;
+      const collapsed = !!(S.ciCollapsed);
+      body.style.display = collapsed ? 'none' : '';
+      if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
+    }
+    function _toggleCiCollapse() {
+      S.ciCollapsed = S.ciCollapsed ? 0 : 1; save(); _applyCiCollapsed();
+    }
+
+    // ── Helper: animated reorder (shared by all five key-based systems) ──────────
+    function _pdAnimReorder(dragEl, overEl, container, cardSelector, shiftUp, shiftDown) {
+      const cards   = Array.from(container.querySelectorAll(':scope > ' + cardSelector));
+      const fromIdx = cards.indexOf(dragEl);
+      const toIdx   = cards.indexOf(overEl);
+      if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
+
+      cards.forEach((el, i) => {
+        if (el === dragEl) return;
+        el.classList.remove(shiftDown, shiftUp);
+        if (fromIdx < toIdx && i > fromIdx && i <= toIdx) el.classList.add(shiftUp);
+        else if (fromIdx > toIdx && i >= toIdx && i < fromIdx) el.classList.add(shiftDown);
+      });
+
+      setTimeout(() => {
+        if (!dragEl || !dragEl.parentNode) return;
+        const cards2 = Array.from(container.querySelectorAll(':scope > ' + cardSelector));
+        const fi = cards2.indexOf(dragEl);
+        const ti = cards2.indexOf(overEl);
+        if (fi === -1 || ti === -1 || fi === ti) return;
+        if (fi < ti) container.insertBefore(dragEl, overEl.nextSibling);
+        else         container.insertBefore(dragEl, overEl);
+        requestAnimationFrame(() => {
+          container.querySelectorAll(cardSelector).forEach(el => el.classList.remove(shiftDown, shiftUp));
+        });
+      }, 80);
+    }
+
+    // ── Overview drag ─────────────────────────────────────────────────────────────
+    let _ovDragEl       = null;
+    let _ovDragLastOver = null;
+
+    function _initOvDrag() {
+      _initPointerDrag({
+        containerSelector: '#ov-grid',
+        cardSelector: '.ov-card',
+        onStart(card) {
+          _ovDragEl = card;
+          _ovDragLastOver = null;
+          requestAnimationFrame(() => {
+            if (_ovDragEl) {
+              _ovDragEl.style.opacity   = '0.38';
+              _ovDragEl.style.transform = 'scale(0.98)';
+              _ovDragEl.style.boxShadow = '0 6px 24px rgba(0,0,0,0.16)';
+              _ovDragEl.style.zIndex    = '10';
+            }
+          });
+        },
+        onOver(drag, over, container) {
+          if (over === _ovDragLastOver) return;
+          _ovDragLastOver = over;
+          _pdAnimReorder(drag, over, container, '.ov-card', 'ov-shift-up', 'ov-shift-down');
+        },
+        onDrop(container) {
+          const newOrder = Array.from(container.querySelectorAll(':scope > .ov-card'))
+            .map(el => el.dataset.ovKey).filter(Boolean);
+          if (newOrder.length === OV_DEFAULT_ORDER.length) { S.ovOrder = newOrder; save(); }
+        },
+        onEnd(cards) {
+          cards.forEach(el => {
+            el.style.opacity = ''; el.style.transform = ''; el.style.boxShadow = ''; el.style.zIndex = '';
+            el.classList.remove('ov-drag-over', 'ov-shift-down', 'ov-shift-up');
+          });
+          _ovDragEl = null; _ovDragLastOver = null;
+        }
+      });
+    }
+
+    // ── Forecast drag ─────────────────────────────────────────────────────────────
+    let _fcDragEl       = null;
+    let _fcDragLastOver = null;
+
+    function _initFcDrag() {
+      _initPointerDrag({
+        containerSelector: '#fc-grid',
+        cardSelector: '.fc-card',
+        onStart(card) {
+          _fcDragEl = card;
+          _fcDragLastOver = null;
+          requestAnimationFrame(() => {
+            if (_fcDragEl) {
+              _fcDragEl.style.opacity   = '0.38';
+              _fcDragEl.style.transform = 'scale(0.98)';
+              _fcDragEl.style.boxShadow = '0 6px 24px rgba(0,0,0,0.16)';
+              _fcDragEl.style.zIndex    = '10';
+            }
+          });
+        },
+        onOver(drag, over, container) {
+          if (over === _fcDragLastOver) return;
+          _fcDragLastOver = over;
+          _pdAnimReorder(drag, over, container, '.fc-card', 'fc-shift-up', 'fc-shift-down');
+        },
+        onDrop(container) {
+          const newOrder = Array.from(container.querySelectorAll(':scope > .fc-card'))
+            .map(el => el.dataset.fcKey).filter(Boolean);
+          if (newOrder.length === FC_DEFAULT_ORDER.length) { S.fcOrder = newOrder; save(); }
+        },
+        onEnd(cards) {
+          cards.forEach(el => {
+            el.style.opacity = ''; el.style.transform = ''; el.style.boxShadow = ''; el.style.zIndex = '';
+            el.classList.remove('fc-drag-over', 'fc-shift-down', 'fc-shift-up');
+          });
+          _fcDragEl = null; _fcDragLastOver = null;
+        }
+      });
+    }
+
+    // ── Transactions drag ─────────────────────────────────────────────────────────
+    let _txDragEl       = null;
+    let _txDragLastOver = null;
+
+    function _initTxDrag() {
+      _initPointerDrag({
+        containerSelector: '#tx-grid',
+        cardSelector: '.tx-card',
+        onStart(card) {
+          _txDragEl = card;
+          _txDragLastOver = null;
+          requestAnimationFrame(() => {
+            if (_txDragEl) {
+              _txDragEl.style.opacity   = '0.38';
+              _txDragEl.style.transform = 'scale(0.98)';
+              _txDragEl.style.boxShadow = '0 6px 24px rgba(0,0,0,0.16)';
+              _txDragEl.style.zIndex    = '10';
+            }
+          });
+        },
+        onOver(drag, over, container) {
+          if (over === _txDragLastOver) return;
+          _txDragLastOver = over;
+          _pdAnimReorder(drag, over, container, '.tx-card', 'tx-shift-up', 'tx-shift-down');
+        },
+        onDrop(container) {
+          const newOrder = Array.from(container.querySelectorAll(':scope > .tx-card'))
+            .map(el => el.dataset.txKey).filter(Boolean);
+          if (newOrder.length === TX_DEFAULT_ORDER.length) { S.txOrder = newOrder; save(); }
+        },
+        onEnd(cards) {
+          cards.forEach(el => {
+            el.style.opacity = ''; el.style.transform = ''; el.style.boxShadow = ''; el.style.zIndex = '';
+            el.classList.remove('tx-drag-over', 'tx-shift-down', 'tx-shift-up');
+          });
+          _txDragEl = null; _txDragLastOver = null;
+        }
+      });
+    }
+
+    // ── Budget drag ───────────────────────────────────────────────────────────────
+    let _budDragEl       = null;
+    let _budDragLastOver = null;
+
+    function _initBudDrag() {
+      _initPointerDrag({
+        containerSelector: '#bud-grid',
+        cardSelector: '.bud-card',
+        onStart(card) {
+          _budDragEl = card;
+          _budDragLastOver = null;
+          requestAnimationFrame(() => {
+            if (_budDragEl) {
+              _budDragEl.style.opacity   = '0.38';
+              _budDragEl.style.transform = 'scale(0.98)';
+              _budDragEl.style.boxShadow = '0 6px 24px rgba(0,0,0,0.16)';
+              _budDragEl.style.zIndex    = '10';
+            }
+          });
+        },
+        onOver(drag, over, container) {
+          if (over === _budDragLastOver) return;
+          _budDragLastOver = over;
+          _pdAnimReorder(drag, over, container, '.bud-card', 'bud-shift-up', 'bud-shift-down');
+        },
+        onDrop(container) {
+          const newOrder = Array.from(container.querySelectorAll(':scope > .bud-card'))
+            .map(el => el.dataset.budKey).filter(Boolean);
+          if (newOrder.length === BUD_DEFAULT_ORDER.length) { S.budOrder = newOrder; save(); }
+        },
+        onEnd(cards) {
+          cards.forEach(el => {
+            el.style.opacity = ''; el.style.transform = ''; el.style.boxShadow = ''; el.style.zIndex = '';
+            el.classList.remove('bud-drag-over', 'bud-shift-down', 'bud-shift-up');
+          });
+          _budDragEl = null; _budDragLastOver = null;
+        }
+      });
+    }
+
+    // ── Goals drag ────────────────────────────────────────────────────────────────
+    // Order is index-based: onDrop rebuilds S.goals from DOM order.
+    let _dragGoalEl       = null;
+    let _dragGoalLastOver = null;
+
+    function _initGoalDrag() {
+      _initPointerDrag({
+        containerSelector: '#goalList',
+        cardSelector: '.gc',
+        onStart(card) {
+          _dragGoalEl = card;
+          _dragGoalLastOver = null;
+          requestAnimationFrame(() => {
+            if (_dragGoalEl) {
+              _dragGoalEl.style.opacity   = '0.38';
+              _dragGoalEl.style.transform = 'scale(0.97)';
+              _dragGoalEl.style.boxShadow = '0 6px 24px rgba(0,0,0,0.18)';
+              _dragGoalEl.style.zIndex    = '10';
+            }
+          });
+        },
+        onOver(drag, over, container) {
+          if (over === _dragGoalLastOver) return;
+          _dragGoalLastOver = over;
+          // Goals use #goalList as container but cards aren't :scope > .gc (could be nested)
+          const cards   = Array.from(container.querySelectorAll('.gc'));
+          const fromIdx = cards.indexOf(drag);
+          const toIdx   = cards.indexOf(over);
+          if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
+          cards.forEach((el, i) => {
+            if (el === drag) return;
+            el.classList.remove('gc-shift-down', 'gc-shift-up');
+            if (fromIdx < toIdx && i > fromIdx && i <= toIdx) el.classList.add('gc-shift-up');
+            else if (fromIdx > toIdx && i >= toIdx && i < fromIdx) el.classList.add('gc-shift-down');
+          });
+          setTimeout(() => {
+            if (!drag || !drag.parentNode) return;
+            const cards2 = Array.from(container.querySelectorAll('.gc'));
+            const fi = cards2.indexOf(drag);
+            const ti = cards2.indexOf(over);
+            if (fi === -1 || ti === -1 || fi === ti) return;
+            if (fi < ti) container.insertBefore(drag, over.nextSibling);
+            else         container.insertBefore(drag, over);
+            requestAnimationFrame(() => {
+              container.querySelectorAll('.gc').forEach(el => el.classList.remove('gc-shift-down', 'gc-shift-up'));
+            });
+          }, 80);
+        },
+        onDrop(container) {
+          // Rebuild S.goals order from current DOM order using data-gid
+          const domIds = Array.from(container.querySelectorAll('.gc[data-gid]'))
+            .map(el => el.dataset.gid).filter(Boolean);
+          if (domIds.length === S.goals.length) {
+            const byId = {};
+            S.goals.forEach(g => { byId[g.id] = g; });
+            S.goals = domIds.map(id => byId[id]).filter(Boolean);
+            save();
+          }
+          renderGoals();
+        },
+        onEnd(cards) {
+          cards.forEach(el => {
+            el.style.opacity = ''; el.style.transform = ''; el.style.boxShadow = ''; el.style.zIndex = '';
+            el.classList.remove('gc-drag-over', 'gc-shift-down', 'gc-shift-up');
+          });
+          _dragGoalEl = null; _dragGoalLastOver = null;
+        }
+      });
+    }
+
+    // ── Accounts drag (group-boundary enforced) ───────────────────────────────────
+    // Drag is restricted to within groups; data-grp attribute enforces the boundary.
+    let _accDragEl       = null;
+    let _accDragLastOver = null;
+
+    function _initAccDrag() {
+      _initPointerDrag({
+        containerSelector: '#accList',
+        cardSelector: '.ac',
+        groupKey(el) { return el ? (el.dataset.grp || '') : ''; },
+        onStart(card) {
+          _accDragEl = card;
+          _accDragLastOver = null;
+          requestAnimationFrame(() => {
+            if (_accDragEl) _accDragEl.classList.add('ac-dragging');
+          });
+        },
+        onOver(drag, over, container) {
+          if (over === _accDragLastOver) return;
+          _accDragLastOver = over;
+          const grpKey = drag.dataset.grp || '';
+          const siblings = Array.from(container.querySelectorAll('.ac[data-grp="' + grpKey + '"]'));
+          const fromIdx = siblings.indexOf(drag);
+          const toIdx   = siblings.indexOf(over);
+          if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
+          siblings.forEach((el, i) => {
+            if (el === drag) return;
+            el.classList.remove('ac-shift-down', 'ac-shift-up');
+            if (fromIdx < toIdx && i > fromIdx && i <= toIdx) el.classList.add('ac-shift-up');
+            else if (fromIdx > toIdx && i >= toIdx && i < fromIdx) el.classList.add('ac-shift-down');
+          });
+          setTimeout(() => {
+            if (!drag || !drag.parentNode) return;
+            const sibs2 = Array.from(container.querySelectorAll('.ac[data-grp="' + grpKey + '"]'));
+            const fi = sibs2.indexOf(drag);
+            const ti = sibs2.indexOf(over);
+            if (fi === -1 || ti === -1 || fi === ti) return;
+            if (fi < ti) container.insertBefore(drag, over.nextSibling);
+            else         container.insertBefore(drag, over);
+            requestAnimationFrame(() => {
+              container.querySelectorAll('.ac').forEach(el => el.classList.remove('ac-shift-up', 'ac-shift-down'));
+            });
+          }, 80);
+        },
+        onDrop(container) {
+          const newOrder = Array.from(container.querySelectorAll('.ac[data-acc-id]'))
+            .map(el => el.dataset.accId).filter(Boolean);
+          S.accOrder = newOrder;
+          save();
+        },
+        onEnd(cards) {
+          cards.forEach(el => {
+            el.classList.remove('ac-dragging', 'ac-drag-over', 'ac-shift-up', 'ac-shift-down');
+          });
+          _accDragEl = null; _accDragLastOver = null;
+        }
+      });
+    }
+
+    // Returns all .ac cards in the same group as cardEl (kept for any legacy references)
+    function _accGrpKey(cardEl) { return cardEl ? (cardEl.dataset.grp || '') : ''; }
+    function _accSiblingsInGroup(cardEl) {
+      const key = _accGrpKey(cardEl);
+      if (!key) return [];
+      return Array.from(document.querySelectorAll('#accList .ac[data-grp="' + key + '"]'));
+    }
+
+
     function renderOv() {
       // Record snapshot whenever overview loads
       recordNwSnapshot();
@@ -7237,6 +8307,7 @@
       _applyOvOrder();
       _applyOvWidths();
       _applyOvCollapsed();
+      _initOvDrag();
       renderNwChart();
       renderCashFlow();
       renderSpendBreak();
@@ -8114,6 +9185,7 @@
       el.innerHTML = html;
       _applyAccWidths();
       _applyAccCollapsed();
+      _initAccDrag();
       // Build charts for all visible accounts with history
       S.accounts.forEach(a => {
         const hist = a.balHistory || []; if (hist.length < 2) return;
@@ -8175,7 +9247,7 @@
       // Count transactions for this account
       const txCount = S.transactions.filter(t => t.accountId === a.id).length;
       const dragAttrs = draggable
-        ? `draggable="true" data-acc-id="${a.id}" data-grp="${grpKey||''}" ondragstart="_accDragStart(event,this)" ondragend="_accDragEnd()"`
+        ? `data-acc-id="${a.id}" data-grp="${grpKey||''}" data-draggable="1"`
         : `data-acc-id="${a.id}"`;
       const dragHandle = draggable
         ? `<span class="ac-drag-handle" title="Drag to reorder">&#8942;&#8942;</span>`
@@ -9715,11 +10787,7 @@
           stat2Color = '';
         }
 
-        return `<div class="gc" data-gid="${g.id}" draggable="true"
-        ondragstart="_goalDragStart(event,${gi})"
-        ondragend="_goalDragEnd()"
-        ondragover="_goalDragOver(event,${gi})"
-        ondrop="_goalDrop(event,${gi})">
+        return `<div class="gc" data-gid="${g.id}" data-draggable="1">
       <div class="gchead"><span class="gc-drag-handle" title="Drag to reorder">&#8942;&#8942;</span><div class="gcname">${g.name}</div>${badge}<div class="gcbtns"><div class="card-menu-wrap"><button class="card-menu-btn" onclick="toggleCardMenu(event,'gc-menu-${g.id}')" aria-label="Options">&#8942;</button><div class="card-menu-dropdown" id="gc-menu-${g.id}"><button class="card-menu-item" onclick="closeCardMenus();_toggleGoalWidth('${g.id}')">Resize</button><button class="card-menu-item goal-collapse-btn" onclick="closeCardMenus();_toggleGoalCollapse('${g.id}')">${(S.goalCollapsed && S.goalCollapsed[g.id]) ? 'Expand' : 'Collapse'}</button><button class="card-menu-item" onclick="closeCardMenus();openAddGoal('${g.id}')">Edit</button><div id="gc-del-confirm-${g.id}" style="display:none" class="card-menu-confirm"><p>Delete this goal?</p><div class="card-menu-confirm-btns"><button class="cmc-no" onclick="hideDelConfirm('gc-del-confirm-${g.id}')">Cancel</button><button class="cmc-yes" onclick="closeCardMenus();delGoal('${g.id}')">Delete</button></div></div><button class="card-menu-item dan" onclick="showDelConfirm('gc-del-confirm-${g.id}',this)">Delete</button></div></div></div></div>
       <div class="gc-body">
         <div class="gbody">
@@ -9735,7 +10803,7 @@
       </div>
     </div>`;
       }).join('');
-      requestAnimationFrame(() => _renderGoalCharts());
+      requestAnimationFrame(() => { _renderGoalCharts(); _initGoalDrag(); });
       _applyGoalWidths();
       _applyGoalCollapsed();
       _applyCiCollapsed();
@@ -9858,8 +10926,8 @@
             const fAct  = fIdx.map(i => actualData[i]);
             const fProj = fIdx.map(i => projData[i]);
 
-            const mainColor = ip ? cc2.debt : (isEnv ? 'var(--pu)' : cc2.savingsLine);
-            const mainFill  = ip ? cc2.debtFill : (isEnv ? 'rgba(139,92,246,0.08)' : cc2.savingsFill);
+            const mainColor = ip ? cc2.debt : (isEnv ? cc2.envelope : cc2.savingsLine);
+            const mainFill  = ip ? cc2.debtFill : (isEnv ? cc2.envelopeFill : cc2.savingsFill);
             const trajColor = cc2.savingsTarget || '#22c55e';
 
             const datasets2 = [
@@ -9967,8 +11035,8 @@
         const filtered = pts.filter((_, i) => i % step === 0 || i === pts.length - 1);
         const labs = filtered.map((_, i) => futureMonthLabel(i === filtered.length - 1 ? pts.length : (i * step) + 1));
 
-        const mainColor = ip ? cc.debt : (isEnv ? 'var(--pu)' : cc.savingsLine);
-        const mainFill  = ip ? cc.debtFill : (isEnv ? 'rgba(139,92,246,0.08)' : cc.savingsFill);
+        const mainColor = ip ? cc.debt : (isEnv ? cc.envelope : cc.savingsLine);
+        const mainFill  = ip ? cc.debtFill : (isEnv ? cc.envelopeFill : cc.savingsFill);
 
         const datasets = [{
           label: ip ? 'Balance' : 'Projected',
@@ -10884,6 +11952,8 @@
         savingsLine: '#000000',
         savingsFill: 'rgba(0,0,0,0.06)',
         savingsTarget: '#555555',
+        envelope: '#5c35b0',
+        envelopeFill: 'rgba(92,53,176,0.07)',
       },
       color: {
         palette: ['#1a7a3c', '#c0282a', '#1452b0', '#b56a00', '#5c35b0', '#0e7490',
@@ -10917,6 +11987,8 @@
         savingsLine: '#1a7a3c',
         savingsFill: 'rgba(26,122,60,0.10)',
         savingsTarget: '#1452b0',
+        envelope: '#5c35b0',
+        envelopeFill: 'rgba(92,53,176,0.08)',
       },
       dark: {
         palette: ['#2dd078', '#f04a4a', '#4d9dff', '#f0a830', '#9b6eff', '#22d4d4',
@@ -10950,6 +12022,8 @@
         savingsLine: '#2dd078',
         savingsFill: 'rgba(45,208,120,0.10)',
         savingsTarget: '#4d9dff',
+        envelope: '#9b6eff',
+        envelopeFill: 'rgba(155,110,255,0.10)',
       }
     };
 
@@ -11149,1170 +12223,6 @@
     //     the insertBefore when the target hasn't changed, silencing the rapid
     //     repeated dragover fires that would otherwise cause flicker.
 
-    let _dragGoalEl       = null;
-    let _dragGoalLastOver = null;
-
-    function _goalDragStart(e, idx) {
-      if (e.target.closest('input, textarea, select, button, a, [contenteditable]')) return;
-      _dragGoalEl       = e.currentTarget;
-      _dragGoalLastOver = null;
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', String(idx));
-      // Capture original positions for animation reference
-      const container = _dragGoalEl.parentNode;
-      if (container) {
-        Array.from(container.querySelectorAll('.gc')).forEach(el => {
-          el._dragOriginY = el.getBoundingClientRect().top;
-        });
-      }
-      requestAnimationFrame(() => {
-        if (_dragGoalEl) {
-          _dragGoalEl.style.opacity   = '0.38';
-          _dragGoalEl.style.transform = 'scale(0.97)';
-          _dragGoalEl.style.boxShadow = '0 6px 24px rgba(0,0,0,0.18)';
-          _dragGoalEl.style.zIndex    = '10';
-        }
-      });
-    }
-
-    function _goalDragEnd() {
-      document.querySelectorAll('.gc').forEach(el => {
-        el.style.opacity   = '';
-        el.style.transform = '';
-        el.style.boxShadow = '';
-        el.style.zIndex    = '';
-        el.classList.remove('gc-drag-over', 'gc-shift-down', 'gc-shift-up');
-        delete el._dragOriginY;
-      });
-      _dragGoalEl       = null;
-      _dragGoalLastOver = null;
-    }
-
-    function _goalDragOver(e, _idx) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      if (!_dragGoalEl) return;
-
-      const overEl = e.currentTarget;
-      if (!overEl || overEl === _dragGoalEl) return;
-      if (overEl === _dragGoalLastOver) return;
-      _dragGoalLastOver = overEl;
-
-      const container = _dragGoalEl.parentNode;
-      if (!container) return;
-
-      const cards   = Array.from(container.querySelectorAll('.gc'));
-      const fromIdx = cards.indexOf(_dragGoalEl);
-      const toIdx   = cards.indexOf(overEl);
-      if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
-
-      // Animate cards in the displaced range before moving DOM
-      cards.forEach((el, i) => {
-        if (el === _dragGoalEl) return;
-        el.classList.remove('gc-shift-down', 'gc-shift-up');
-        if (fromIdx < toIdx && i > fromIdx && i <= toIdx) {
-          el.classList.add('gc-shift-up');
-        } else if (fromIdx > toIdx && i >= toIdx && i < fromIdx) {
-          el.classList.add('gc-shift-down');
-        }
-      });
-
-      // Brief delay so CSS transition is visible before the DOM reorder
-      setTimeout(() => {
-        if (!_dragGoalEl || !_dragGoalEl.parentNode) return;
-        const cards2 = Array.from(_dragGoalEl.parentNode.querySelectorAll('.gc'));
-        const fi = cards2.indexOf(_dragGoalEl);
-        const ti = cards2.indexOf(overEl);
-        if (fi === -1 || ti === -1 || fi === ti) return;
-        if (fi < ti) { container.insertBefore(_dragGoalEl, overEl.nextSibling); }
-        else         { container.insertBefore(_dragGoalEl, overEl); }
-        // Clear shift classes after DOM settles
-        requestAnimationFrame(() => {
-          container.querySelectorAll('.gc').forEach(el => el.classList.remove('gc-shift-down', 'gc-shift-up'));
-        });
-      }, 80);
-    }
-
-    function _goalDrop(e, _idx) {
-      e.preventDefault();
-      if (!_dragGoalEl) return;
-
-      const container = _dragGoalEl.parentNode;
-      document.querySelectorAll('.gc').forEach(el => {
-        el.style.opacity   = '';
-        el.style.transform = '';
-        el.style.boxShadow = '';
-        el.style.zIndex    = '';
-        el.classList.remove('gc-drag-over', 'gc-shift-down', 'gc-shift-up');
-      });
-
-      if (!container) { _dragGoalEl = null; _dragGoalLastOver = null; renderGoals(); return; }
-
-      const cards    = Array.from(container.querySelectorAll('.gc'));
-      const newOrder = cards.map(el => {
-        const m = (el.getAttribute('ondragstart') || '').match(/_goalDragStart\(event,(\d+)\)/);
-        return m ? parseInt(m[1], 10) : null;
-      }).filter(i => i !== null);
-
-      if (newOrder.length === S.goals.length) {
-        const orig = S.goals.slice();
-        S.goals = newOrder.map(i => orig[i]);
-      }
-
-      _dragGoalEl       = null;
-      _dragGoalLastOver = null;
-      save();
-      renderGoals();
-    }
-
-    // ── Spending Breakdown Chart ─────────────────────────────────────────────────
-    let sbRange = 'month';
-    let sbMode  = 'cat';  // 'cat' = by category, 'group' = needs/wants/goals
-    let _sbChart = null;
-
-    function setSbRange(range, btn) {
-      sbRange = range;
-      document.querySelectorAll('#sbRangeBtns .btn').forEach(b => b.classList.remove('on'));
-      if (btn) btn.classList.add('on');
-      renderSpendBreak();
-    }
-
-    function setSbMode(mode, btn) {
-      sbMode = mode;
-      document.querySelectorAll('#sbModeBtns .btn').forEach(b => b.classList.remove('on'));
-      if (btn) btn.classList.add('on');
-      renderSpendBreak();
-    }
-
-    function _getSbTxs() {
-      const now = new Date(), y = now.getFullYear(), m = now.getMonth();
-      let txs = S.transactions.filter(t => t.date && t.amount < 0);
-      // Exclude transfers/excluded categories
-      txs = txs.filter(t => {
-        const bc = resolveBudCat(t.category);
-        return !(bc && bc.exclude);
-      });
-      if (sbRange === 'month') {
-        txs = txs.filter(t => { const d = new Date(t.date + 'T00:00:00'); return d.getFullYear() === y && d.getMonth() === m; });
-      } else if (sbRange === 'prev') {
-        const pm = m === 0 ? 11 : m - 1, py = m === 0 ? y - 1 : y;
-        txs = txs.filter(t => { const d = new Date(t.date + 'T00:00:00'); return d.getFullYear() === py && d.getMonth() === pm; });
-      } else if (sbRange === '7day') {
-        const cutoff = new Date(now); cutoff.setDate(cutoff.getDate() - 6); cutoff.setHours(0,0,0,0);
-        txs = txs.filter(t => new Date(t.date + 'T00:00:00') >= cutoff);
-      } else if (sbRange === '14day') {
-        const cutoff = new Date(now); cutoff.setDate(cutoff.getDate() - 13); cutoff.setHours(0,0,0,0);
-        txs = txs.filter(t => new Date(t.date + 'T00:00:00') >= cutoff);
-      } else if (sbRange === '6mo') {
-        const cutoff = new Date(y, m - 5, 1);
-        txs = txs.filter(t => new Date(t.date + 'T00:00:00') >= cutoff);
-      } else if (sbRange === 'year') {
-        txs = txs.filter(t => new Date(t.date + 'T00:00:00').getFullYear() === y);
-      }
-      return txs;
-    }
-
-    function _getSbGroupBuckets(txs) {
-      const buckets = { needs: 0, wants: 0, goals: 0, other: 0 };
-      txs.forEach(t => {
-        const amt = Math.abs(t.amount);
-        if (t.splits && t.splits.length) {
-          t.splits.forEach(sp => {
-            const bc = resolveBudCat(sp.category);
-            const g  = (bc && buckets.hasOwnProperty(bc.group)) ? bc.group : 'other';
-            buckets[g] += Math.abs(Number(sp.amount || 0));
-          });
-        } else {
-          const bc = resolveBudCat(t.category);
-          const g  = (bc && buckets.hasOwnProperty(bc.group)) ? bc.group : 'other';
-          buckets[g] += amt;
-        }
-      });
-      return buckets;
-    }
-
-    function _updateSbSumLine(txs) {
-      const total    = txs.reduce((s, t) => s + Math.abs(t.amount), 0);
-      const buckets  = _getSbGroupBuckets(txs);
-      const grandTotal = buckets.needs + buckets.wants + buckets.goals + buckets.other;
-      const pct = v => grandTotal > 0 ? Math.round(v / grandTotal * 100) : 0;
-      const elTotal = document.getElementById('sbSumTotal');
-      const elNeeds = document.getElementById('sbSumNeeds');
-      const elWants = document.getElementById('sbSumWants');
-      const elGoals = document.getElementById('sbSumGoals');
-      if (elTotal) elTotal.textContent = total > 0 ? '\u2212$' + Math.round(total).toLocaleString() : '';
-      if (elNeeds) elNeeds.textContent = grandTotal > 0 ? 'Needs ' + pct(buckets.needs) + '%' : '';
-      if (elWants) elWants.textContent = grandTotal > 0 ? 'Wants ' + pct(buckets.wants) + '%' : '';
-      if (elGoals) elGoals.textContent = grandTotal > 0 ? 'Goals ' + pct(buckets.goals) + '%' : '';
-    }
-
-    function renderSpendBreak() {
-      const canvas   = document.getElementById('sbChart');
-      const emptyEl  = document.getElementById('sbEmpty');
-      const legendEl = document.getElementById('sbLegend');
-      if (!canvas || !emptyEl || !legendEl) return;
-
-      const txs = _getSbTxs();
-      const th  = getTheme();
-
-      if (!txs.length) {
-        emptyEl.style.display = 'flex';
-        canvas.style.display  = 'none';
-        legendEl.innerHTML    = '';
-        ['sbSumTotal','sbSumNeeds','sbSumWants','sbSumGoals'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = ''; });
-        if (_sbChart) { try { _sbChart.destroy(); } catch(e){} _sbChart = null; }
-        return;
-      }
-      emptyEl.style.display = 'none';
-      canvas.style.display  = 'block';
-
-      _updateSbSumLine(txs);
-
-      let labels, values, colors;
-
-      if (sbMode === 'group') {
-        const buckets = _getSbGroupBuckets(txs);
-        // Needs=blue, Wants=amber, Goals=green
-        const groupCfg = [
-          { key: 'needs', label: 'Needs',  cColor: '#1452b0', dColor: '#4d9dff', gColor: '#333333' },
-          { key: 'wants', label: 'Wants',  cColor: '#b56a00', dColor: '#f0a830', gColor: '#666666' },
-          { key: 'goals', label: 'Goals',  cColor: '#1a7a3c', dColor: '#2dd078', gColor: '#000000' },
-          { key: 'other', label: 'Other',  cColor: '#888888', dColor: '#aaaaaa', gColor: '#888888' },
-        ].filter(g => buckets[g.key] > 0);
-        labels = groupCfg.map(g => g.label);
-        values = groupCfg.map(g => Math.round(buckets[g.key] * 100) / 100);
-        colors = groupCfg.map(g => th === 'dark' ? g.dColor : th === 'color' ? g.cColor : g.gColor);
-      } else {
-        const catTotals = {};
-        txs.forEach(t => {
-          const amt = Math.abs(t.amount);
-          if (t.splits && t.splits.length) {
-            t.splits.forEach(sp => {
-              const cat = sp.category || 'Uncategorized';
-              catTotals[cat] = (catTotals[cat] || 0) + Math.abs(Number(sp.amount || 0));
-            });
-          } else {
-            const cat = t.category || 'Uncategorized';
-            catTotals[cat] = (catTotals[cat] || 0) + amt;
-          }
-        });
-        const sorted = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
-        const shown  = sorted.slice(0, 10);
-        const rest   = sorted.slice(10).reduce((s, [, v]) => s + v, 0);
-        if (rest > 0) shown.push(['Other', rest]);
-        labels = shown.map(([k]) => k);
-        values = shown.map(([, v]) => Math.round(v * 100) / 100);
-        const palette = (CHART_COLORS[th] || CHART_COLORS.color).palette;
-        colors = labels.map((_, i) => palette[i % palette.length]);
-      }
-
-      const total   = values.reduce((s, v) => s + v, 0);
-      const fmtTip  = v => cs() + v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      const tooltipBg = th === 'dark' ? '#1e2333' : '#ffffff';
-      const tooltipTx = th === 'dark' ? '#e8eaf0' : '#111111';
-
-      const chartData = {
-        labels,
-        datasets: [{
-          data: values,
-          backgroundColor: colors,
-          borderColor: th === 'dark' ? '#161b2a' : '#ffffff',
-          borderWidth: 2,
-          hoverOffset: 8
-        }]
-      };
-
-      if (_sbChart && _sbChart.canvas && _sbChart.canvas.isConnected) {
-        _sbChart.data = chartData;
-        _sbChart.update('active');
-      } else {
-        if (_sbChart) { try { _sbChart.destroy(); } catch(e){} }
-        _sbChart = new Chart(canvas, {
-          type: 'doughnut',
-          data: chartData,
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '52%',
-            animation: { duration: 350 },
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                backgroundColor: tooltipBg,
-                titleColor: tooltipTx,
-                bodyColor:  tooltipTx,
-                borderColor: th === 'dark' ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.10)',
-                borderWidth: 1,
-                callbacks: {
-                  title: ctx => ctx[0].label,
-                  label: ctx => {
-                    const pct = total > 0 ? Math.round(ctx.raw / total * 100) : 0;
-                    return '  ' + fmtTip(ctx.raw) + '  (' + pct + '%)';
-                  }
-                }
-              }
-            }
-          }
-        });
-      }
-
-      legendEl.innerHTML = labels.map((lbl, i) => {
-        const pct = total > 0 ? Math.round(values[i] / total * 100) : 0;
-        return '<div style="display:flex;align-items:center;gap:4px;cursor:default" title="' + lbl + ': ' + fmtTip(values[i]) + ' (' + pct + '%)">'
-          + '<span style="width:10px;height:10px;border-radius:2px;background:' + colors[i] + ';flex-shrink:0;display:inline-block"></span>'
-          + '<span style="color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px">' + lbl + '</span>'
-          + '<span style="color:var(--tx3);font-size:10px">' + pct + '%</span>'
-          + '</div>';
-      }).join('');
-    }
-
-    // ── Overview card drag-and-drop (live animated reorder) ──────────────────────
-    // Mirrors the Goals DnD pattern exactly:
-    //   - Drag only activates when initiated on the .ov-drag-handle
-    //   - _ovDragLastOver deduplicates rapid dragover fires (anti-flicker)
-    //   - Order persists to S.ovOrder across sessions
-
-    let _ovDragEl       = null;
-    let _ovDragLastOver = null;
-
-    function _ovDragStart(e) {
-      // Accept drag from anywhere on the card — the ⋮⋮ handle is a visual affordance only.
-      // Suppress for interactive children so buttons/inputs still work normally.
-      if (e.target.closest('input, textarea, select, button, a, [contenteditable]')) return;
-      _ovDragEl       = e.currentTarget;
-      _ovDragLastOver = null;
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', _ovDragEl.dataset.ovKey || '');
-      requestAnimationFrame(() => {
-        if (_ovDragEl) {
-          _ovDragEl.style.opacity   = '0.38';
-          _ovDragEl.style.transform = 'scale(0.98)';
-          _ovDragEl.style.boxShadow = '0 6px 24px rgba(0,0,0,0.16)';
-          _ovDragEl.style.zIndex    = '10';
-        }
-      });
-    }
-
-    function _ovDragEnd() {
-      document.querySelectorAll('.ov-card').forEach(el => {
-        el.style.opacity   = '';
-        el.style.transform = '';
-        el.style.boxShadow = '';
-        el.style.zIndex    = '';
-        el.classList.remove('ov-drag-over', 'ov-shift-down', 'ov-shift-up');
-      });
-      _ovDragEl       = null;
-      _ovDragLastOver = null;
-    }
-
-    function _ovDragOver(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      if (!_ovDragEl) return;
-
-      const overEl = e.currentTarget;
-      if (!overEl || overEl === _ovDragEl) return;
-      if (overEl === _ovDragLastOver) return;
-      _ovDragLastOver = overEl;
-
-      const container = document.getElementById('ov-grid');
-      if (!container) return;
-      const cards   = Array.from(container.querySelectorAll(':scope > .ov-card'));
-      const fromIdx = cards.indexOf(_ovDragEl);
-      const toIdx   = cards.indexOf(overEl);
-      if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
-
-      // Animate displaced cards before DOM move
-      cards.forEach((el, i) => {
-        if (el === _ovDragEl) return;
-        el.classList.remove('ov-shift-down', 'ov-shift-up');
-        if (fromIdx < toIdx && i > fromIdx && i <= toIdx) el.classList.add('ov-shift-up');
-        else if (fromIdx > toIdx && i >= toIdx && i < fromIdx) el.classList.add('ov-shift-down');
-      });
-
-      setTimeout(() => {
-        if (!_ovDragEl || !_ovDragEl.parentNode) return;
-        const container2 = document.getElementById('ov-grid');
-        if (!container2) return;
-        const cards2  = Array.from(container2.querySelectorAll(':scope > .ov-card'));
-        const fi = cards2.indexOf(_ovDragEl);
-        const ti = cards2.indexOf(overEl);
-        if (fi === -1 || ti === -1 || fi === ti) return;
-        if (fi < ti) container2.insertBefore(_ovDragEl, overEl.nextSibling);
-        else         container2.insertBefore(_ovDragEl, overEl);
-        requestAnimationFrame(() => {
-          container2.querySelectorAll('.ov-card').forEach(el => el.classList.remove('ov-shift-down', 'ov-shift-up'));
-        });
-      }, 80);
-    }
-
-    function _ovDrop(e) {
-      e.preventDefault();
-      if (!_ovDragEl) return;
-
-      document.querySelectorAll('.ov-card').forEach(el => {
-        el.style.opacity   = '';
-        el.style.transform = '';
-        el.style.boxShadow = '';
-        el.style.zIndex    = '';
-        el.classList.remove('ov-drag-over', 'ov-shift-down', 'ov-shift-up');
-      });
-
-      // Persist new order
-      const container = document.getElementById('ov-grid');
-      if (container) {
-        const newOrder = Array.from(container.querySelectorAll(':scope > .ov-card'))
-          .map(el => el.dataset.ovKey).filter(Boolean);
-        if (newOrder.length === OV_DEFAULT_ORDER.length) {
-          S.ovOrder = newOrder;
-          save();
-        }
-      }
-      _ovDragEl       = null;
-      _ovDragLastOver = null;
-    }
-
-    // Apply persisted card order inside #ov-grid
-    function _applyOvOrder() {
-      const grid = document.getElementById('ov-grid');
-      if (!grid) return;
-      const order = (S.ovOrder && S.ovOrder.length === OV_DEFAULT_ORDER.length)
-        ? S.ovOrder : OV_DEFAULT_ORDER;
-      const cardMap = {};
-      grid.querySelectorAll(':scope > .ov-card').forEach(el => { cardMap[el.dataset.ovKey] = el; });
-      order.forEach((key, i) => {
-        const el = cardMap[key];
-        if (!el) return;
-        // insertBefore(el, null) appends; insertBefore(el, grid.children[i]) moves to position i
-        const ref = grid.children[i];
-        if (ref !== el) grid.insertBefore(el, ref || null);
-      });
-    }
-
-    // Apply persisted width (ov-full class) to each card
-    function _applyOvWidths() {
-      const grid = document.getElementById('ov-grid');
-      if (!grid) return;
-      grid.querySelectorAll(':scope > .ov-card').forEach(el => {
-        const key = el.dataset.ovKey;
-        const wide = S.ovWidths ? (S.ovWidths[key] !== 0) : true;
-        el.classList.toggle('ov-full', wide);
-      });
-    }
-
-    // Toggle a card between half and full width, persist, re-apply
-    function _toggleOvWidth(key) {
-      if (!S.ovWidths) S.ovWidths = Object.assign({}, OV_DEFAULT_WIDTHS);
-      S.ovWidths[key] = S.ovWidths[key] === 0 ? 1 : 0;
-      save();
-      _applyOvWidths();
-      // Chart canvases resize with CSS — nudge Chart.js to redraw after layout settles
-      setTimeout(() => {
-        try { renderNwChart(); } catch(e) {}
-        try { renderCashFlow(); } catch(e) {}
-        try { if (_sbChart) _sbChart.resize(); } catch(e) {}
-      }, 50);
-    }
-
-    // ── Forecast card drag-and-drop (live animated reorder) ──────────────────────
-    // Mirrors Overview DnD exactly — same anti-flicker pattern, persists to S.fcOrder.
-
-    let _fcDragEl       = null;
-    let _fcDragLastOver = null;
-
-    function _fcDragStart(e) {
-      if (e.target.closest('input, textarea, select, button, a, [contenteditable]')) return;
-      _fcDragEl       = e.currentTarget;
-      _fcDragLastOver = null;
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', _fcDragEl.dataset.fcKey || '');
-      requestAnimationFrame(() => {
-        if (_fcDragEl) {
-          _fcDragEl.style.opacity   = '0.38';
-          _fcDragEl.style.transform = 'scale(0.98)';
-          _fcDragEl.style.boxShadow = '0 6px 24px rgba(0,0,0,0.16)';
-          _fcDragEl.style.zIndex    = '10';
-        }
-      });
-    }
-
-    function _fcDragEnd() {
-      document.querySelectorAll('.fc-card').forEach(el => {
-        el.style.opacity   = '';
-        el.style.transform = '';
-        el.style.boxShadow = '';
-        el.style.zIndex    = '';
-        el.classList.remove('fc-drag-over', 'fc-shift-down', 'fc-shift-up');
-      });
-      _fcDragEl       = null;
-      _fcDragLastOver = null;
-    }
-
-    function _fcDragOver(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      if (!_fcDragEl) return;
-      const overEl = e.currentTarget;
-      if (!overEl || overEl === _fcDragEl) return;
-      if (overEl === _fcDragLastOver) return;
-      _fcDragLastOver = overEl;
-
-      const container = document.getElementById('fc-grid');
-      if (!container) return;
-      const cards   = Array.from(container.querySelectorAll(':scope > .fc-card'));
-      const fromIdx = cards.indexOf(_fcDragEl);
-      const toIdx   = cards.indexOf(overEl);
-      if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
-
-      cards.forEach((el, i) => {
-        if (el === _fcDragEl) return;
-        el.classList.remove('fc-shift-down', 'fc-shift-up');
-        if (fromIdx < toIdx && i > fromIdx && i <= toIdx) el.classList.add('fc-shift-up');
-        else if (fromIdx > toIdx && i >= toIdx && i < fromIdx) el.classList.add('fc-shift-down');
-      });
-
-      setTimeout(() => {
-        if (!_fcDragEl || !_fcDragEl.parentNode) return;
-        const container2 = document.getElementById('fc-grid');
-        if (!container2) return;
-        const cards2 = Array.from(container2.querySelectorAll(':scope > .fc-card'));
-        const fi = cards2.indexOf(_fcDragEl);
-        const ti = cards2.indexOf(overEl);
-        if (fi === -1 || ti === -1 || fi === ti) return;
-        if (fi < ti) container2.insertBefore(_fcDragEl, overEl.nextSibling);
-        else         container2.insertBefore(_fcDragEl, overEl);
-        requestAnimationFrame(() => {
-          container2.querySelectorAll('.fc-card').forEach(el => el.classList.remove('fc-shift-down', 'fc-shift-up'));
-        });
-      }, 80);
-    }
-
-    function _fcDrop(e) {
-      e.preventDefault();
-      if (!_fcDragEl) return;
-      document.querySelectorAll('.fc-card').forEach(el => {
-        el.style.opacity   = '';
-        el.style.transform = '';
-        el.style.boxShadow = '';
-        el.style.zIndex    = '';
-        el.classList.remove('fc-drag-over', 'fc-shift-down', 'fc-shift-up');
-      });
-      const container = document.getElementById('fc-grid');
-      if (container) {
-        const newOrder = Array.from(container.querySelectorAll(':scope > .fc-card'))
-          .map(el => el.dataset.fcKey).filter(Boolean);
-        if (newOrder.length === FC_DEFAULT_ORDER.length) {
-          S.fcOrder = newOrder;
-          save();
-        }
-      }
-      _fcDragEl       = null;
-      _fcDragLastOver = null;
-    }
-
-    // Apply persisted card order inside #fc-grid
-    function _applyFcOrder() {
-      const grid = document.getElementById('fc-grid');
-      if (!grid) return;
-      const order = (S.fcOrder && S.fcOrder.length === FC_DEFAULT_ORDER.length)
-        ? S.fcOrder : FC_DEFAULT_ORDER;
-      const cardMap = {};
-      grid.querySelectorAll(':scope > .fc-card').forEach(el => { cardMap[el.dataset.fcKey] = el; });
-      order.forEach((key, i) => {
-        const el = cardMap[key];
-        if (!el) return;
-        const ref = grid.children[i];
-        if (ref !== el) grid.insertBefore(el, ref || null);
-      });
-    }
-
-    // Apply persisted width (fc-full class) to each card
-    function _applyFcWidths() {
-      const grid = document.getElementById('fc-grid');
-      if (!grid) return;
-      grid.querySelectorAll(':scope > .fc-card').forEach(el => {
-        const key  = el.dataset.fcKey;
-        const wide = S.fcWidths ? (S.fcWidths[key] !== 0) : true;
-        el.classList.toggle('fc-full', wide);
-      });
-    }
-
-    // Toggle a card between half and full width, persist, re-apply
-    function _toggleFcWidth(key) {
-      if (!S.fcWidths) S.fcWidths = Object.assign({}, FC_DEFAULT_WIDTHS);
-      S.fcWidths[key] = S.fcWidths[key] === 0 ? 1 : 0;
-      save();
-      _applyFcWidths();
-      // Nudge Chart.js canvases to redraw after CSS layout change
-      setTimeout(() => {
-        try { updateFc(); } catch(e) {}
-        try { updateSavingsFc(); } catch(e) {}
-      }, 50);
-    }
-
-    // Apply persisted collapsed state to each fc-card
-    function _applyFcCollapsed() {
-      if (!document.getElementById('fc-grid')) return;
-      document.querySelectorAll('#fc-grid .fc-card').forEach(el => {
-        const key = el.dataset.fcKey;
-        const collapsed = !!(S.fcCollapsed && S.fcCollapsed[key]);
-        el.classList.toggle('fc-collapsed', collapsed);
-        const btn = document.getElementById('fc-collapse-btn-' + key);
-        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
-      });
-    }
-
-    function _toggleFcCollapse(key) {
-      if (!S.fcCollapsed) S.fcCollapsed = {};
-      S.fcCollapsed[key] = S.fcCollapsed[key] ? 0 : 1;
-      save();
-      _applyFcCollapsed();
-    }
-
-    function _applyCiCollapsed() {
-      const card = document.getElementById('ci-card');
-      const body = document.getElementById('ci-body');
-      const btn  = document.getElementById('ci-collapse-btn');
-      if (!card || !body) return;
-      const collapsed = !!(S.ciCollapsed);
-      body.style.display = collapsed ? 'none' : '';
-      if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
-    }
-
-    function _toggleCiCollapse() {
-      S.ciCollapsed = S.ciCollapsed ? 0 : 1;
-      save();
-      _applyCiCollapsed();
-    }
-
-    // ── Transaction card drag-and-drop (live animated reorder) ───────────────────
-    // Mirrors Overview / Forecast DnD — same anti-flicker pattern, persists to S.txOrder.
-
-    let _txDragEl       = null;
-    let _txDragLastOver = null;
-
-    function _txDragStart(e) {
-      if (e.target.closest('input, textarea, select, button, a, [contenteditable]')) return;
-      _txDragEl       = e.currentTarget;
-      _txDragLastOver = null;
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', _txDragEl.dataset.txKey || '');
-      requestAnimationFrame(() => {
-        if (_txDragEl) {
-          _txDragEl.style.opacity   = '0.38';
-          _txDragEl.style.transform = 'scale(0.98)';
-          _txDragEl.style.boxShadow = '0 6px 24px rgba(0,0,0,0.16)';
-          _txDragEl.style.zIndex    = '10';
-        }
-      });
-    }
-
-    function _txDragEnd() {
-      document.querySelectorAll('.tx-card').forEach(el => {
-        el.style.opacity   = '';
-        el.style.transform = '';
-        el.style.boxShadow = '';
-        el.style.zIndex    = '';
-        el.classList.remove('tx-drag-over', 'tx-shift-down', 'tx-shift-up');
-      });
-      _txDragEl       = null;
-      _txDragLastOver = null;
-    }
-
-    function _txDragOver(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      if (!_txDragEl) return;
-
-      const overEl = e.currentTarget;
-      if (!overEl || overEl === _txDragEl) return;
-      if (overEl === _txDragLastOver) return;
-      _txDragLastOver = overEl;
-
-      const container = document.getElementById('tx-grid');
-      if (!container) return;
-      const cards   = Array.from(container.querySelectorAll(':scope > .tx-card'));
-      const fromIdx = cards.indexOf(_txDragEl);
-      const toIdx   = cards.indexOf(overEl);
-      if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
-
-      // Animate displaced cards, then live-reorder in DOM after 80 ms (matches OV/FC pattern)
-      cards.forEach((el, i) => {
-        if (el === _txDragEl) return;
-        el.classList.remove('tx-shift-down', 'tx-shift-up');
-        if (fromIdx < toIdx && i > fromIdx && i <= toIdx) el.classList.add('tx-shift-up');
-        else if (fromIdx > toIdx && i >= toIdx && i < fromIdx) el.classList.add('tx-shift-down');
-      });
-
-      setTimeout(() => {
-        if (!_txDragEl || !_txDragEl.parentNode) return;
-        const container2 = document.getElementById('tx-grid');
-        if (!container2) return;
-        const cards2 = Array.from(container2.querySelectorAll(':scope > .tx-card'));
-        const fi = cards2.indexOf(_txDragEl);
-        const ti = cards2.indexOf(overEl);
-        if (fi === -1 || ti === -1 || fi === ti) return;
-        if (fi < ti) container2.insertBefore(_txDragEl, overEl.nextSibling);
-        else         container2.insertBefore(_txDragEl, overEl);
-        requestAnimationFrame(() => {
-          container2.querySelectorAll('.tx-card').forEach(el => el.classList.remove('tx-shift-down', 'tx-shift-up'));
-        });
-      }, 80);
-    }
-
-    function _txDrop(e) {
-      e.preventDefault();
-      if (!_txDragEl) return;
-
-      // DOM is already in final order from live reorder in _txDragOver — just persist it
-      document.querySelectorAll('.tx-card').forEach(el => {
-        el.style.opacity   = '';
-        el.style.transform = '';
-        el.style.boxShadow = '';
-        el.style.zIndex    = '';
-        el.classList.remove('tx-drag-over', 'tx-shift-down', 'tx-shift-up');
-      });
-
-      const container = document.getElementById('tx-grid');
-      if (container) {
-        const newOrder = Array.from(container.querySelectorAll(':scope > .tx-card'))
-          .map(el => el.dataset.txKey).filter(Boolean);
-        if (newOrder.length === TX_DEFAULT_ORDER.length) {
-          S.txOrder = newOrder;
-          save();
-        }
-      }
-      _txDragEl       = null;
-      _txDragLastOver = null;
-    }
-
-    // Apply persisted card order inside #tx-grid
-    function _applyTxOrder() {
-      const grid = document.getElementById('tx-grid');
-      if (!grid) return;
-      const order = (S.txOrder && S.txOrder.length === TX_DEFAULT_ORDER.length)
-        ? S.txOrder : TX_DEFAULT_ORDER;
-      const cardMap = {};
-      grid.querySelectorAll(':scope > .tx-card').forEach(el => { cardMap[el.dataset.txKey] = el; });
-      order.forEach((key, i) => {
-        const el = cardMap[key];
-        if (!el) return;
-        const ref = grid.children[i];
-        if (ref !== el) grid.insertBefore(el, ref || null);
-      });
-    }
-
-    // Apply persisted width (tx-full class) to each card
-    function _applyTxWidths() {
-      const grid = document.getElementById('tx-grid');
-      if (!grid) return;
-      grid.querySelectorAll(':scope > .tx-card').forEach(el => {
-        const key  = el.dataset.txKey;
-        const wide = S.txWidths ? (S.txWidths[key] !== 0) : true;
-        el.classList.toggle('tx-full', wide);
-      });
-    }
-
-    // Toggle a card between half and full width, persist, re-apply
-    function _toggleTxWidth(key) {
-      if (!S.txWidths) S.txWidths = Object.assign({}, TX_DEFAULT_WIDTHS);
-      S.txWidths[key] = S.txWidths[key] === 0 ? 1 : 0;
-      save();
-      _applyTxWidths();
-    }
-
-    // Apply persisted collapsed state to each tx-card
-    function _applyTxCollapsed() {
-      if (!document.getElementById('tx-grid')) return;
-      document.querySelectorAll('#tx-grid .tx-card').forEach(el => {
-        const key = el.dataset.txKey;
-        const collapsed = !!(S.txCollapsed && S.txCollapsed[key]);
-        el.classList.toggle('tx-collapsed', collapsed);
-        const btn = document.getElementById('tx-collapse-btn-' + key);
-        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
-      });
-    }
-
-    function _toggleTxCollapse(key) {
-      if (!S.txCollapsed) S.txCollapsed = {};
-      S.txCollapsed[key] = S.txCollapsed[key] ? 0 : 1;
-      save();
-      _applyTxCollapsed();
-    }
-
-    // ── Budget card drag-and-drop (live animated reorder) ────────────────────────
-    // Mirrors OV / FC / TX DnD exactly — same anti-flicker pattern, persists to S.budOrder.
-
-    let _budDragEl       = null;
-    let _budDragLastOver = null;
-
-    function _budDragStart(e) {
-      if (e.target.closest('input, textarea, select, button, a, [contenteditable]')) return;
-      _budDragEl       = e.currentTarget;
-      _budDragLastOver = null;
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', _budDragEl.dataset.budKey || '');
-      requestAnimationFrame(() => {
-        if (_budDragEl) {
-          _budDragEl.style.opacity   = '0.38';
-          _budDragEl.style.transform = 'scale(0.98)';
-          _budDragEl.style.boxShadow = '0 6px 24px rgba(0,0,0,0.16)';
-          _budDragEl.style.zIndex    = '10';
-        }
-      });
-    }
-
-    function _budDragEnd() {
-      document.querySelectorAll('.bud-card').forEach(el => {
-        el.style.opacity   = '';
-        el.style.transform = '';
-        el.style.boxShadow = '';
-        el.style.zIndex    = '';
-        el.classList.remove('bud-drag-over', 'bud-shift-down', 'bud-shift-up');
-      });
-      _budDragEl       = null;
-      _budDragLastOver = null;
-    }
-
-    function _budDragOver(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      if (!_budDragEl) return;
-      const overEl = e.currentTarget;
-      if (!overEl || overEl === _budDragEl) return;
-      if (overEl === _budDragLastOver) return;
-      _budDragLastOver = overEl;
-
-      const container = document.getElementById('bud-grid');
-      if (!container) return;
-      const cards   = Array.from(container.querySelectorAll(':scope > .bud-card'));
-      const fromIdx = cards.indexOf(_budDragEl);
-      const toIdx   = cards.indexOf(overEl);
-      if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
-
-      cards.forEach((el, i) => {
-        if (el === _budDragEl) return;
-        el.classList.remove('bud-shift-down', 'bud-shift-up');
-        if (fromIdx < toIdx && i > fromIdx && i <= toIdx) el.classList.add('bud-shift-up');
-        else if (fromIdx > toIdx && i >= toIdx && i < fromIdx) el.classList.add('bud-shift-down');
-      });
-
-      setTimeout(() => {
-        if (!_budDragEl || !_budDragEl.parentNode) return;
-        const container2 = document.getElementById('bud-grid');
-        if (!container2) return;
-        const cards2 = Array.from(container2.querySelectorAll(':scope > .bud-card'));
-        const fi = cards2.indexOf(_budDragEl);
-        const ti = cards2.indexOf(overEl);
-        if (fi === -1 || ti === -1 || fi === ti) return;
-        if (fi < ti) container2.insertBefore(_budDragEl, overEl.nextSibling);
-        else         container2.insertBefore(_budDragEl, overEl);
-        requestAnimationFrame(() => {
-          container2.querySelectorAll('.bud-card').forEach(el => el.classList.remove('bud-shift-down', 'bud-shift-up'));
-        });
-      }, 80);
-    }
-
-    function _budDrop(e) {
-      e.preventDefault();
-      if (!_budDragEl) return;
-      document.querySelectorAll('.bud-card').forEach(el => {
-        el.style.opacity   = '';
-        el.style.transform = '';
-        el.style.boxShadow = '';
-        el.style.zIndex    = '';
-        el.classList.remove('bud-drag-over', 'bud-shift-down', 'bud-shift-up');
-      });
-      const container = document.getElementById('bud-grid');
-      if (container) {
-        const newOrder = Array.from(container.querySelectorAll(':scope > .bud-card'))
-          .map(el => el.dataset.budKey).filter(Boolean);
-        if (newOrder.length === BUD_DEFAULT_ORDER.length) {
-          S.budOrder = newOrder;
-          save();
-        }
-      }
-      _budDragEl       = null;
-      _budDragLastOver = null;
-    }
-
-    // Apply persisted card order inside #bud-grid
-    function _applyBudOrder() {
-      const grid = document.getElementById('bud-grid');
-      if (!grid) return;
-      const order = (S.budOrder && S.budOrder.length === BUD_DEFAULT_ORDER.length)
-        ? S.budOrder : BUD_DEFAULT_ORDER;
-      const cardMap = {};
-      grid.querySelectorAll(':scope > .bud-card').forEach(el => { cardMap[el.dataset.budKey] = el; });
-      order.forEach((key, i) => {
-        const el = cardMap[key];
-        if (!el) return;
-        const ref = grid.children[i];
-        if (ref !== el) grid.insertBefore(el, ref || null);
-      });
-    }
-
-    // Apply persisted width (bud-full class) to each card
-    function _applyBudWidths() {
-      const grid = document.getElementById('bud-grid');
-      if (!grid) return;
-      grid.querySelectorAll(':scope > .bud-card').forEach(el => {
-        const key  = el.dataset.budKey;
-        const wide = S.budWidths ? (S.budWidths[key] !== 0) : true;
-        el.classList.toggle('bud-full', wide);
-      });
-    }
-
-    // Toggle a card between half and full width, persist, re-apply
-    function _toggleBudWidth(key) {
-      if (!S.budWidths) S.budWidths = Object.assign({}, BUD_DEFAULT_WIDTHS);
-      S.budWidths[key] = S.budWidths[key] === 0 ? 1 : 0;
-      save();
-      _applyBudWidths();
-      // Nudge Sankey canvas to redraw after layout change
-      setTimeout(() => { try { renderBudget(); } catch(e) {} }, 50);
-    }
-
-    // Apply persisted collapsed state to each bud-card
-    function _applyBudCollapsed() {
-      if (!document.getElementById('bud-grid')) return;
-      document.querySelectorAll('#bud-grid .bud-card').forEach(el => {
-        const key = el.dataset.budKey;
-        const collapsed = !!(S.budCollapsed && S.budCollapsed[key]);
-        el.classList.toggle('bud-collapsed', collapsed);
-        const btn = document.getElementById('bud-collapse-btn-' + key);
-        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
-      });
-    }
-
-    function _toggleBudCollapse(key) {
-      if (!S.budCollapsed) S.budCollapsed = {};
-      S.budCollapsed[key] = S.budCollapsed[key] ? 0 : 1;
-      save();
-      _applyBudCollapsed();
-    }
-
-    // ── Account & Goal card width toggle ─────────────────────────────────────────
-
-    function _applyAccWidths() {
-      document.querySelectorAll('#accList .ac[data-acc-id]').forEach(el => {
-        const id = el.dataset.accId;
-        el.classList.toggle('ac-wide', !!(S.accWidths && S.accWidths[id]));
-      });
-    }
-
-    function _applyGoalWidths() {
-      document.querySelectorAll('#goalList .gc[data-gid]').forEach(el => {
-        const id = el.dataset.gid;
-        el.classList.toggle('gc-wide', !!(S.goalWidths && S.goalWidths[id]));
-      });
-    }
-
-    function _toggleAccWidth(id) {
-      if (!S.accWidths) S.accWidths = {};
-      S.accWidths[id] = S.accWidths[id] ? 0 : 1;
-      save();
-      // Direct DOM toggle — no full re-render needed
-      const card = document.querySelector('#accList .ac[data-acc-id="' + id + '"]');
-      if (card) card.classList.toggle('ac-wide', !!S.accWidths[id]);
-    }
-
-    function _toggleGoalWidth(id) {
-      if (!S.goalWidths) S.goalWidths = {};
-      S.goalWidths[id] = S.goalWidths[id] ? 0 : 1;
-      save();
-      const card = document.querySelector('#goalList .gc[data-gid="' + id + '"]');
-      if (card) card.classList.toggle('gc-wide', !!S.goalWidths[id]);
-    }
-
-    // ── Collapse / Expand ─────────────────────────────────────────────────────────
-
-    function _applyOvCollapsed() {
-      if (!document.getElementById('ov-grid')) return;
-      document.querySelectorAll('#ov-grid .ov-card').forEach(el => {
-        const key = el.dataset.ovKey;
-        const collapsed = !!(S.ovCollapsed && S.ovCollapsed[key]);
-        el.classList.toggle('ov-collapsed', collapsed);
-        const btn = document.getElementById('ov-collapse-btn-' + key);
-        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
-      });
-    }
-
-    function _toggleOvCollapse(key) {
-      if (!S.ovCollapsed) S.ovCollapsed = {};
-      S.ovCollapsed[key] = S.ovCollapsed[key] ? 0 : 1;
-      save();
-      _applyOvCollapsed();
-    }
-
-    function _applyAccCollapsed() {
-      document.querySelectorAll('#accList .ac[data-acc-id]').forEach(el => {
-        const id = el.dataset.accId;
-        const collapsed = !!(S.accCollapsed && S.accCollapsed[id]);
-        el.classList.toggle('ac-collapsed', collapsed);
-        const btn = el.querySelector('.acc-collapse-btn');
-        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
-      });
-    }
-
-    function _toggleAccCollapse(id) {
-      if (!S.accCollapsed) S.accCollapsed = {};
-      S.accCollapsed[id] = S.accCollapsed[id] ? 0 : 1;
-      save();
-      const card = document.querySelector('#accList .ac[data-acc-id="' + id + '"]');
-      if (card) {
-        const collapsed = !!S.accCollapsed[id];
-        card.classList.toggle('ac-collapsed', collapsed);
-        const btn = card.querySelector('.acc-collapse-btn');
-        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
-      }
-    }
-
-    function _applyGoalCollapsed() {
-      document.querySelectorAll('#goalList .gc[data-gid]').forEach(el => {
-        const id = el.dataset.gid;
-        const collapsed = !!(S.goalCollapsed && S.goalCollapsed[id]);
-        el.classList.toggle('gc-collapsed', collapsed);
-        const btn = el.querySelector('.goal-collapse-btn');
-        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
-      });
-    }
-
-    function _toggleGoalCollapse(id) {
-      if (!S.goalCollapsed) S.goalCollapsed = {};
-      S.goalCollapsed[id] = S.goalCollapsed[id] ? 0 : 1;
-      save();
-      const card = document.querySelector('#goalList .gc[data-gid="' + id + '"]');
-      if (card) {
-        const collapsed = !!S.goalCollapsed[id];
-        card.classList.toggle('gc-collapsed', collapsed);
-        const btn = card.querySelector('.goal-collapse-btn');
-        if (btn) btn.textContent = collapsed ? 'Expand' : 'Collapse';
-      }
-    }
-    function _setAllAccCollapsed(state) {
-      if (!S.accCollapsed) S.accCollapsed = {};
-      document.querySelectorAll('#accList .ac[data-acc-id]').forEach(el => {
-        S.accCollapsed[el.dataset.accId] = state ? 1 : 0;
-      });
-      save();
-      _applyAccCollapsed();
-    }
-
-    function _setAllGoalCollapsed(state) {
-      if (!S.goalCollapsed) S.goalCollapsed = {};
-      document.querySelectorAll('#goalList .gc[data-gid]').forEach(el => {
-        S.goalCollapsed[el.dataset.gid] = state ? 1 : 0;
-      });
-      save();
-      _applyGoalCollapsed();
-    }
-
-    // Design: drag only within a group (accounts can't cross group boundaries).
-    // On drop, S.accOrder (flat ID array) is rebuilt from the current DOM order
-    // across all groups, then saved. renderAcc() re-reads S.accOrder on next call.
-    // Anti-flicker: same _lastOver guard as Goals and Overview DnD.
-
-    let _accDragEl       = null;
-    let _accDragLastOver = null;
-
-    function _accDragStart(e, cardEl) {
-      // Accept drag from anywhere on the card (same pattern as Goals DnD).
-      // The ⋮⋮ handle is a visual affordance only — not a gate.
-      // Suppress only for interactive children: buttons, inputs, selects.
-      if (e.target.closest('input, textarea, select, button, a, [contenteditable]')) return;
-      _accDragEl       = cardEl;
-      _accDragLastOver = null;
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', cardEl.dataset.accId || '');
-      requestAnimationFrame(() => {
-        if (_accDragEl) _accDragEl.classList.add('ac-dragging');
-      });
-    }
-
-    function _accDragEnd() {
-      document.querySelectorAll('.ac').forEach(el => {
-        el.classList.remove('ac-dragging', 'ac-drag-over', 'ac-shift-up', 'ac-shift-down');
-      });
-      _accDragEl       = null;
-      _accDragLastOver = null;
-    }
-
-    function _accDragOver(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      if (!_accDragEl) return;
-
-      // Walk up from event target to find the .ac card being hovered
-      const overEl = e.target.closest('.ac');
-      if (!overEl || overEl === _accDragEl) return;
-      if (overEl === _accDragLastOver) return;
-
-      // Only allow reorder within same group (compare data-grp attribute — immune to DOM reorder)
-      const dragGrp = _accGrpKey(_accDragEl);
-      const overGrp = _accGrpKey(overEl);
-      if (!dragGrp || dragGrp !== overGrp) return;
-
-      _accDragLastOver = overEl;
-
-      const siblings = _accSiblingsInGroup(_accDragEl);
-      const fromIdx  = siblings.indexOf(_accDragEl);
-      const toIdx    = siblings.indexOf(overEl);
-      if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
-
-      // Animate displaced cards
-      siblings.forEach((el, i) => {
-        if (el === _accDragEl) return;
-        el.classList.remove('ac-shift-down', 'ac-shift-up');
-        if (fromIdx < toIdx && i > fromIdx && i <= toIdx) el.classList.add('ac-shift-up');
-        else if (fromIdx > toIdx && i >= toIdx && i < fromIdx) el.classList.add('ac-shift-down');
-      });
-
-      setTimeout(() => {
-        if (!_accDragEl || !_accDragEl.parentNode) return;
-        const sibs2 = _accSiblingsInGroup(_accDragEl);
-        const fi = sibs2.indexOf(_accDragEl);
-        const ti = sibs2.indexOf(overEl);
-        if (fi === -1 || ti === -1 || fi === ti) return;
-        const parent = _accDragEl.parentNode;
-        if (fi < ti) parent.insertBefore(_accDragEl, overEl.nextSibling);
-        else         parent.insertBefore(_accDragEl, overEl);
-        requestAnimationFrame(() => {
-          document.querySelectorAll('.ac').forEach(el => el.classList.remove('ac-shift-up', 'ac-shift-down'));
-        });
-      }, 80);
-    }
-
-    function _accDrop(e) {
-      e.preventDefault();
-      if (!_accDragEl) return;
-
-      document.querySelectorAll('.ac').forEach(el => {
-        el.classList.remove('ac-dragging', 'ac-drag-over', 'ac-shift-up', 'ac-shift-down');
-      });
-
-      // Persist new order from DOM
-      const newOrder = Array.from(document.querySelectorAll('#accList .ac[data-acc-id]'))
-        .map(el => el.dataset.accId).filter(Boolean);
-      S.accOrder = newOrder;
-      save();
-
-      _accDragEl       = null;
-      _accDragLastOver = null;
-    }
-
-    // Returns the data-grp value stamped on the card at render time
-    function _accGrpKey(cardEl) {
-      return cardEl ? (cardEl.dataset.grp || '') : '';
-    }
-
-    // Returns all .ac cards in the same group as cardEl (by data-grp attribute)
-    function _accSiblingsInGroup(cardEl) {
-      const key = _accGrpKey(cardEl);
-      if (!key) return [];
-      return Array.from(document.querySelectorAll('#accList .ac[data-grp="' + key + '"]'));
-    }
-
         // ── Three-dot card menu helpers ───────────────────────────────────────────────
     function closeCardMenus() {
       document.querySelectorAll('.card-menu-dropdown.open').forEach(m => m.classList.remove('open'));
@@ -12377,16 +12287,115 @@
     setMethod(S.method || 'snowball', null);
     renderOv();
     renderSupporterUI();
+
+    // ── Settings hub ──────────────────────────────────────────────────────────
+    function openStPanel(id) {
+      const panel = document.getElementById(id);
+      if (!panel) return;
+      // Populate version in the update panel if opening it
+      if (id === 'stp-update') {
+        const el = document.getElementById('about-version');
+        if (el && typeof APP_VERSION !== 'undefined') el.textContent = 'v' + APP_VERSION;
+        // Reset button state each time panel opens
+        const btn = document.getElementById('update-btn');
+        const status = document.getElementById('update-status');
+        if (btn) btn.disabled = false;
+        if (status) status.textContent = '';
+      }
+      panel.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeStPanel(id) {
+      const panel = document.getElementById(id);
+      if (!panel) return;
+      panel.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Close panels on Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.st-panel-wrap.open').forEach(p => {
+          p.classList.remove('open');
+        });
+        document.body.style.overflow = '';
+      }
+    });
+
   </script>
 
-  <!-- ── PWA Service Worker Registration ──────────────────────────────────── -->
+  <!-- ── PWA Service Worker Registration & Update ─────────────────────────── -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-          .then(reg => console.log('[Fulcrum SW] Registered, scope:', reg.scope))
+          .then(reg => {
+            console.log('[Fulcrum SW] Registered, scope:', reg.scope);
+            // Listen for a new SW taking control — reload to apply it
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+              window.location.reload();
+            });
+          })
           .catch(err => console.warn('[Fulcrum SW] Registration failed:', err));
       });
+    }
+
+    async function checkForUpdate() {
+      const btn = document.getElementById('update-btn');
+      const status = document.getElementById('update-status');
+
+      if (!('serviceWorker' in navigator)) {
+        status.textContent = 'Service worker not supported in this browser.';
+        status.style.color = 'var(--tx3)';
+        return;
+      }
+
+      btn.disabled = true;
+      status.textContent = 'Checking…';
+      status.style.color = 'var(--tx3)';
+
+      try {
+        const reg = await navigator.serviceWorker.getRegistration();
+        if (!reg) {
+          status.textContent = 'No service worker registered.';
+          btn.disabled = false;
+          return;
+        }
+
+        // Ask the browser to re-fetch sw.js from the server
+        await reg.update();
+
+        if (reg.waiting) {
+          // A new SW is already waiting — activate it immediately
+          status.textContent = 'Update found. Reloading…';
+          status.style.color = 'var(--g)';
+          reg.waiting.postMessage('SKIP_WAITING');
+          return; // controllerchange listener above will reload
+        }
+
+        if (reg.installing) {
+          // New SW is currently downloading — wait for it to finish
+          status.textContent = 'Update downloading…';
+          reg.installing.addEventListener('statechange', e => {
+            if (e.target.state === 'installed') {
+              status.textContent = 'Update ready. Reloading…';
+              status.style.color = 'var(--g)';
+              e.target.postMessage('SKIP_WAITING');
+            }
+          });
+        } else {
+          // No update found
+          status.textContent = "You're on the latest version.";
+          status.style.color = 'var(--tx3)';
+          btn.disabled = false;
+        }
+      } catch (err) {
+        console.warn('[Fulcrum SW] Update check failed:', err);
+        status.textContent = 'Update check failed. Are you online?';
+        status.style.color = 'var(--r)';
+        btn.disabled = false;
+      }
     }
   </script>
 </body>
