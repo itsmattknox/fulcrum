@@ -93,3 +93,10 @@ self.addEventListener('fetch', event => {
     })
   );
 });
+
+// ── Messages: support update checks from the app ──────────────────────────────
+self.addEventListener('message', event => {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
